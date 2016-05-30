@@ -14,6 +14,7 @@
 
 #import "OpenCVImageProcessing.h"
 #import "ImageProcessing.h"
+#import "FaceDetector.h"
 
 #include <iostream>
 #include <fstream>
@@ -151,7 +152,18 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         cv::Mat dst;
         cv::transpose(grayMat, dst);
         cv::flip(dst, dst, 2);
-        UIImage *imageFace = [self detectFace:dst];
+        
+        NSArray<Face*> *faces = [FaceDetector detectFace:dst];
+        
+        
+        UIImage *imageFace;
+        if (faces.firstObject) {
+            imageFace = faces.firstObject.faceImage;
+        }
+        
+        NSLog(@"number detected face : %d", faces.count);
+        
+//        imageFace = [self detectFace:dst];
 
         dispatch_async(dispatch_get_main_queue(), ^{
             self.imageViewFace.image = imageFace;

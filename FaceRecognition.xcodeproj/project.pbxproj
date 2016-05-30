@@ -20,6 +20,8 @@
 		BB039A021CF9A8A5008C9BAF /* 2.pic.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BB039A001CF9A8A5008C9BAF /* 2.pic.jpg */; };
 		BB039A051CF9C8B3008C9BAF /* CameraViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB039A041CF9C8B3008C9BAF /* CameraViewController.mm */; };
 		BB0B5ED71CF9137700F13EE7 /* PCAViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB0B5ED61CF9137700F13EE7 /* PCAViewController.mm */; };
+		BB15200E1CFC281E0028C5CB /* Face.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB15200D1CFC281E0028C5CB /* Face.mm */; };
+		BB1520111CFC2ACF0028C5CB /* FaceDetector.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB1520101CFC2ACF0028C5CB /* FaceDetector.mm */; };
 		BB288B6E1CFAA65000784037 /* OpenCVImageProcessing.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB288B6D1CFAA65000784037 /* OpenCVImageProcessing.mm */; };
 		BB288B711CFACD9F00784037 /* ImageProcessing.m in Sources */ = {isa = PBXBuildFile; fileRef = BB288B701CFACD9F00784037 /* ImageProcessing.m */; };
 		BB722D481CAFF36400701F03 /* haarcascade_frontalface_alt2.xml in Resources */ = {isa = PBXBuildFile; fileRef = BB722D471CAFF36400701F03 /* haarcascade_frontalface_alt2.xml */; };
@@ -50,6 +52,10 @@
 		BB039A041CF9C8B3008C9BAF /* CameraViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CameraViewController.mm; sourceTree = "<group>"; };
 		BB0B5ED51CF9137700F13EE7 /* PCAViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCAViewController.h; sourceTree = "<group>"; };
 		BB0B5ED61CF9137700F13EE7 /* PCAViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PCAViewController.mm; sourceTree = "<group>"; };
+		BB15200C1CFC281E0028C5CB /* Face.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Face.h; sourceTree = "<group>"; };
+		BB15200D1CFC281E0028C5CB /* Face.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Face.mm; sourceTree = "<group>"; };
+		BB15200F1CFC2ACF0028C5CB /* FaceDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceDetector.h; sourceTree = "<group>"; };
+		BB1520101CFC2ACF0028C5CB /* FaceDetector.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FaceDetector.mm; sourceTree = "<group>"; };
 		BB288B6C1CFAA65000784037 /* OpenCVImageProcessing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenCVImageProcessing.h; sourceTree = "<group>"; };
 		BB288B6D1CFAA65000784037 /* OpenCVImageProcessing.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OpenCVImageProcessing.mm; sourceTree = "<group>"; };
 		BB288B6F1CFACD9F00784037 /* ImageProcessing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageProcessing.h; sourceTree = "<group>"; };
@@ -150,8 +156,12 @@
 				BB039A041CF9C8B3008C9BAF /* CameraViewController.mm */,
 				BB288B6C1CFAA65000784037 /* OpenCVImageProcessing.h */,
 				BB288B6D1CFAA65000784037 /* OpenCVImageProcessing.mm */,
+				BB15200F1CFC2ACF0028C5CB /* FaceDetector.h */,
+				BB1520101CFC2ACF0028C5CB /* FaceDetector.mm */,
 				BB288B6F1CFACD9F00784037 /* ImageProcessing.h */,
 				BB288B701CFACD9F00784037 /* ImageProcessing.m */,
+				BB15200C1CFC281E0028C5CB /* Face.h */,
+				BB15200D1CFC281E0028C5CB /* Face.mm */,
 				BBA10E9F1CAA0D1300B74283 /* Main.storyboard */,
 				BBA10EA21CAA0D1300B74283 /* Assets.xcassets */,
 				BBA10EA41CAA0D1300B74283 /* LaunchScreen.storyboard */,
@@ -302,6 +312,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB1520111CFC2ACF0028C5CB /* FaceDetector.mm in Sources */,
+				BB15200E1CFC281E0028C5CB /* Face.mm in Sources */,
 				BB039A051CF9C8B3008C9BAF /* CameraViewController.mm in Sources */,
 				BB288B6E1CFAA65000784037 /* OpenCVImageProcessing.mm in Sources */,
 				BB288B711CFACD9F00784037 /* ImageProcessing.m in Sources */,
