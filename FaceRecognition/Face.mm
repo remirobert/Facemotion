@@ -16,7 +16,7 @@
     
     if (self) {
         self.face = face;
-        self.faceImage = [OpenCVImageProcessing UIImageFromCVMat:self.face];
+        self.faceImage = [OpenCVImageProcessing UIImageFromCVMat:face];
     }
     return self;
 }
