@@ -1,0 +1,18 @@
+PODS:
+  - FCFileManager (1.0.17)
+  - Masonry (1.0.0)
+  - OpenCV (2.4.12.3)
+
+DEPENDENCIES:
+  - FCFileManager
+  - Masonry
+  - OpenCV (~> 2.4.12.3)
+
+SPEC CHECKSUMS:
+  FCFileManager: 8bfc931ce2a6223676147e9baf0e8a65c691eca6
+  Masonry: b529bb169217897b6354d4b56b1fada6d475b13d
+  OpenCV: 52fd6b6b31296d817f69254441da111d5a661207
+
+PODFILE CHECKSUM: 3067dc55c311d833e5de8af157bd217948852c9f
+
+COCOAPODS: 1.0.0

@@ -2,6 +2,7 @@
 #
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
 
+opencv
 ## Build generated
 build/
 DerivedData
@@ -33,7 +34,7 @@ xcuserdata
 # you should judge for yourself, the pros and cons are mentioned at:
 # https://guides.cocoapods.org/using/using-cocoapods.html#should-i-check-the-pods-directory-into-source-control
 #
-# Pods/
+Pods/
 
 # Carthage
 #
