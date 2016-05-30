@@ -1,5 +1,5 @@
 //
-//  Face.h
+//  FaceRecognition.h
 //  FaceRecognition
 //
 //  Created by Remi Robert on 30/05/16.
@@ -9,11 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <opencv2/opencv.hpp>
 #import <opencv2/core/core.hpp>
+#import "Face.h"
 
-@interface Face : NSObject
-@property (nonatomic, assign) cv::Mat face;
-@property (nonatomic, strong) UIImage *faceImage;
-@property (nonatomic, assign) int label;
-
-- (instancetype)init:(cv::Mat)face;
+@interface FaceRecognition : NSObject
++ (BOOL)trainingFace:(NSArray<Face *> *)faces withFace:(Face *)face;
 @end

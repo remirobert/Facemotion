@@ -22,6 +22,7 @@
 		BB0B5ED71CF9137700F13EE7 /* PCAViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB0B5ED61CF9137700F13EE7 /* PCAViewController.mm */; };
 		BB15200E1CFC281E0028C5CB /* Face.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB15200D1CFC281E0028C5CB /* Face.mm */; };
 		BB1520111CFC2ACF0028C5CB /* FaceDetector.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB1520101CFC2ACF0028C5CB /* FaceDetector.mm */; };
+		BB1520141CFC3DF10028C5CB /* FaceRecognition.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB1520131CFC3DF10028C5CB /* FaceRecognition.mm */; };
 		BB288B6E1CFAA65000784037 /* OpenCVImageProcessing.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB288B6D1CFAA65000784037 /* OpenCVImageProcessing.mm */; };
 		BB288B711CFACD9F00784037 /* ImageProcessing.m in Sources */ = {isa = PBXBuildFile; fileRef = BB288B701CFACD9F00784037 /* ImageProcessing.m */; };
 		BB722D481CAFF36400701F03 /* haarcascade_frontalface_alt2.xml in Resources */ = {isa = PBXBuildFile; fileRef = BB722D471CAFF36400701F03 /* haarcascade_frontalface_alt2.xml */; };
@@ -56,6 +57,8 @@
 		BB15200D1CFC281E0028C5CB /* Face.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Face.mm; sourceTree = "<group>"; };
 		BB15200F1CFC2ACF0028C5CB /* FaceDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceDetector.h; sourceTree = "<group>"; };
 		BB1520101CFC2ACF0028C5CB /* FaceDetector.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FaceDetector.mm; sourceTree = "<group>"; };
+		BB1520121CFC3DF10028C5CB /* FaceRecognition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceRecognition.h; sourceTree = "<group>"; };
+		BB1520131CFC3DF10028C5CB /* FaceRecognition.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FaceRecognition.mm; sourceTree = "<group>"; };
 		BB288B6C1CFAA65000784037 /* OpenCVImageProcessing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenCVImageProcessing.h; sourceTree = "<group>"; };
 		BB288B6D1CFAA65000784037 /* OpenCVImageProcessing.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OpenCVImageProcessing.mm; sourceTree = "<group>"; };
 		BB288B6F1CFACD9F00784037 /* ImageProcessing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageProcessing.h; sourceTree = "<group>"; };
@@ -158,6 +161,8 @@
 				BB288B6D1CFAA65000784037 /* OpenCVImageProcessing.mm */,
 				BB15200F1CFC2ACF0028C5CB /* FaceDetector.h */,
 				BB1520101CFC2ACF0028C5CB /* FaceDetector.mm */,
+				BB1520121CFC3DF10028C5CB /* FaceRecognition.h */,
+				BB1520131CFC3DF10028C5CB /* FaceRecognition.mm */,
 				BB288B6F1CFACD9F00784037 /* ImageProcessing.h */,
 				BB288B701CFACD9F00784037 /* ImageProcessing.m */,
 				BB15200C1CFC281E0028C5CB /* Face.h */,
@@ -320,6 +325,7 @@
 				BB0B5ED71CF9137700F13EE7 /* PCAViewController.mm in Sources */,
 				BBA10E9B1CAA0D1300B74283 /* AppDelegate.m in Sources */,
 				BB722D581CB14ED500701F03 /* VideoFaceDetector.cpp in Sources */,
+				BB1520141CFC3DF10028C5CB /* FaceRecognition.mm in Sources */,
 				BBA10E981CAA0D1300B74283 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

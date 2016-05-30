@@ -17,6 +17,7 @@
     if (self) {
         self.face = face;
         self.faceImage = [OpenCVImageProcessing UIImageFromCVMat:face];
+        self.label = [[NSDate new] timeIntervalSince1970];
     }
     return self;
 }
