@@ -49,9 +49,14 @@
         cv::Point center(faces[i].x + resizeImage.width * 0.5, faces[i].y + resizeImage.height * 0.5);
         cv::Mat faceDetected = smallImage(faces[i]);
         cv::Mat croppedImage = cv::Mat(smallImage, cv::Rect(faces[i].x, faces[i].y, faces[i].width, faces[i].height)).clone();
+        cv::Mat croppedImageGray = cv::Mat(grayImage, cv::Rect(faces[i].x, faces[i].y, faces[i].width, faces[i].height)).clone();
+
+        resize(croppedImage, croppedImage, cv::Size(30, 30));
+        resize(croppedImageGray, croppedImageGray, cv::Size(30, 30));
+        NSLog(@"resize cropped Image : %d %d", croppedImage.size[0], croppedImage.size[1]);
         
         Face *newFace = [[Face alloc] init:croppedImage];
-//        newFace.faceImage = [OpenCVImageProcessing UIImageFromCVMat:<#(cv::Mat)#>]
+        newFace.face = croppedImageGray;
         [facesDetected addObject:newFace];
     }
     return facesDetected;

@@ -32,14 +32,20 @@
 + (int)trainingImages:(std::vector<cv::Mat>)images labels:(std::vector<int>)labels sample:(cv::Mat)frame {
     FaceRecognition *instance = [self sharedInstance];
     instance.recognizer->train(images, labels);
-    return instance.recognizer->predict(frame);
+    int ret = instance.recognizer->predict(frame);
+    NSLog(@"ret training : %d", ret);
+    return ret;
 }
 
 + (BOOL)trainingFace:(NSArray<Face *> *)faces withFace:(Face *)face {
     std::vector<cv::Mat> images;
     std::vector<int> labels;
+    
+    NSLog(@"size image training : %d %d", faces.firstObject.face.size[0], faces.firstObject.face.size[1]);
+    NSLog(@"size image test : %d %d", face.face.size[0], face.face.size[1]);
 
     for (Face *currentFace in faces) {
+        NSLog(@"add current label to training : %d", currentFace.label);
         images.push_back(currentFace.face);
         labels.push_back(currentFace.label);
     }

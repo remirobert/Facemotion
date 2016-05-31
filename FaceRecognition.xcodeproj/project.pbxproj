@@ -23,8 +23,10 @@
 		BB15200E1CFC281E0028C5CB /* Face.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB15200D1CFC281E0028C5CB /* Face.mm */; };
 		BB1520111CFC2ACF0028C5CB /* FaceDetector.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB1520101CFC2ACF0028C5CB /* FaceDetector.mm */; };
 		BB1520141CFC3DF10028C5CB /* FaceRecognition.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB1520131CFC3DF10028C5CB /* FaceRecognition.mm */; };
+		BB1520181CFD1FDC0028C5CB /* FaceCollectionViewCell.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB1520161CFD1FDC0028C5CB /* FaceCollectionViewCell.mm */; };
+		BB1520191CFD1FDC0028C5CB /* FaceCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB1520171CFD1FDC0028C5CB /* FaceCollectionViewCell.xib */; };
 		BB288B6E1CFAA65000784037 /* OpenCVImageProcessing.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB288B6D1CFAA65000784037 /* OpenCVImageProcessing.mm */; };
-		BB288B711CFACD9F00784037 /* ImageProcessing.m in Sources */ = {isa = PBXBuildFile; fileRef = BB288B701CFACD9F00784037 /* ImageProcessing.m */; };
+		BB288B711CFACD9F00784037 /* ImageProcessing.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB288B701CFACD9F00784037 /* ImageProcessing.mm */; };
 		BB722D481CAFF36400701F03 /* haarcascade_frontalface_alt2.xml in Resources */ = {isa = PBXBuildFile; fileRef = BB722D471CAFF36400701F03 /* haarcascade_frontalface_alt2.xml */; };
 		BB722D581CB14ED500701F03 /* VideoFaceDetector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BB722D561CB14ED500701F03 /* VideoFaceDetector.cpp */; };
 		BBA10E981CAA0D1300B74283 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA10E971CAA0D1300B74283 /* main.m */; };
@@ -59,10 +61,13 @@
 		BB1520101CFC2ACF0028C5CB /* FaceDetector.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FaceDetector.mm; sourceTree = "<group>"; };
 		BB1520121CFC3DF10028C5CB /* FaceRecognition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceRecognition.h; sourceTree = "<group>"; };
 		BB1520131CFC3DF10028C5CB /* FaceRecognition.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FaceRecognition.mm; sourceTree = "<group>"; };
+		BB1520151CFD1FDC0028C5CB /* FaceCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceCollectionViewCell.h; sourceTree = "<group>"; };
+		BB1520161CFD1FDC0028C5CB /* FaceCollectionViewCell.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FaceCollectionViewCell.mm; sourceTree = "<group>"; };
+		BB1520171CFD1FDC0028C5CB /* FaceCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FaceCollectionViewCell.xib; sourceTree = "<group>"; };
 		BB288B6C1CFAA65000784037 /* OpenCVImageProcessing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenCVImageProcessing.h; sourceTree = "<group>"; };
 		BB288B6D1CFAA65000784037 /* OpenCVImageProcessing.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OpenCVImageProcessing.mm; sourceTree = "<group>"; };
 		BB288B6F1CFACD9F00784037 /* ImageProcessing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageProcessing.h; sourceTree = "<group>"; };
-		BB288B701CFACD9F00784037 /* ImageProcessing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageProcessing.m; sourceTree = "<group>"; };
+		BB288B701CFACD9F00784037 /* ImageProcessing.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ImageProcessing.mm; sourceTree = "<group>"; };
 		BB722D471CAFF36400701F03 /* haarcascade_frontalface_alt2.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = haarcascade_frontalface_alt2.xml; sourceTree = "<group>"; };
 		BB722D491CB119E900701F03 /* FaceRecognition-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FaceRecognition-Bridging-Header.h"; sourceTree = "<group>"; };
 		BB722D561CB14ED500701F03 /* VideoFaceDetector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VideoFaceDetector.cpp; sourceTree = "<group>"; };
@@ -164,7 +169,10 @@
 				BB1520121CFC3DF10028C5CB /* FaceRecognition.h */,
 				BB1520131CFC3DF10028C5CB /* FaceRecognition.mm */,
 				BB288B6F1CFACD9F00784037 /* ImageProcessing.h */,
-				BB288B701CFACD9F00784037 /* ImageProcessing.m */,
+				BB288B701CFACD9F00784037 /* ImageProcessing.mm */,
+				BB1520151CFD1FDC0028C5CB /* FaceCollectionViewCell.h */,
+				BB1520161CFD1FDC0028C5CB /* FaceCollectionViewCell.mm */,
+				BB1520171CFD1FDC0028C5CB /* FaceCollectionViewCell.xib */,
 				BB15200C1CFC281E0028C5CB /* Face.h */,
 				BB15200D1CFC281E0028C5CB /* Face.mm */,
 				BBA10E9F1CAA0D1300B74283 /* Main.storyboard */,
@@ -249,6 +257,7 @@
 				BB039A011CF9A8A5008C9BAF /* 1.pic.jpg in Resources */,
 				BBA10EA61CAA0D1300B74283 /* LaunchScreen.storyboard in Resources */,
 				BBA10EA31CAA0D1300B74283 /* Assets.xcassets in Resources */,
+				BB1520191CFD1FDC0028C5CB /* FaceCollectionViewCell.xib in Resources */,
 				BB722D481CAFF36400701F03 /* haarcascade_frontalface_alt2.xml in Resources */,
 				BB0399EE1CF92BA7008C9BAF /* yaleB01_P00A-005E-10.pgm in Resources */,
 				BBA10EA11CAA0D1300B74283 /* Main.storyboard in Resources */,
@@ -321,9 +330,10 @@
 				BB15200E1CFC281E0028C5CB /* Face.mm in Sources */,
 				BB039A051CF9C8B3008C9BAF /* CameraViewController.mm in Sources */,
 				BB288B6E1CFAA65000784037 /* OpenCVImageProcessing.mm in Sources */,
-				BB288B711CFACD9F00784037 /* ImageProcessing.m in Sources */,
+				BB288B711CFACD9F00784037 /* ImageProcessing.mm in Sources */,
 				BB0B5ED71CF9137700F13EE7 /* PCAViewController.mm in Sources */,
 				BBA10E9B1CAA0D1300B74283 /* AppDelegate.m in Sources */,
+				BB1520181CFD1FDC0028C5CB /* FaceCollectionViewCell.mm in Sources */,
 				BB722D581CB14ED500701F03 /* VideoFaceDetector.cpp in Sources */,
 				BB1520141CFC3DF10028C5CB /* FaceRecognition.mm in Sources */,
 				BBA10E981CAA0D1300B74283 /* main.m in Sources */,

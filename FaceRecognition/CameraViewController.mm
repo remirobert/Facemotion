@@ -15,14 +15,16 @@
 #import "OpenCVImageProcessing.h"
 #import "ImageProcessing.h"
 #import "FaceDetector.h"
+#import "FaceRecognition.h"
+#import "FaceCollectionViewCell.h"
 
 #include <iostream>
 #include <fstream>
 #include <sstream>
 
-@interface CameraViewController () <AVCaptureMetadataOutputObjectsDelegate, AVCaptureVideoDataOutputSampleBufferDelegate>
-@property (weak, nonatomic) IBOutlet UIImageView *imageViewFace;
-@property (weak, nonatomic) IBOutlet UIImageView *imageViewPreview;
+@interface CameraViewController () <AVCaptureMetadataOutputObjectsDelegate, AVCaptureVideoDataOutputSampleBufferDelegate, UICollectionViewDataSource>
+@property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *collectionViewLayout;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, strong) AVCaptureSession *session;
 @property (nonatomic, strong) AVCaptureDevice *frontDevice;
 @property (nonatomic, strong) AVCaptureDevice *backDevice;
@@ -33,9 +35,17 @@
 @property (nonatomic, strong) AVCaptureVideoPreviewLayer *layerPreview;
 @property (nonatomic, assign) float currentValue;
 @property (nonatomic, assign) cv::CascadeClassifier face_cascade;
+@property (nonatomic, strong) NSMutableArray<Face *> *faces;
 @end
 
 @implementation CameraViewController
+
+- (NSMutableArray *)faces {
+    if (!_faces) {
+        _faces = [NSMutableArray new];
+    }
+    return _faces;
+}
 
 - (AVCaptureSession *)session {
     if (!_session) {
@@ -116,8 +126,7 @@
 
 - (void)viewDidLayoutSubviews {
     [self.view.layer addSublayer:self.layerPreview];
-    [self.view bringSubviewToFront:self.imageViewFace];
-    [self.view bringSubviewToFront:self.imageViewPreview];
+    [self.view bringSubviewToFront:self.collectionView];
 }
 
 - (UIImage *)cropImage:(UIImage *)image {
@@ -153,60 +162,50 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         cv::transpose(grayMat, dst);
         cv::flip(dst, dst, 2);
         
-        NSArray<Face*> *faces = [FaceDetector detectFace:dst];
+        NSArray<Face*> *facesDetected = [FaceDetector detectFace:dst];
         
-        
-        UIImage *imageFace;
-        if (faces.firstObject) {
-            imageFace = faces.firstObject.faceImage;
+        if (self.faces.count == 0) {
+            [self.faces addObjectsFromArray:facesDetected];
+        }
+        else {
+//            for (NSInteger index = 0; index < self.faces.count; index++) {
+//                [self.faces objectAtIndex:index].label = int(index);
+//            }
+            NSLog(@"🍪 number stack faces : %d", self.faces.count);
+            if (facesDetected.firstObject) {
+                if (![FaceRecognition trainingFace:self.faces withFace:facesDetected.firstObject]) {
+                    NSLog(@"🍋 add new unknow face !!");
+                    [self.faces addObjectsFromArray:facesDetected];
+                    
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self.collectionView reloadData];
+                    });
+                }
+            }
         }
         
-        NSLog(@"number detected face : %d", faces.count);
+        UIImage *imageFace;
+        UIImage *imagePreview;
         
+        if (facesDetected.firstObject) {
+            imagePreview = [OpenCVImageProcessing UIImageFromCVMat:facesDetected.firstObject.face];
+        }
+
+        
+        if (self.faces.firstObject) {
+            imageFace = self.faces.firstObject.faceImage;
+        }
 //        imageFace = [self detectFace:dst];
 
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.imageViewFace.image = imageFace;
-        });
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            self.imageViewFace.image = imageFace;
+//            self.imageViewPreview.image = imagePreview;
+//        });
         
         CGImageRelease(cgimage);
         self.currentValue = currentTimestampValue + 0.25;
     }
-}
-
-- (UIImage *)detectFace:(cv::Mat)frame {
-    std::vector<cv::Rect> faces;
-    cv::Size resizeImage(frame.size[1] / 10, frame.size[0] / 10);
-    
-    cv::Mat grayImage;
-    cv::Mat smallImage;
-    cv::cvtColor(frame, grayImage, cv::COLOR_BGR2GRAY);
-    
-    NSLog(@"⚠️ new size size image : %d %d", resizeImage.width, resizeImage.height);
-    
-    resize(grayImage, smallImage, resizeImage);
-    //equalizeHist(grayImage, grayImage);
-    
-    self.face_cascade.detectMultiScale(smallImage, faces, 1.4, 3, 0, cv::Size(30, 30));
-    NSLog(@"number faces detected : %lu", faces.size());
-    for( size_t i = 0; i < faces.size(); i++ ) {
-        NSLog(@"✅⚽️ position face detected : %d %d", faces[i].x, faces[i].y);
-        NSLog(@"✅💨 size face detected : %d %d", faces[i].width, faces[i].height);
-        cv::Point center(faces[i].x + resizeImage.width * 0.5, faces[i].y + resizeImage.height * 0.5);
-        cv::Mat faceDetected = smallImage(faces[i]);
-        
-        cv::Mat croppedImage = cv::Mat(smallImage, cv::Rect(faces[i].x, faces[i].y, faces[i].width, faces[i].height)).clone();
-        
-        cv::rectangle(smallImage, cvPoint(faces[i].x, faces[i].y), cvPoint(faces[i].x + faces[i].width, faces[i].y + faces[i].height), cv::Scalar(0, 255, 0));
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.imageViewPreview.image = [OpenCVImageProcessing UIImageFromCVMat:smallImage];
-        });
-        
-        NSLog(@"⭐️👩 NEW IMAGE size frame created : %d %d", croppedImage.size[0], croppedImage.size[1]);
-        return [OpenCVImageProcessing UIImageFromCVMat:croppedImage];
-    }
-    return [OpenCVImageProcessing UIImageFromCVMat:smallImage];
 }
 
 - (void)initCamera {
@@ -243,6 +242,17 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     }
 }
 
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return self.faces.count;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    FaceCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"FaceCollectionViewCell" forIndexPath:indexPath];
+    Face *currentFace = [self.faces objectAtIndex:indexPath.row];
+    [cell configure:currentFace];
+    return cell;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -254,10 +264,14 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     self.face_cascade = cv::CascadeClassifier(faceCascadePath);
     [self checkPermissionCamera];
     self.currentValue = 0;
-    self.imageViewFace.image = [UIImage imageNamed:@"face-10"];
-    self.imageViewFace.contentMode = UIViewContentModeScaleAspectFit;
-    self.imageViewFace.layer.masksToBounds = true;
-    self.imageViewFace.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:0.5];
+    
+    self.collectionViewLayout.itemSize= CGSizeMake(100, 100);
+    self.collectionViewLayout.minimumLineSpacing = 0;
+    self.collectionViewLayout.minimumInteritemSpacing = 0;
+    self.collectionViewLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+    
+    [self.collectionView registerNib:[UINib nibWithNibName:@"FaceCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"FaceCollectionViewCell"];
+    self.collectionView.dataSource = self;
 }
 
 @end
