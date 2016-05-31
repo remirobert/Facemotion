@@ -40,6 +40,8 @@
     resize(frame, smallImage, resizeImage);
     cv::cvtColor(smallImage, grayImage, cv::COLOR_BGR2GRAY);
     
+    NSLog(@"size image detected : %d %d", frame.size[0], frame.size[1]);
+    
     NSMutableArray<Face *> *facesDetected = [[NSMutableArray alloc] initWithCapacity:faces.size()];
     [self sharedInstance].face_cascade.detectMultiScale(smallImage, faces, 1.4, 3, 0, cv::Size(30, 30));
     
@@ -58,6 +60,7 @@
         
         Face *newFace = [[Face alloc] init:croppedImage];
         newFace.face = croppedImageGray;
+        newFace.rect = CGRectMake(faces[i].x * 10, faces[i].y * 10, faces[i].width * 10, faces[i].height * 10);
         [facesDetected addObject:newFace];
     }
     return facesDetected;

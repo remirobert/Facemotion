@@ -14,6 +14,7 @@
 @property (nonatomic, assign) cv::Mat face;
 @property (nonatomic, strong) UIImage *faceImage;
 @property (nonatomic, assign) int label;
+@property (nonatomic, assign) CGRect rect;
 
 - (instancetype)init:(cv::Mat)face;
 @end

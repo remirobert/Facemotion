@@ -36,9 +36,17 @@
 @property (nonatomic, strong) AVCaptureVideoPreviewLayer *layerPreview;
 @property (nonatomic, assign) float currentValue;
 @property (nonatomic, strong) NSMutableSet<Face *> *faces;
+@property (nonatomic, strong) NSMutableArray<UIView *> *viewsFace;
 @end
 
 @implementation CameraViewController
+
+- (NSMutableArray *)viewsFace {
+    if (!_viewsFace) {
+        _viewsFace = [NSMutableArray new];
+    }
+    return _viewsFace;
+}
 
 - (NSMutableSet *)faces {
     if (!_faces) {
@@ -72,7 +80,7 @@
 - (AVCaptureVideoDataOutput *)videoOutput {
     if (!_videoOutput) {
         _videoOutput = [[AVCaptureVideoDataOutput alloc] init];
-        [_videoOutput setSampleBufferDelegate:self queue:dispatch_queue_create("videoutputaueeur",NULL)];
+        [_videoOutput setSampleBufferDelegate:self queue:dispatch_queue_create("videoutputaueeur", NULL)];
     }
     return _videoOutput;
 }
@@ -128,6 +136,10 @@
     [self.view.layer addSublayer:self.layerPreview];
     [self.view bringSubviewToFront:self.collectionView];
     [self.view bringSubviewToFront:self.buttonFlipCamera];
+    
+    for (UIView *view in self.viewsFace) {
+        [self.view bringSubviewToFront:view];
+    }
 }
 
 - (UIImage *)cropImage:(UIImage *)image {
@@ -135,6 +147,31 @@
                                  (image.size.width / 2), (image.size.height / 2));
     CGImageRef imageRef = CGImageCreateWithImageInRect([image CGImage], croprect);
     return [UIImage imageWithCGImage:imageRef];
+}
+
+- (void)captureOutput:(AVCaptureOutput *)captureOutput
+didOutputMetadataObjects:(NSArray *)metadataObjects
+       fromConnection:(AVCaptureConnection *)connection {
+
+//    for (UIView *view in self.viewsFace) {
+//        [view removeFromSuperview];
+//    }
+    for (AVMetadataObject *object in metadataObjects) {
+        if ([object.type isEqualToString:AVMetadataObjectTypeFace]) {
+            CGRect frameFace = object.bounds;
+            CGSize sizeScreen = CGSizeMake(1920, 1080);
+            
+            CGRect rectCalculated = CGRectMake(frameFace.origin.x * sizeScreen.width, frameFace.origin.y * sizeScreen.height, 100, 100);
+            
+            [self.viewsFace removeAllObjects];
+            UIView *newView = [[UIView alloc] initWithFrame:rectCalculated];
+            newView.layer.borderColor = [[[UIColor redColor] colorWithAlphaComponent:0.5] CGColor];
+            newView.layer.borderWidth = 1;
+            newView.backgroundColor = [UIColor clearColor];
+            [self.viewsFace addObject:newView];
+            [self.view addSubview:newView];
+        }
+    }
 }
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput
@@ -167,25 +204,25 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         
         self.currentValue = currentTimestampValue + 0.25;
         
-        if (self.faces.count == 0) {
-            [self.faces addObjectsFromArray:facesDetected];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.collectionView reloadData];
-            });
-        }
-        else {
-            NSLog(@"🍪 number stack faces : %lu", (unsigned long)self.faces.count);
-            if (facesDetected.firstObject) {
-                if (![FaceRecognition trainingFace:[self.faces allObjects] withFace:facesDetected.firstObject]) {
-                    NSLog(@"🍋 add new unknow face !!");
-                    [self.faces addObject:facesDetected.firstObject];
-                    
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [self.collectionView reloadData];
-                    });
-                }
-            }
-        }
+        //        if (self.faces.count == 0) {
+        //            [self.faces addObjectsFromArray:facesDetected];
+        //            dispatch_async(dispatch_get_main_queue(), ^{
+        //                [self.collectionView reloadData];
+        //            });
+        //        }
+        //        else {
+        //            NSLog(@"🍪 number stack faces : %lu", (unsigned long)self.faces.count);
+        //            if (facesDetected.firstObject) {
+        //                if (![FaceRecognition trainingFace:[self.faces allObjects] withFace:facesDetected.firstObject]) {
+        //                    NSLog(@"🍋 add new unknow face !!");
+        //                    [self.faces addObject:facesDetected.firstObject];
+        //
+        //                    dispatch_async(dispatch_get_main_queue(), ^{
+        //                        [self.collectionView reloadData];
+        //                    });
+        //                }
+        //            }
+        //        }
         CGImageRelease(cgimage);
     }
 }
