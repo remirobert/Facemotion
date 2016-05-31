@@ -51,8 +51,9 @@
         cv::Mat croppedImage = cv::Mat(smallImage, cv::Rect(faces[i].x, faces[i].y, faces[i].width, faces[i].height)).clone();
         cv::Mat croppedImageGray = cv::Mat(grayImage, cv::Rect(faces[i].x, faces[i].y, faces[i].width, faces[i].height)).clone();
 
-        resize(croppedImage, croppedImage, cv::Size(30, 30));
-        resize(croppedImageGray, croppedImageGray, cv::Size(30, 30));
+        cv::Size finalSize(50, 50);
+        resize(croppedImage, croppedImage, cv::Size(50, 50));
+        resize(croppedImageGray, croppedImageGray, cv::Size(50, 50));
         NSLog(@"resize cropped Image : %d %d", croppedImage.size[0], croppedImage.size[1]);
         
         Face *newFace = [[Face alloc] init:croppedImage];

@@ -24,6 +24,7 @@
 
 @interface CameraViewController () <AVCaptureMetadataOutputObjectsDelegate, AVCaptureVideoDataOutputSampleBufferDelegate, UICollectionViewDataSource>
 @property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *collectionViewLayout;
+@property (weak, nonatomic) IBOutlet UIButton *buttonFlipCamera;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, strong) AVCaptureSession *session;
 @property (nonatomic, strong) AVCaptureDevice *frontDevice;
@@ -126,6 +127,7 @@
 - (void)viewDidLayoutSubviews {
     [self.view.layer addSublayer:self.layerPreview];
     [self.view bringSubviewToFront:self.collectionView];
+    [self.view bringSubviewToFront:self.buttonFlipCamera];
 }
 
 - (UIImage *)cropImage:(UIImage *)image {
@@ -222,6 +224,10 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     }
 }
 
+- (IBAction)flipCamera:(id)sender {
+    
+}
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return self.faces.count;
 }
@@ -239,7 +245,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     [self checkPermissionCamera];
     self.currentValue = 0;
     
-    self.collectionViewLayout.itemSize= CGSizeMake(100, 100);
+    self.collectionViewLayout.itemSize = CGSizeMake(100, 100);
     self.collectionViewLayout.minimumLineSpacing = 0;
     self.collectionViewLayout.minimumInteritemSpacing = 0;
     self.collectionViewLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;

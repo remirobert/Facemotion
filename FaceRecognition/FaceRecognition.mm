@@ -31,10 +31,19 @@
 
 + (int)trainingImages:(std::vector<cv::Mat>)images labels:(std::vector<int>)labels sample:(cv::Mat)frame {
     FaceRecognition *instance = [self sharedInstance];
+    int predicted_label = -1;
+    double predicted_confidence = 0.0;
+    
     instance.recognizer->train(images, labels);
-    int ret = instance.recognizer->predict(frame);
-    NSLog(@"ret training : %d", ret);
-    return ret;
+    instance.recognizer->predict(frame, predicted_label, predicted_confidence);
+    NSLog(@"number train faces: %d", images.size());
+    NSLog(@"ret label training : %d", predicted_label);
+    NSLog(@"ret confidence training : %f", predicted_confidence);
+    if (predicted_confidence == 0 && images.size() == 0) {
+        return -1;
+    }
+    return predicted_label;
+//    return (predicted_confidence < 500) ? -1 : predicted_label;
 }
 
 + (BOOL)trainingFace:(NSArray<Face *> *)faces withFace:(Face *)face {

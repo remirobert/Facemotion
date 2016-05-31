@@ -50,15 +50,32 @@
                                 </collectionViewFlowLayout>
                                 <cells/>
                             </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nZj-0H-ExE">
+                                <rect key="frame" x="40" y="40" width="69" height="38"/>
+                                <color key="backgroundColor" red="0.1450980392" green="0.61568627450000002" blue="0.73333333329999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="69" id="nSs-TG-UXS"/>
+                                    <constraint firstAttribute="height" constant="38" id="qCd-LP-3uQ"/>
+                                </constraints>
+                                <state key="normal" title="rotate">
+                                    <color key="titleColor" red="0.94509803920000002" green="0.94901960780000005" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="flipCamera:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lE9-Av-38b"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="NuT-Gi-Qdn" secondAttribute="trailing" constant="-20" id="Ixg-tQ-8rq"/>
+                            <constraint firstItem="nZj-0H-ExE" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="jVp-Cv-jj1"/>
                             <constraint firstItem="NuT-Gi-Qdn" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="kbD-9m-0RO"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="NuT-Gi-Qdn" secondAttribute="bottom" id="ovv-pq-oIg"/>
+                            <constraint firstItem="nZj-0H-ExE" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="qYB-S9-OjG"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="buttonFlipCamera" destination="nZj-0H-ExE" id="bEJ-qE-N1u"/>
                         <outlet property="collectionView" destination="NuT-Gi-Qdn" id="kBf-RA-fil"/>
                         <outlet property="collectionViewLayout" destination="pha-EL-RS4" id="r8Q-cL-MSI"/>
                     </connections>
