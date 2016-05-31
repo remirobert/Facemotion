@@ -35,14 +35,14 @@
 @property (nonatomic, strong) AVCaptureVideoPreviewLayer *layerPreview;
 @property (nonatomic, assign) float currentValue;
 @property (nonatomic, assign) cv::CascadeClassifier face_cascade;
-@property (nonatomic, strong) NSMutableArray<Face *> *faces;
+@property (nonatomic, strong) NSMutableSet<Face *> *faces;
 @end
 
 @implementation CameraViewController
 
-- (NSMutableArray *)faces {
+- (NSMutableSet *)faces {
     if (!_faces) {
-        _faces = [NSMutableArray new];
+        _faces = [NSMutableSet new];
     }
     return _faces;
 }
@@ -164,19 +164,20 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         
         NSArray<Face*> *facesDetected = [FaceDetector detectFace:dst];
         
+        self.currentValue = currentTimestampValue + 0.25;
+        
         if (self.faces.count == 0) {
             [self.faces addObjectsFromArray:facesDetected];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.collectionView reloadData];
+            });r
         }
         else {
-//            for (NSInteger index = 0; index < self.faces.count; index++) {
-//                [self.faces objectAtIndex:index].label = int(index);
-//            }
-            NSLog(@"🍪 number stack faces : %d", self.faces.count);
+            NSLog(@"🍪 number stack faces : %lu", (unsigned long)self.faces.count);
             if (facesDetected.firstObject) {
                 if (![FaceRecognition trainingFace:self.faces withFace:facesDetected.firstObject]) {
                     NSLog(@"🍋 add new unknow face !!");
                     [self.faces addObjectsFromArray:facesDetected];
-                    
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [self.collectionView reloadData];
@@ -184,27 +185,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
                 }
             }
         }
-        
-        UIImage *imageFace;
-        UIImage *imagePreview;
-        
-        if (facesDetected.firstObject) {
-            imagePreview = [OpenCVImageProcessing UIImageFromCVMat:facesDetected.firstObject.face];
-        }
-
-        
-        if (self.faces.firstObject) {
-            imageFace = self.faces.firstObject.faceImage;
-        }
-//        imageFace = [self detectFace:dst];
-
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            self.imageViewFace.image = imageFace;
-//            self.imageViewPreview.image = imagePreview;
-//        });
-        
         CGImageRelease(cgimage);
-        self.currentValue = currentTimestampValue + 0.25;
     }
 }
 
