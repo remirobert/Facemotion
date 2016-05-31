@@ -34,7 +34,6 @@
 @property (nonatomic, strong) AVCaptureStillImageOutput *stillImageOutput;
 @property (nonatomic, strong) AVCaptureVideoPreviewLayer *layerPreview;
 @property (nonatomic, assign) float currentValue;
-@property (nonatomic, assign) cv::CascadeClassifier face_cascade;
 @property (nonatomic, strong) NSMutableSet<Face *> *faces;
 @end
 
@@ -170,14 +169,14 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
             [self.faces addObjectsFromArray:facesDetected];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.collectionView reloadData];
-            });r
+            });
         }
         else {
             NSLog(@"🍪 number stack faces : %lu", (unsigned long)self.faces.count);
             if (facesDetected.firstObject) {
-                if (![FaceRecognition trainingFace:self.faces withFace:facesDetected.firstObject]) {
+                if (![FaceRecognition trainingFace:[self.faces allObjects] withFace:facesDetected.firstObject]) {
                     NSLog(@"🍋 add new unknow face !!");
-                    [self.faces addObjectsFromArray:facesDetected];
+                    [self.faces addObject:facesDetected.firstObject];
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [self.collectionView reloadData];
@@ -229,7 +228,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     FaceCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"FaceCollectionViewCell" forIndexPath:indexPath];
-    Face *currentFace = [self.faces objectAtIndex:indexPath.row];
+    Face *currentFace = [[self.faces allObjects] objectAtIndex:indexPath.row];
     [cell configure:currentFace];
     return cell;
 }
@@ -237,12 +236,6 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    std::string faceCascadePath = [[[NSBundle mainBundle] pathForResource:@"haarcascade_frontalface_alt2"
-                                                                ofType:@"xml"] UTF8String];
-    
-    NSLog(@"path ressource face file : %s", faceCascadePath.c_str());
-    
-    self.face_cascade = cv::CascadeClassifier(faceCascadePath);
     [self checkPermissionCamera];
     self.currentValue = 0;
     

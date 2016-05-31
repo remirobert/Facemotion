@@ -41,10 +41,8 @@
     std::vector<cv::Mat> images;
     std::vector<int> labels;
     NSMutableArray<NSNumber *> *labelsTest = [NSMutableArray new];
-    
-    NSLog(@"size image training : %d %d", faces.firstObject.face.size[0], faces.firstObject.face.size[1]);
-    NSLog(@"size image test : %d %d", face.face.size[0], face.face.size[1]);
 
+    NSLog(@"   🍿 test face label : %d", face.label);
     for (Face *currentFace in faces) {
         NSLog(@"add current label to training : %d", currentFace.label);
         images.push_back(currentFace.face);
@@ -52,7 +50,6 @@
         [labelsTest addObject:@(currentFace.label)];
     }
     return [labelsTest containsObject:@([self trainingImages:images labels:labels sample:face.face])];
-//    return [self trainingImages:images labels:labels sample:face.face] == face.label;
 }
 
 @end
