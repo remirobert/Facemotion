@@ -23,6 +23,7 @@
 #include <sstream>
 
 @interface CameraViewController () <AVCaptureMetadataOutputObjectsDelegate, AVCaptureVideoDataOutputSampleBufferDelegate, UICollectionViewDataSource>
+@property (weak, nonatomic) IBOutlet UIImageView *imageViewPreview;
 @property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *collectionViewLayout;
 @property (weak, nonatomic) IBOutlet UIButton *buttonFlipCamera;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
@@ -37,9 +38,19 @@
 @property (nonatomic, assign) float currentValue;
 @property (nonatomic, strong) NSMutableSet<Face *> *faces;
 @property (nonatomic, strong) NSMutableArray<UIView *> *viewsFace;
+@property (nonatomic, strong) CIDetector *faceDetector;
 @end
 
 @implementation CameraViewController
+
+- (CIDetector *)faceDetector {
+    if (!_faceDetector) {
+        NSDictionary *detectorOptions = [[NSDictionary alloc] initWithObjectsAndKeys:CIDetectorAccuracyLow, CIDetectorAccuracy,
+                                         @(YES), CIDetectorTracking, nil];
+        _faceDetector = [CIDetector detectorOfType:CIDetectorTypeFace context:nil options:detectorOptions];
+    }
+    return _faceDetector;
+}
 
 - (NSMutableArray *)viewsFace {
     if (!_viewsFace) {
@@ -136,34 +147,85 @@
     [self.view.layer addSublayer:self.layerPreview];
     [self.view bringSubviewToFront:self.collectionView];
     [self.view bringSubviewToFront:self.buttonFlipCamera];
+    [self.view bringSubviewToFront:self.imageViewPreview];
     
     for (UIView *view in self.viewsFace) {
         [self.view bringSubviewToFront:view];
     }
 }
 
-- (UIImage *)cropImage:(UIImage *)image {
-    CGRect croprect = CGRectMake(image.size.width / 4, image.size.height / 4 ,
-                                 (image.size.width / 2), (image.size.height / 2));
-    CGImageRef imageRef = CGImageCreateWithImageInRect([image CGImage], croprect);
-    return [UIImage imageWithCGImage:imageRef];
+- (UIImage*)imageByCropping2:(UIImage *)imageToCrop toRect:(CGRect)rect
+
+{
+    
+    //create a context to do our clipping in
+    
+    UIGraphicsBeginImageContext(rect.size);
+    
+    CGContextRef currentContext = UIGraphicsGetCurrentContext();
+    
+    //create a rect with the size we want to crop the image to
+    //the X and Y here are zero so we start at the beginning of our
+    //newly created context
+    
+    CGRect clippedRect = CGRectMake(0, 0, rect.size.width, rect.size.height);
+    
+    CGContextClipToRect( currentContext, clippedRect);
+    
+    //create a rect equivalent to the full size of the image
+    //offset the rect by the X and Y we want to start the crop
+    //from in order to cut off anything before them
+    
+    CGRect drawRect = CGRectMake(rect.origin.x * -1,
+                                 rect.origin.y * -1,
+                                 imageToCrop.size.width,
+                                 imageToCrop.size.height);
+    
+    //draw the image to our clipped context using our offset rect
+    
+    CGContextDrawImage(currentContext, drawRect, imageToCrop.CGImage);
+    
+    //pull the image from our cropped context
+    
+    UIImage *cropped = UIGraphicsGetImageFromCurrentImageContext();
+    
+    //pop the context to get back to the default
+    
+    UIGraphicsEndImageContext();
+    
+    //Note: this is autoreleased
+    
+    return cropped;
+    
+}
+
+- (UIImage *)imageByCropping:(UIImage *)imageToCrop toRect:(CGRect)rect {
+    CGImageRef imageRef = CGImageCreateWithImageInRect([imageToCrop CGImage], rect);
+    UIImage *cropped = [UIImage imageWithCGImage:imageRef];
+//    CGImageRelease(imageRef);
+    return cropped;
 }
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput
 didOutputMetadataObjects:(NSArray *)metadataObjects
        fromConnection:(AVCaptureConnection *)connection {
 
-//    for (UIView *view in self.viewsFace) {
-//        [view removeFromSuperview];
-//    }
+    
+    return;
+    
+    for (UIView *view in self.viewsFace) {
+        [view removeFromSuperview];
+    }
+    [self.viewsFace removeAllObjects];
     for (AVMetadataObject *object in metadataObjects) {
         if ([object.type isEqualToString:AVMetadataObjectTypeFace]) {
             CGRect frameFace = object.bounds;
             CGSize sizeScreen = CGSizeMake(1920, 1080);
             
-            CGRect rectCalculated = CGRectMake(frameFace.origin.x * sizeScreen.width, frameFace.origin.y * sizeScreen.height, 100, 100);
+            NSLog(@"size face bounds : %f %f %f %f", frameFace.origin.x * CGRectGetWidth([UIScreen mainScreen].bounds), frameFace.origin.y * CGRectGetHeight([UIScreen mainScreen].bounds), frameFace.size.width, frameFace.size.height);
             
-            [self.viewsFace removeAllObjects];
+            CGRect rectCalculated = CGRectMake(frameFace.origin.x * CGRectGetWidth([UIScreen mainScreen].bounds), frameFace.origin.y * CGRectGetHeight([UIScreen mainScreen].bounds), 100, 100);
+            
             UIView *newView = [[UIView alloc] initWithFrame:rectCalculated];
             newView.layer.borderColor = [[[UIColor redColor] colorWithAlphaComponent:0.5] CGColor];
             newView.layer.borderWidth = 1;
@@ -174,6 +236,96 @@ didOutputMetadataObjects:(NSArray *)metadataObjects
     }
 }
 
+- (NSNumber *) exifOrientation: (UIDeviceOrientation) orientation
+{
+    int exifOrientation;
+    /* kCGImagePropertyOrientation values
+     The intended display orientation of the image. If present, this key is a CFNumber value with the same value as defined
+     by the TIFF and EXIF specifications -- see enumeration of integer constants.
+     The value specified where the origin (0,0) of the image is located. If not present, a value of 1 is assumed.
+     
+     used when calling featuresInImage: options: The value for this key is an integer NSNumber from 1..8 as found in kCGImagePropertyOrientation.
+     If present, the detection will be done based on that orientation but the coordinates in the returned features will still be based on those of the image. */
+    
+    enum {
+        PHOTOS_EXIF_0ROW_TOP_0COL_LEFT			= 1, //   1  =  0th row is at the top, and 0th column is on the left (THE DEFAULT).
+        PHOTOS_EXIF_0ROW_TOP_0COL_RIGHT			= 2, //   2  =  0th row is at the top, and 0th column is on the right.
+        PHOTOS_EXIF_0ROW_BOTTOM_0COL_RIGHT      = 3, //   3  =  0th row is at the bottom, and 0th column is on the right.
+        PHOTOS_EXIF_0ROW_BOTTOM_0COL_LEFT       = 4, //   4  =  0th row is at the bottom, and 0th column is on the left.
+        PHOTOS_EXIF_0ROW_LEFT_0COL_TOP          = 5, //   5  =  0th row is on the left, and 0th column is the top.
+        PHOTOS_EXIF_0ROW_RIGHT_0COL_TOP         = 6, //   6  =  0th row is on the right, and 0th column is the top.
+        PHOTOS_EXIF_0ROW_RIGHT_0COL_BOTTOM      = 7, //   7  =  0th row is on the right, and 0th column is the bottom.
+        PHOTOS_EXIF_0ROW_LEFT_0COL_BOTTOM       = 8  //   8  =  0th row is on the left, and 0th column is the bottom.
+    };
+    
+    switch (orientation) {
+        case UIDeviceOrientationPortraitUpsideDown:  // Device oriented vertically, home button on the top
+            exifOrientation = PHOTOS_EXIF_0ROW_LEFT_0COL_BOTTOM;
+            break;
+        case UIDeviceOrientationLandscapeLeft:       // Device oriented horizontally, home button on the right
+//            if (self.isUsingFrontFacingCamera)
+//                exifOrientation = PHOTOS_EXIF_0ROW_BOTTOM_0COL_RIGHT;
+//            else
+                exifOrientation = PHOTOS_EXIF_0ROW_TOP_0COL_LEFT;
+            break;
+        case UIDeviceOrientationLandscapeRight:      // Device oriented horizontally, home button on the left
+//            if (self.isUsingFrontFacingCamera)
+//                exifOrientation = PHOTOS_EXIF_0ROW_TOP_0COL_LEFT;
+//            else
+                exifOrientation = PHOTOS_EXIF_0ROW_BOTTOM_0COL_RIGHT;
+            break;
+        case UIDeviceOrientationPortrait:            // Device oriented vertically, home button on the bottom
+        default:
+            exifOrientation = PHOTOS_EXIF_0ROW_RIGHT_0COL_TOP;
+            break;
+    }
+    return [NSNumber numberWithInt:exifOrientation];
+}
+
+- (CGRect)videoPreviewBoxForGravity:(NSString *)gravity
+                          frameSize:(CGSize)frameSize
+                       apertureSize:(CGSize)apertureSize
+{
+    CGFloat apertureRatio = apertureSize.height / apertureSize.width;
+    CGFloat viewRatio = frameSize.width / frameSize.height;
+    
+    CGSize size = CGSizeZero;
+    if ([gravity isEqualToString:AVLayerVideoGravityResizeAspectFill]) {
+        if (viewRatio > apertureRatio) {
+            size.width = frameSize.width;
+            size.height = apertureSize.width * (frameSize.width / apertureSize.height);
+        } else {
+            size.width = apertureSize.height * (frameSize.height / apertureSize.width);
+            size.height = frameSize.height;
+        }
+    } else if ([gravity isEqualToString:AVLayerVideoGravityResizeAspect]) {
+        if (viewRatio > apertureRatio) {
+            size.width = apertureSize.height * (frameSize.height / apertureSize.width);
+            size.height = frameSize.height;
+        } else {
+            size.width = frameSize.width;
+            size.height = apertureSize.width * (frameSize.width / apertureSize.height);
+        }
+    } else if ([gravity isEqualToString:AVLayerVideoGravityResize]) {
+        size.width = frameSize.width;
+        size.height = frameSize.height;
+    }
+    
+    CGRect videoBox;
+    videoBox.size = size;
+    if (size.width < frameSize.width)
+        videoBox.origin.x = (frameSize.width - size.width) / 2;
+    else
+        videoBox.origin.x = (size.width - frameSize.width) / 2;
+    
+    if ( size.height < frameSize.height )
+        videoBox.origin.y = (frameSize.height - size.height) / 2;
+    else
+        videoBox.origin.y = (size.height - frameSize.height) / 2;
+    
+    return videoBox;
+}
+
 - (void)captureOutput:(AVCaptureOutput *)captureOutput
 didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
        fromConnection:(AVCaptureConnection *)connection {
@@ -181,28 +333,145 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     float currentTimestampValue = (float)timestamp.value / timestamp.timescale;
     
     if (currentTimestampValue >= self.currentValue) {
+        
         CVPixelBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
-        if (pixelBuffer == nil) {
-            NSLog(@"pixelBuffer is nil");
-            return;
+        CFDictionaryRef attachments = CMCopyDictionaryOfAttachments(kCFAllocatorDefault, sampleBuffer, kCMAttachmentMode_ShouldPropagate);
+        CIImage *ciImage = [[CIImage alloc] initWithCVPixelBuffer:pixelBuffer
+                                                          options:(__bridge NSDictionary *)attachments];
+        UIImage *imageCI = [UIImage imageWithCIImage:ciImage];
+        if (attachments) {
+            CFRelease(attachments);
         }
-        CIImage *ciimage = [CIImage imageWithCVPixelBuffer:pixelBuffer];
         
-        CIContext *context = [CIContext contextWithOptions:nil];
-        CGImageRef cgimage = [context createCGImage:ciimage
-                                           fromRect:CGRectMake(0, 0,
-                                                               CVPixelBufferGetWidth(pixelBuffer),
-                                                               CVPixelBufferGetHeight(pixelBuffer))];
-        UIImage *image = [UIImage imageWithCGImage:cgimage];
-        image = [ImageProcessing fixrotation:image];
-        cv::Mat grayMat = [OpenCVImageProcessing cvMatFromUIImage:image];
-        cv::Mat dst;
-        cv::transpose(grayMat, dst);
-        cv::flip(dst, dst, 2);
+        // make sure your device orientation is not locked.
+        UIDeviceOrientation curDeviceOrientation = [[UIDevice currentDevice] orientation];
         
-        NSArray<Face*> *facesDetected = [FaceDetector detectFace:dst];
+        NSDictionary *imageOptions = nil;
+        
+        imageOptions = [NSDictionary dictionaryWithObject:[self exifOrientation:curDeviceOrientation]
+                                                   forKey:CIDetectorImageOrientation];
+        
+        
+        NSArray *features = [self.faceDetector featuresInImage:ciImage
+                                                       options:imageOptions];
+        
+        // get the clean aperture
+        // the clean aperture is a rectangle that defines the portion of the encoded pixel dimensions
+        // that represents image data valid for display.
+        CMFormatDescriptionRef fdesc = CMSampleBufferGetFormatDescription(sampleBuffer);
+        CGRect cleanAperture = CMVideoFormatDescriptionGetCleanAperture(fdesc, false /*originIsTopLeft == false*/);
+        
+        NSLog(@"number faces detected : %lu", (unsigned long)features.count);
+        NSLog(@"clean frame : %f %f %f %f", cleanAperture.origin.x, cleanAperture.origin.y, cleanAperture.size.width, cleanAperture.size.height);
+        
+        dispatch_async(dispatch_get_main_queue(), ^(void) {
+            
+            for (UIView *view in self.viewsFace) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [view removeFromSuperview];
+                });
+            }
+            
+            CGSize parentFrameSize = [self.view frame].size;
+            NSString *gravity = [self.layerPreview videoGravity];
+            BOOL isMirrored = [self.layerPreview isMirrored];
+            CGRect previewBox = [self videoPreviewBoxForGravity:gravity
+                                                                frameSize:parentFrameSize
+                                                             apertureSize:cleanAperture.size];
+            
+            [self.viewsFace removeAllObjects];
+            
+            
+            
+            for (CIFaceFeature *feature in features) {
+                CGRect faceRect = feature.bounds;
+                
+                NSLog(@"tracking id : %d", feature.trackingID);
+
+                // flip preview width and height
+                CGFloat temp = faceRect.size.width;
+                faceRect.size.width = faceRect.size.height;
+                faceRect.size.height = temp;
+                temp = faceRect.origin.x;
+                faceRect.origin.x = faceRect.origin.y;
+                faceRect.origin.y = temp;
+                // scale coordinates so they fit in the preview box, which may be scaled
+                CGFloat widthScaleBy = previewBox.size.width / cleanAperture.size.height;
+                CGFloat heightScaleBy = previewBox.size.height / cleanAperture.size.width;
+                faceRect.size.width *= widthScaleBy;
+                faceRect.size.height *= heightScaleBy;
+                faceRect.origin.x *= widthScaleBy;
+                faceRect.origin.y *= heightScaleBy;
+                
+                UIImage *previewImage = [self imageByCropping2:imageCI toRect:faceRect];
+                NSLog(@"image CI : %@", imageCI);
+                NSLog(@"preview image CI : %@", previewImage);
+            
+                
+                self.imageViewPreview.image = previewImage;
+                
+//                UIView *frameFace = [[UIView alloc] initWithFrame:faceRect];
+//                frameFace.layer.borderWidth = 1;
+//                frameFace.layer.borderColor = [[[UIColor redColor] colorWithAlphaComponent:0.6] CGColor];
+//                [self.viewsFace addObject:frameFace];
+//                
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    [self.view addSubview:frameFace];
+//                });
+            }
+//            [self drawFaces:features
+//                forVideoBox:cleanAperture
+//                orientation:curDeviceOrientation];
+        });
         
         self.currentValue = currentTimestampValue + 0.25;
+        
+//        CVPixelBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+//        if (pixelBuffer == nil) {
+//            NSLog(@"pixelBuffer is nil");
+//            return;
+//        }
+//        CIImage *;; = [CIImage imageWithCVPixelBuffer:pixelBuffer];
+//        
+//        CIContext *context = [CIContext contextWithOptions:nil];
+//        CGImageRef cgimage = [context createCGImage:ciimage
+//                                           fromRect:CGRectMake(0, 0,
+//                                                               CVPixelBufferGetWidth(pixelBuffer),
+//                                                               CVPixelBufferGetHeight(pixelBuffer))];
+//        UIImage *image = [UIImage imageWithCGImage:cgimage];
+//        image = [ImageProcessing fixrotation:image];
+//        cv::Mat grayMat = [OpenCVImageProcessing cvMatFromUIImage:image];
+//        cv::Mat dst;
+//        cv::transpose(grayMat, dst);
+//        cv::flip(dst, dst, 2);
+//        
+//        NSArray<Face*> *facesDetected = [FaceDetector detectFace:dst];
+//        
+//        self.currentValue = currentTimestampValue + 0.25;
+//        
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            for (UIView *view in self.viewsFace) {
+//                [view removeFromSuperview];
+//            }
+//            
+//            [self.viewsFace removeAllObjects];
+//            for (Face *currentFace in facesDetected) {
+//                UIView *newView = [UIView new];
+//                
+//                CGFloat ratioWidth = CGRectGetWidth([UIScreen mainScreen].bounds) / 1920;
+//                CGFloat ratioHeight = CGRectGetHeight([UIScreen mainScreen].bounds) / 1080;
+//                
+////                CGRect frameView = CGRectMake(currentFace.rect.origin.x / ratioWidth, currentFace.rect.origin.y / ratioHeight, currentFace.rect.size.width, currentFace.rect.size.height);
+//                
+//                newView.frame = currentFace.rect;
+//                
+//                newView.backgroundColor = [UIColor clearColor];
+//                newView.layer.borderColor = [[[UIColor greenColor] colorWithAlphaComponent:0.5] CGColor];
+//                newView.layer.borderWidth = 3;
+//                [self.viewsFace addObject:newView];
+//                [self.view addSubview:newView];
+//            }
+//        });
         
         //        if (self.faces.count == 0) {
         //            [self.faces addObjectsFromArray:facesDetected];
@@ -223,7 +492,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         //                }
         //            }
         //        }
-        CGImageRelease(cgimage);
+//        CGImageRelease(cgimage);
     }
 }
 
@@ -289,6 +558,8 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     
     [self.collectionView registerNib:[UINib nibWithNibName:@"FaceCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"FaceCollectionViewCell"];
     self.collectionView.dataSource = self;
+    
+    self.imageViewPreview.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:0.6];
 }
 
 @end
