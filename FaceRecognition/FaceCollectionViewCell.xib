@@ -17,20 +17,33 @@
                         <rect key="frame" x="15" y="15" width="70" height="70"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#57" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZD5-k6-XJq">
+                        <rect key="frame" x="8" y="84" width="84" height="16"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="16" id="hQL-V4-cLG"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="10"/>
+                        <color key="textColor" red="1" green="1" blue="1" alpha="0.5" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <constraints>
                 <constraint firstItem="1ra-3J-28I" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="15" id="8Yo-1F-0bw"/>
+                <constraint firstItem="ZD5-k6-XJq" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="Cr9-6f-GyI"/>
                 <constraint firstAttribute="bottom" secondItem="1ra-3J-28I" secondAttribute="bottom" constant="15" id="JVU-T7-4M1"/>
                 <constraint firstItem="1ra-3J-28I" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="15" id="SL1-DL-47q"/>
                 <constraint firstAttribute="trailing" secondItem="1ra-3J-28I" secondAttribute="trailing" constant="15" id="WFZ-Cx-sEh"/>
+                <constraint firstAttribute="bottom" secondItem="ZD5-k6-XJq" secondAttribute="bottom" id="ruK-EG-pwG"/>
+                <constraint firstAttribute="trailing" secondItem="ZD5-k6-XJq" secondAttribute="trailing" constant="8" id="x92-uG-CUG"/>
             </constraints>
             <size key="customSize" width="155" height="153"/>
             <connections>
                 <outlet property="imageViewFace" destination="1ra-3J-28I" id="0uG-61-qmS"/>
+                <outlet property="labelTrackId" destination="ZD5-k6-XJq" id="iWV-rG-avf"/>
             </connections>
-            <point key="canvasLocation" x="286.5" y="353.5"/>
+            <point key="canvasLocation" x="286" y="353"/>
         </collectionViewCell>
     </objects>
 </document>
