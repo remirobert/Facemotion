@@ -376,7 +376,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    if (self.detectedFaces.count > 0) {
+    if (self.detectedFaces.count > 0  && self.bottomConstraintCollection.constant < 0) {
         self.bottomConstraintCollection.constant = 0;
         [self.effectView setNeedsUpdateConstraints];
         [UIView animateWithDuration:0.5
@@ -396,7 +396,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
                                 [self.view layoutIfNeeded];
                             } completion:^(BOOL finished) {}];
     }
-    else {
+    else if (self.detectedFaces.count == 0 && self.bottomConstraintCollection.constant > -128) {
         self.bottomConstraintCollection.constant = -128;
         self.bottomConstraintClear.constant = -136;
         [self.effectView setNeedsUpdateConstraints];
