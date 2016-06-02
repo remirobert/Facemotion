@@ -36,6 +36,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3dw-lW-JZd" customClass="GradientView">
+                                <rect key="frame" x="0.0" y="480" width="600" height="120"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="120" id="D3c-0n-iGD"/>
+                                </constraints>
+                            </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="NuT-Gi-Qdn">
                                 <rect key="frame" x="0.0" y="500" width="600" height="100"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -74,9 +81,12 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="bottomMargin" secondItem="3dw-lW-JZd" secondAttribute="bottom" id="8a7-3x-ori"/>
                             <constraint firstAttribute="trailingMargin" secondItem="NuT-Gi-Qdn" secondAttribute="trailing" constant="-20" id="Ixg-tQ-8rq"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="3dw-lW-JZd" secondAttribute="trailing" constant="-20" id="QqA-bu-Q2s"/>
                             <constraint firstItem="0jx-cR-pY7" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="50" id="VKV-IQ-uK6"/>
                             <constraint firstAttribute="trailingMargin" secondItem="0jx-cR-pY7" secondAttribute="trailing" constant="50" id="Wxo-D2-erf"/>
+                            <constraint firstItem="3dw-lW-JZd" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="hTQ-DN-QaA"/>
                             <constraint firstItem="nZj-0H-ExE" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="jVp-Cv-jj1"/>
                             <constraint firstItem="NuT-Gi-Qdn" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="kbD-9m-0RO"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="NuT-Gi-Qdn" secondAttribute="bottom" id="ovv-pq-oIg"/>
