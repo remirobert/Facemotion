@@ -15,14 +15,18 @@
     
     if (self) {
         self.trackId = trackId;
-        self.faces = [[NSMutableArray alloc] initWithCapacity:10];
+        self.faces = [[NSMutableArray alloc] initWithCapacity:MAX_NUMBER_FRAME];
     }
     return self;
 }
 
 - (void)addFrame:(UIImage *)frame {
-    if (self.faces.count >= 10) {
-        [self.faces removeObjectAtIndex:0];
+    if (!frame) {
+        return;
+    }
+    if (self.faces.count >= MAX_NUMBER_FRAME) {
+        [self.faces insertObject:frame atIndex:MAX_NUMBER_FRAME - 1];
+        return;
     }
     [self.faces addObject:frame];
 }

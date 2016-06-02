@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#define MAX_NUMBER_FRAME 5
+
 @interface DetectFace : NSObject
 @property (nonatomic, assign) NSInteger trackId;
 @property (nonatomic, strong) NSMutableArray<UIImage *> *faces;

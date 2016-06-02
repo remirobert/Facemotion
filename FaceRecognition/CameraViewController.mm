@@ -264,6 +264,10 @@
         [self.detectedFaces removeObjectAtIndex:0];
     }
     [self.detectedFaces addObject:newFace];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.collectionView reloadData];
+    });
 }
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput
@@ -315,7 +319,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
             
             [self addNewFaceFrame:feature frame:croppedImage];
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self.collectionView reloadData];
+//                [self.collectionView reloadData];
 //                self.imageViewPreview.image = croppedImage;
             });
         }
