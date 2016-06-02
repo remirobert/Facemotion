@@ -9,7 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface ImageProcessing : NSObject
-
 + (UIImage *)fixrotation:(UIImage *)image;
-
 @end

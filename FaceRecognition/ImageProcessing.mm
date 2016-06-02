@@ -11,7 +11,8 @@
 @implementation ImageProcessing
 
 + (UIImage *)fixrotation:(UIImage *)image {
-    if (image.imageOrientation == UIImageOrientationUp) return image;
+    if (image.imageOrientation == UIImageOrientationUp)
+        return image;
     CGAffineTransform transform = CGAffineTransformIdentity;
     
     switch (image.imageOrientation) {
