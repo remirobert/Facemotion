@@ -28,6 +28,7 @@
 #define MAX_DETECTED_FACES 10
 
 @interface CameraViewController () <AVCaptureMetadataOutputObjectsDelegate, AVCaptureVideoDataOutputSampleBufferDelegate, UICollectionViewDataSource>
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *indicatorLoadingSession;
 @property (weak, nonatomic) IBOutlet UIImageView *imageViewPreview;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraintCollection;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraintClear;
@@ -281,7 +282,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     if (currentTimestampValue >= self.currentValue) {
         CVPixelBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
         CIImage *ciImage = [[CIImage alloc] initWithCVPixelBuffer:pixelBuffer options:nil];
-
+        
         CIContext *context = [CIContext contextWithOptions:nil];
         CGImageRef cgimage = [context createCGImage:ciImage
                                            fromRect:CGRectMake(0, 0,
@@ -324,17 +325,23 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     }
 }
 
-- (void)initCamera {
-    [self initDevice];
-    [self initInputDevice:self.backDevice];
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     if ([self.session canAddOutput:self.videoOutput]) {
         [self.session addOutput:self.videoOutput];
     }
     if ([self.session canAddOutput:self.stillImageOutput]) {
         [self.session addOutput:self.stillImageOutput];
     }
-    [self.session startRunning];
     [self initMetadataOutput];
+    
+    [self.indicatorLoadingSession stopAnimating];
+}
+
+- (void)initCamera {
+    [self initDevice];
+    [self initInputDevice:self.backDevice];
+    [self.session startRunning];
 }
 
 - (void)checkPermissionCamera {
@@ -377,8 +384,8 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
              usingSpringWithDamping:0.6
               initialSpringVelocity:0.6
                             options:UIViewAnimationOptionCurveEaseOut animations:^{
-            [self.view layoutIfNeeded];
-        } completion:^(BOOL finished) {}];
+                                [self.view layoutIfNeeded];
+                            } completion:^(BOOL finished) {}];
         
         [UIView animateWithDuration:0.5
                               delay:0.5
@@ -387,7 +394,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
                             options:UIViewAnimationOptionCurveEaseOut animations:^{
                                 self.bottomConstraintClear.constant = 136;
                                 [self.view layoutIfNeeded];
-        } completion:^(BOOL finished) {}];
+                            } completion:^(BOOL finished) {}];
     }
     else {
         self.bottomConstraintCollection.constant = -128;
@@ -423,8 +430,6 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     
     self.bottomConstraintCollection.constant = -128;
     self.bottomConstraintClear.constant = -136;
-    [self.effectView setNeedsUpdateConstraints];
-    [self.view layoutIfNeeded];
 }
 
 - (void)didReceiveMemoryWarning {

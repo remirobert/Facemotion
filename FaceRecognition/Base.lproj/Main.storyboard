@@ -101,6 +101,13 @@
                                 </constraints>
                                 <blurEffect style="dark"/>
                             </visualEffectView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="bHe-tJ-7PI">
+                                <rect key="frame" x="282" y="281" width="37" height="37"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="37" id="21p-a2-h1S"/>
+                                    <constraint firstAttribute="width" constant="37" id="vqM-8p-Jrv"/>
+                                </constraints>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -111,6 +118,8 @@
                             <constraint firstAttribute="bottomMargin" secondItem="wTW-MB-IWb" secondAttribute="bottom" constant="136" id="Nxs-8M-aed"/>
                             <constraint firstItem="0jx-cR-pY7" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="50" id="VKV-IQ-uK6"/>
                             <constraint firstAttribute="trailingMargin" secondItem="0jx-cR-pY7" secondAttribute="trailing" constant="50" id="Wxo-D2-erf"/>
+                            <constraint firstItem="bHe-tJ-7PI" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="cYM-ju-9IE"/>
+                            <constraint firstItem="bHe-tJ-7PI" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="dQh-fc-EU3"/>
                             <constraint firstItem="nZj-0H-ExE" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="jVp-Cv-jj1"/>
                             <constraint firstItem="nZj-0H-ExE" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="qYB-S9-OjG"/>
                         </constraints>
@@ -123,6 +132,7 @@
                         <outlet property="collectionViewLayout" destination="yEy-Nj-x3I" id="E9J-bu-Ntl"/>
                         <outlet property="effectView" destination="8Zd-XI-Tpj" id="PI1-bT-FWK"/>
                         <outlet property="imageViewPreview" destination="0jx-cR-pY7" id="bEf-lF-nYL"/>
+                        <outlet property="indicatorLoadingSession" destination="bHe-tJ-7PI" id="lkO-n7-AV2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
