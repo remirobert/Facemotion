@@ -429,68 +429,6 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     
     if (currentTimestampValue >= self.currentValue) {
         
-//        CVPixelBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
-//        CFDictionaryRef attachments = CMCopyDictionaryOfAttachments(kCFAllocatorDefault, sampleBuffer, kCMAttachmentMode_ShouldPropagate);
-//        CIImage *ciimage = [[CIImage alloc] initWithCVPixelBuffer:pixelBuffer
-//                                                          options:nil];
-//        
-//        CIContext *context = [CIContext contextWithOptions:nil];
-//        CGImageRef cgimage = [context createCGImage:ciimage
-//                                           fromRect:CGRectMake(0, 0,
-//                                                               CVPixelBufferGetWidth(pixelBuffer),
-//                                                               CVPixelBufferGetHeight(pixelBuffer))];
-//        UIImage *image = [UIImage imageWithCGImage:cgimage];
-//        cv::Mat grayMat = [OpenCVImageProcessing cvMatFromUIImage:image];
-//        cv::Mat dst;
-//        cv::transpose(grayMat, dst);
-//        cv::flip(dst, dst, 2);
-//        image = [OpenCVImageProcessing UIImageFromCVMat:dst];
-//        
-//        NSArray *features = [self.faceDetector featuresInImage:ciimage
-//                                                       options:nil];
-//        
-//        CMFormatDescriptionRef fdesc = CMSampleBufferGetFormatDescription(sampleBuffer);
-//        CGRect cleanAperture = CMVideoFormatDescriptionGetCleanAperture(fdesc, false);
-//        
-//        CGSize parentFrameSize = [self.view frame].size;
-//        NSString *gravity = [self.layerPreview videoGravity];
-//        BOOL isMirrored = [self.layerPreview isMirrored];
-//        CGRect previewBox = [self videoPreviewBoxForGravity:gravity
-//                                                  frameSize:parentFrameSize
-//                                               apertureSize:cleanAperture.size];
-//
-//        
-//        NSLog(@"number faces : %d", features.count);
-//
-//        for (CIFaceFeature *feature in features) {
-//            CGRect faceRect = feature.bounds;
-//            
-//            NSLog(@"tracking id : %d", feature.trackingID);
-//            
-//            // flip preview width and height
-//            CGFloat temp = faceRect.size.width;
-//            faceRect.size.width = faceRect.size.height;
-//            faceRect.size.height = temp;
-//            temp = faceRect.origin.x;
-//            faceRect.origin.x = faceRect.origin.y;
-//            faceRect.origin.y = temp;
-//            // scale coordinates so they fit in the preview box, which may be scaled
-//            CGFloat widthScaleBy = previewBox.size.width / cleanAperture.size.height;
-//            CGFloat heightScaleBy = previewBox.size.height / cleanAperture.size.width;
-//            faceRect.size.width *= widthScaleBy;
-//            faceRect.size.height *= heightScaleBy;
-//            faceRect.origin.x *= widthScaleBy;
-//            faceRect.origin.y *= heightScaleBy;
-//            
-//            UIImage *previewImage = [self imageByCropping:image toRect:faceRect];
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                self.imageViewPreview.image = previewImage;
-//            });
-//        }
-//        
-//        
-//        CGImageRelease(cgimage);
-
         CVPixelBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
         CFDictionaryRef attachments = CMCopyDictionaryOfAttachments(kCFAllocatorDefault, sampleBuffer, kCMAttachmentMode_ShouldPropagate);
         CIImage *ciImage = [[CIImage alloc] initWithCVPixelBuffer:pixelBuffer
@@ -504,23 +442,13 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 
         UIImage *image = [UIImage imageWithCGImage:cgimage];
         
-        cv::Mat grayMat = [OpenCVImageProcessing cvMatFromUIImage:image];
-        cv::Mat dst;
-        cv::transpose(grayMat, dst);
-//        cv::flip(dst, dst, 2);
-        image = [OpenCVImageProcessing UIImageFromCVMat:dst];
+//        cv::Mat grayMat = [OpenCVImageProcessing cvMatFromUIImage:image];
+//        cv::Mat dst;
+//        cv::transpose(grayMat, dst);
+////        cv::flip(dst, dst, 2);
+//        image = [OpenCVImageProcessing UIImageFromCVMat:dst];
 
         CGImageRelease(cgimage);
-
-//
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            self.imageViewPreview.image = image;
-//        });
-        
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            self.imageViewPreview.image = [ImageProcessing fixrotation:imageCI];
-//        });
-//        
         if (attachments) {
             CFRelease(attachments);
         }
@@ -538,9 +466,6 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         NSArray *features = [self.faceDetector featuresInImage:ciImage
                                                        options:imageOptions];
         
-        // get the clean aperture
-        // the clean aperture is a rectangle that defines the portion of the encoded pixel dimensions
-        // that represents image data valid for display.
         CMFormatDescriptionRef fdesc = CMSampleBufferGetFormatDescription(sampleBuffer);
         CGRect cleanAperture = CMVideoFormatDescriptionGetCleanAperture(fdesc, false /*originIsTopLeft == false*/);
         
@@ -568,31 +493,18 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         for (CIFaceFeature *feature in features) {
             CGRect faceRect = feature.bounds;
             
-            NSLog(@"tracking id : %d", feature.trackingID);
-    
-            
-            // flip preview width and height
             CGFloat temp = faceRect.size.width;
             faceRect.size.width = faceRect.size.height;
             faceRect.size.height = temp;
             temp = faceRect.origin.x;
             faceRect.origin.x = faceRect.origin.y;
             faceRect.origin.y = temp;
-            // scale coordinates so they fit in the preview box, which may be scaled
             CGFloat widthScaleBy = previewBox.size.width / cleanAperture.size.height;
             CGFloat heightScaleBy = previewBox.size.height / cleanAperture.size.width;
             faceRect.size.width *= widthScaleBy;
             faceRect.size.height *= heightScaleBy;
             faceRect.origin.x *= widthScaleBy;
             faceRect.origin.y *= heightScaleBy;
-            
-            CGRect newBounds = CGRectMake(feature.bounds.origin.x,
-                                          image.size.height - feature.bounds.origin.y - feature.bounds.size.height,
-                                          feature.bounds.size.width,
-                                          feature.bounds.size.height);
-
-            
-//            faceRect = CGRectApplyAffineTransform(feature.bounds, transform);
             
             NSLog(@"frame face : %f %f %f %f", faceRect.origin.x, faceRect.origin.y, faceRect.size.width, faceRect.size.height);
             NSLog(@"frame face : %f %f %f %f", feature.bounds.origin.x, feature.bounds.origin.y, feature.bounds.size.width, feature.bounds.size.height);
@@ -603,15 +515,12 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.view addSubview:frame];
                 
-                CGImageRef imageRef = CGImageCreateWithImageInRect(image.CGImage, CGRectMake(feature.bounds.origin.y, feature.bounds.origin.x, feature.bounds.size.width, feature.bounds.size.height));
+                CGImageRef imageRef = CGImageCreateWithImageInRect(image.CGImage,
+                                                                   CGRectMake(feature.bounds.origin.x,
+                                                                              image.size.height - (feature.bounds.size.height + feature.bounds.origin.y),
+                                                                              feature.bounds.size.width,
+                                                                              feature.bounds.size.height));
                 UIImage *croppedImage = [UIImage imageWithCGImage:imageRef];
-                
-//                cv::Mat grayMat2 = [OpenCVImageProcessing cvMatFromUIImage:croppedImage];
-//                cv::Mat dst2;
-//                cv::transpose(grayMat2, dst2);
-//                cv::flip(dst2, dst2, 2);
-//                croppedImage = [OpenCVImageProcessing UIImageFromCVMat:dst2];
-
                 CGImageRelease(imageRef);
                 
 //                cv::Mat croppedImageGray = cv::Mat(dst, cv::Rect(feature.bounds.origin.x, feature.bounds.origin.y, feature.bounds.size.width, feature.bounds.size.height)).clone();
@@ -619,98 +528,8 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
                 self.imageViewPreview.image = croppedImage;
             });
             [self.viewsFace addObject:frame];
-            
-            
-            
-//            NSLog(@"image : %@", image);
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                self.imageViewPreview.image = image;
-//            });
-//            
-//            UIImage *previewImage = [self imageByCropping:imageCI toRect:faceRect];
-//            NSLog(@"frame original image : %f %f %f %f", faceRect.origin.x, faceRect.origin.y, faceRect.size.width, faceRect.size.height);
-//            NSLog(@"size original image : %f %f", imageCI.size.width, imageCI.size.height);
-//            NSLog(@"image CI : %@", imageCI);
-//            NSLog(@"preview image CI : %@", previewImage);
-            
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                if (previewImage) {
-//                }
-//            });
         }
-//                    [self drawFaces:features
-//                        forVideoBox:cleanAperture
-//                        orientation:curDeviceOrientation];
-        
         self.currentValue = currentTimestampValue + 0.25;
-        
-        //        CVPixelBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
-        //        if (pixelBuffer == nil) {
-        //            NSLog(@"pixelBuffer is nil");
-        //            return;
-        //        }
-        //        CIImage *;; = [CIImage imageWithCVPixelBuffer:pixelBuffer];
-        //
-        //        CIContext *context = [CIContext contextWithOptions:nil];
-        //        CGImageRef cgimage = [context createCGImage:ciimage
-        //                                           fromRect:CGRectMake(0, 0,
-        //                                                               CVPixelBufferGetWidth(pixelBuffer),
-        //                                                               CVPixelBufferGetHeight(pixelBuffer))];
-        //        UIImage *image = [UIImage imageWithCGImage:cgimage];
-        //        image = [ImageProcessing fixrotation:image];
-        //        cv::Mat grayMat = [OpenCVImageProcessing cvMatFromUIImage:image];
-        //        cv::Mat dst;
-        //        cv::transpose(grayMat, dst);
-        //        cv::flip(dst, dst, 2);
-        //
-        //        NSArray<Face*> *facesDetected = [FaceDetector detectFace:dst];
-        //
-        //        self.currentValue = currentTimestampValue + 0.25;
-        //
-        //        dispatch_async(dispatch_get_main_queue(), ^{
-        //            for (UIView *view in self.viewsFace) {
-        //                [view removeFromSuperview];
-        //            }
-        //
-        //            [self.viewsFace removeAllObjects];
-        //            for (Face *currentFace in facesDetected) {
-        //                UIView *newView = [UIView new];
-        //
-        //                CGFloat ratioWidth = CGRectGetWidth([UIScreen mainScreen].bounds) / 1920;
-        //                CGFloat ratioHeight = CGRectGetHeight([UIScreen mainScreen].bounds) / 1080;
-        //
-        ////                CGRect frameView = CGRectMake(currentFace.rect.origin.x / ratioWidth, currentFace.rect.origin.y / ratioHeight, currentFace.rect.size.width, currentFace.rect.size.height);
-        //
-        //                newView.frame = currentFace.rect;
-        //
-        //                newView.backgroundColor = [UIColor clearColor];
-        //                newView.layer.borderColor = [[[UIColor greenColor] colorWithAlphaComponent:0.5] CGColor];
-        //                newView.layer.borderWidth = 3;
-        //                [self.viewsFace addObject:newView];
-        //                [self.view addSubview:newView];
-        //            }
-        //        });
-        
-        //        if (self.faces.count == 0) {
-        //            [self.faces addObjectsFromArray:facesDetected];
-        //            dispatch_async(dispatch_get_main_queue(), ^{
-        //                [self.collectionView reloadData];
-        //            });
-        //        }
-        //        else {
-        //            NSLog(@"🍪 number stack faces : %lu", (unsigned long)self.faces.count);
-        //            if (facesDetected.firstObject) {
-        //                if (![FaceRecognition trainingFace:[self.faces allObjects] withFace:facesDetected.firstObject]) {
-        //                    NSLog(@"🍋 add new unknow face !!");
-        //                    [self.faces addObject:facesDetected.firstObject];
-        //
-        //                    dispatch_async(dispatch_get_main_queue(), ^{
-        //                        [self.collectionView reloadData];
-        //                    });
-        //                }
-        //            }
-        //        }
-        //        CGImageRelease(cgimage);
     }
 }
 
