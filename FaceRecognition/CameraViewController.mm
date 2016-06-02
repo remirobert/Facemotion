@@ -148,14 +148,7 @@
 }
 
 - (void)viewDidLayoutSubviews {
-    [self.view.layer addSublayer:self.layerPreview];
-    [self.view bringSubviewToFront:self.collectionView];
-    [self.view bringSubviewToFront:self.buttonFlipCamera];
-    [self.view bringSubviewToFront:self.imageViewPreview];
-    
-    for (UIView *view in self.viewsFace) {
-        [self.view bringSubviewToFront:view];
-    }
+    [self.view.layer insertSublayer:self.layerPreview atIndex:0];
 }
 
 - (CGRect)videoPreviewBoxForGravity:(NSString *)gravity
