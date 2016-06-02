@@ -15,7 +15,7 @@
     gradient.frame = self.bounds;
     gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor clearColor] CGColor],
                        (id)[[[UIColor blackColor] colorWithAlphaComponent:0.5] CGColor],
-                       (id)[[UIColor blackColor] CGColor],
+                       (id)[[[UIColor blackColor] colorWithAlphaComponent:0.8] CGColor],
                        (id)[[UIColor blackColor] CGColor], nil];
     [self.layer insertSublayer:gradient atIndex:0];
 }

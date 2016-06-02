@@ -19,6 +19,7 @@
 #import "FaceRecognition.h"
 #import "FaceCollectionViewCell.h"
 #import "DetectFace.h"
+#import "GradientView.h"
 
 #include <iostream>
 #include <fstream>
@@ -28,6 +29,9 @@
 
 @interface CameraViewController () <AVCaptureMetadataOutputObjectsDelegate, AVCaptureVideoDataOutputSampleBufferDelegate, UICollectionViewDataSource>
 @property (weak, nonatomic) IBOutlet UIImageView *imageViewPreview;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraintCollection;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraintClear;
+@property (weak, nonatomic) IBOutlet UIVisualEffectView *effectView;
 @property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *collectionViewLayout;
 @property (weak, nonatomic) IBOutlet UIButton *buttonFlipCamera;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
@@ -250,6 +254,11 @@
             return;
         }
     }
+    
+    if (!feature.hasMouthPosition || !feature.hasLeftEyePosition || !feature.hasRightEyePosition) {
+        return;
+    }
+    
     DetectFace *newFace = [[DetectFace alloc] initWithTrackId:feature.trackingID];
     [newFace addFrame:frameImage];
     
@@ -309,12 +318,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
                                                                           feature.bounds.size.height));
             UIImage *croppedImage = [UIImage imageWithCGImage:imageRef];
             CGImageRelease(imageRef);
-            
             [self addNewFaceFrame:feature frame:croppedImage];
-            dispatch_async(dispatch_get_main_queue(), ^{
-//                [self.collectionView reloadData];
-//                self.imageViewPreview.image = croppedImage;
-            });
         }
         self.currentValue = currentTimestampValue + 0.50;
     }
@@ -358,7 +362,41 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     
 }
 
+- (IBAction)clearFaces:(id)sender {
+    NSLog(@"clear call");
+    [self.detectedFaces removeAllObjects];
+    [self.collectionView reloadData];
+}
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    if (self.detectedFaces.count > 0) {
+        self.bottomConstraintCollection.constant = 0;
+        [self.effectView setNeedsUpdateConstraints];
+        [UIView animateWithDuration:0.5
+                              delay:0
+             usingSpringWithDamping:0.6
+              initialSpringVelocity:0.6
+                            options:UIViewAnimationOptionCurveEaseOut animations:^{
+            [self.view layoutIfNeeded];
+        } completion:^(BOOL finished) {}];
+        
+        [UIView animateWithDuration:0.5
+                              delay:0.5
+             usingSpringWithDamping:0.6
+              initialSpringVelocity:0.6
+                            options:UIViewAnimationOptionCurveEaseOut animations:^{
+                                self.bottomConstraintClear.constant = 136;
+                                [self.view layoutIfNeeded];
+        } completion:^(BOOL finished) {}];
+    }
+    else {
+        self.bottomConstraintCollection.constant = -128;
+        self.bottomConstraintClear.constant = -136;
+        [self.effectView setNeedsUpdateConstraints];
+        [UIView animateWithDuration:0.5 animations:^{
+            [self.view layoutIfNeeded];
+        }];
+    }
     return self.detectedFaces.count;
 }
 
@@ -383,8 +421,10 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     [self.collectionView registerNib:[UINib nibWithNibName:@"FaceCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"FaceCollectionViewCell"];
     self.collectionView.dataSource = self;
     
-//    self.imageViewPreview.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:0.6];
-//    self.imageViewPreview.layer.masksToBounds = true;
+    self.bottomConstraintCollection.constant = -128;
+    self.bottomConstraintClear.constant = -136;
+    [self.effectView setNeedsUpdateConstraints];
+    [self.view layoutIfNeeded];
 }
 
 - (void)didReceiveMemoryWarning {
