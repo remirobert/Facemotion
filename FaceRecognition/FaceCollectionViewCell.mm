@@ -24,8 +24,11 @@
     self.imageViewFace.image = nil;
 }
 
-- (void)configure:(Face *)face {
-    self.imageViewFace.image = face.faceImage;
+- (void)configure:(DetectFace *)face {
+    UIImage *faceFrame = [face.faces firstObject];
+    if (faceFrame) {
+        self.imageViewFace.image = faceFrame;
+    }
 }
 
 @end

@@ -18,10 +18,13 @@
 #import "FaceDetector.h"
 #import "FaceRecognition.h"
 #import "FaceCollectionViewCell.h"
+#import "DetectFace.h"
 
 #include <iostream>
 #include <fstream>
 #include <sstream>
+
+#define MAX_DETECTED_FACES 10
 
 @interface CameraViewController () <AVCaptureMetadataOutputObjectsDelegate, AVCaptureVideoDataOutputSampleBufferDelegate, UICollectionViewDataSource>
 @property (weak, nonatomic) IBOutlet UIImageView *imageViewPreview;
@@ -37,9 +40,9 @@
 @property (nonatomic, strong) AVCaptureStillImageOutput *stillImageOutput;
 @property (nonatomic, strong) AVCaptureVideoPreviewLayer *layerPreview;
 @property (nonatomic, assign) float currentValue;
-@property (nonatomic, strong) NSMutableSet<Face *> *faces;
 @property (nonatomic, strong) NSMutableArray<UIView *> *viewsFace;
 @property (nonatomic, strong) CIDetector *faceDetector;
+@property (nonatomic, strong) NSMutableArray<DetectFace *> *detectedFaces;
 @end
 
 @implementation CameraViewController
@@ -60,11 +63,11 @@
     return _viewsFace;
 }
 
-- (NSMutableSet *)faces {
-    if (!_faces) {
-        _faces = [NSMutableSet new];
+- (NSMutableArray *)detectedFaces {
+    if (!_detectedFaces) {
+        _detectedFaces = [[NSMutableArray alloc] initWithCapacity:MAX_TRAILER_SIZE];
     }
-    return _faces;
+    return _detectedFaces;
 }
 
 - (AVCaptureSession *)session {
@@ -225,6 +228,44 @@
     return faceRect;
 }
 
+- (void)cleanDetectedFaces:(NSArray *)features {
+    [self.detectedFaces enumerateObjectsUsingBlock:^(DetectFace * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        BOOL detected = false;
+        for (CIFaceFeature *feature in features) {
+            if (feature.trackingID == obj.trackId) {
+                detected = true;
+                break;
+            }
+        }
+        if (!detected) {
+            [self.detectedFaces removeObject:obj];
+        }
+    }];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.collectionView reloadData];
+    });
+}
+
+- (void)addNewFaceFrame:(CIFaceFeature *)feature frame:(UIImage *)frameImage {
+    if (![feature hasTrackingID]) {
+        return;
+    }
+    for (DetectFace *detectedFace in self.detectedFaces) {
+        if (detectedFace.trackId == feature.trackingID) {
+            [detectedFace addFrame:frameImage];
+            return;
+        }
+    }
+    DetectFace *newFace = [[DetectFace alloc] initWithTrackId:feature.trackingID];
+    [newFace addFrame:frameImage];
+    
+    if (self.detectedFaces.count >= MAX_TRAILER_SIZE) {
+        [self.detectedFaces removeObjectAtIndex:0];
+    }
+    [self.detectedFaces addObject:newFace];
+}
+
 - (void)captureOutput:(AVCaptureOutput *)captureOutput
 didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
        fromConnection:(AVCaptureConnection *)connection {
@@ -244,6 +285,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         CGImageRelease(cgimage);
         
         NSArray *features = [self featuresForImage:ciImage];
+        [self cleanDetectedFaces:features];
         
         CMFormatDescriptionRef fdesc = CMSampleBufferGetFormatDescription(sampleBuffer);
         CGRect cleanAperture = CMVideoFormatDescriptionGetCleanAperture(fdesc, false);
@@ -258,21 +300,26 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         transform = CGAffineTransformTranslate(transform,
                                                0, -self.view.bounds.size.height);
         
+        
+        NSLog(@"🤖 number detected frames : %lu", (unsigned long)self.detectedFaces.count);
         for (CIFaceFeature *feature in features) {
             CGRect faceRect = [self frameForFeature:feature previewBox:previewBox cleanAperture:cleanAperture];
             
+            CGImageRef imageRef = CGImageCreateWithImageInRect(image.CGImage,
+                                                               CGRectMake(feature.bounds.origin.x,
+                                                                          image.size.height - (feature.bounds.size.height + feature.bounds.origin.y),
+                                                                          feature.bounds.size.width,
+                                                                          feature.bounds.size.height));
+            UIImage *croppedImage = [UIImage imageWithCGImage:imageRef];
+            CGImageRelease(imageRef);
+            
+            [self addNewFaceFrame:feature frame:croppedImage];
             dispatch_async(dispatch_get_main_queue(), ^{
-                CGImageRef imageRef = CGImageCreateWithImageInRect(image.CGImage,
-                                                                   CGRectMake(feature.bounds.origin.x,
-                                                                              image.size.height - (feature.bounds.size.height + feature.bounds.origin.y),
-                                                                              feature.bounds.size.width,
-                                                                              feature.bounds.size.height));
-                UIImage *croppedImage = [UIImage imageWithCGImage:imageRef];
-                CGImageRelease(imageRef);
-                self.imageViewPreview.image = croppedImage;
+                [self.collectionView reloadData];
+//                self.imageViewPreview.image = croppedImage;
             });
         }
-        self.currentValue = currentTimestampValue + 0.25;
+        self.currentValue = currentTimestampValue + 0.50;
     }
 }
 
@@ -315,12 +362,12 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.faces.count;
+    return self.detectedFaces.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     FaceCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"FaceCollectionViewCell" forIndexPath:indexPath];
-    Face *currentFace = [[self.faces allObjects] objectAtIndex:indexPath.row];
+    DetectFace *currentFace = [self.detectedFaces objectAtIndex:indexPath.row];
     [cell configure:currentFace];
     return cell;
 }
@@ -339,8 +386,13 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     [self.collectionView registerNib:[UINib nibWithNibName:@"FaceCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"FaceCollectionViewCell"];
     self.collectionView.dataSource = self;
     
-    self.imageViewPreview.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:0.6];
-    self.imageViewPreview.layer.masksToBounds = true;
+//    self.imageViewPreview.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:0.6];
+//    self.imageViewPreview.layer.masksToBounds = true;
+}
+
+- (void)didReceiveMemoryWarning {
+    [self.detectedFaces removeAllObjects];
+    [self.collectionView reloadData];
 }
 
 @end

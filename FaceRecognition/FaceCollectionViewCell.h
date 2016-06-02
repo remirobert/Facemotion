@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Face.h"
+#import "DetectFace.h"
 
 @interface FaceCollectionViewCell : UICollectionViewCell
-- (void)configure:(Face *)face;
+- (void)configure:(DetectFace *)face;
 @end
