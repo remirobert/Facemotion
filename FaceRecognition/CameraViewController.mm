@@ -149,205 +149,37 @@
     [self.view bringSubviewToFront:self.buttonFlipCamera];
     [self.view bringSubviewToFront:self.imageViewPreview];
     
-    
     for (UIView *view in self.viewsFace) {
         [self.view bringSubviewToFront:view];
     }
 }
 
-- (UIImage*)imageByCropping2:(UIImage *)imageToCrop toRect:(CGRect)rect
-
-{
-    
-    //create a context to do our clipping in
-    
-    UIGraphicsBeginImageContext(rect.size);
-    
-    CGContextRef currentContext = UIGraphicsGetCurrentContext();
-    
-    //create a rect with the size we want to crop the image to
-    //the X and Y here are zero so we start at the beginning of our
-    //newly created context
-    
-    CGRect clippedRect = CGRectMake(0, 0, rect.size.width, rect.size.height);
-    
-    CGContextClipToRect( currentContext, clippedRect);
-    
-    //create a rect equivalent to the full size of the image
-    //offset the rect by the X and Y we want to start the crop
-    //from in order to cut off anything before them
-    
-    CGRect drawRect = CGRectMake(rect.origin.x * -1,
-                                 rect.origin.y * -1,
-                                 imageToCrop.size.width,
-                                 imageToCrop.size.height);
-    
-    //draw the image to our clipped context using our offset rect
-    
-    CGContextDrawImage(currentContext, drawRect, imageToCrop.CGImage);
-    
-    //pull the image from our cropped context
-    
-    UIImage *cropped = UIGraphicsGetImageFromCurrentImageContext();
-    
-    //pop the context to get back to the default
-    
-    UIGraphicsEndImageContext();
-    
-    //Note: this is autoreleased
-    
-    return cropped;
-    
-}
-
-static inline double radians (double degrees) {return degrees * M_PI/180;}
-UIImage* rotate(UIImage* src, UIImageOrientation orientation)
-{
-    UIGraphicsBeginImageContext(src.size);
-    
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    if (orientation == UIImageOrientationRight) {
-        CGContextRotateCTM (context, radians(90));
-    } else if (orientation == UIImageOrientationLeft) {
-        CGContextRotateCTM (context, radians(-90));
-    } else if (orientation == UIImageOrientationDown) {
-        // NOTHING
-    } else if (orientation == UIImageOrientationUp) {
-        CGContextRotateCTM (context, radians(90));
-    }
-    
-    [src drawAtPoint:CGPointMake(0, 0)];
-    
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return image;
-}
-
-- (UIImage *)imageByCropping:(UIImage *)imageToCrop toRect:(CGRect)rect {
-    cv::Mat frame = [OpenCVImageProcessing cvMatFromUIImage:[ImageProcessing fixrotation:imageToCrop]];
-
-    cv::Mat croppedImage = cv::Mat(frame, cv::Rect(rect.origin.x, rect.origin.x, rect.size.width, rect.size.height)).clone();
-    return [OpenCVImageProcessing UIImageFromCVMat:croppedImage];
-}
-
-+ (UIImage *) UIViewToImage:(UIView *)view
-{
-    // Create a graphics context with the target size
-    // On iOS 4 and later, use UIGraphicsBeginImageContextWithOptions to take the scale into consideration
-    // On iOS prior to 4, fall back to use UIGraphicsBeginImageContext
-    //
-    // CGSize imageSize = [[UIScreen mainScreen] bounds].size;
-    CGSize imageSize = CGSizeMake( (CGFloat)480.0, (CGFloat)640.0 );        // camera image size
-    
-    if (NULL != UIGraphicsBeginImageContextWithOptions)
-        UIGraphicsBeginImageContextWithOptions(imageSize, NO, 0);
-    else
-        UIGraphicsBeginImageContext(imageSize);
-    
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    // Start with the view...
-    //
-    CGContextSaveGState(context);
-    CGContextTranslateCTM(context, [view center].x, [view center].y);
-    CGContextConcatCTM(context, [view transform]);
-    CGContextTranslateCTM(context,-[view bounds].size.width * [[view layer] anchorPoint].x,-[view bounds].size.height * [[view layer] anchorPoint].y);
-    [[view layer] renderInContext:context];
-    CGContextRestoreGState(context);
-    
-    // ...then repeat for every subview from back to front
-    //
-    for (UIView *subView in [view subviews])
-    {
-        if ( [subView respondsToSelector:@selector(screen)] )
-            if ( [(UIWindow *)subView screen] == [UIScreen mainScreen] )
-                continue;
-        
-        CGContextSaveGState(context);
-        CGContextTranslateCTM(context, [subView center].x, [subView center].y);
-        CGContextConcatCTM(context, [subView transform]);
-        CGContextTranslateCTM(context,-[subView bounds].size.width * [[subView layer] anchorPoint].x,-[subView bounds].size.height * [[subView layer] anchorPoint].y);
-        [[subView layer] renderInContext:context];
-        CGContextRestoreGState(context);
-    }
-    
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();   // autoreleased image
-    
-    UIGraphicsEndImageContext();
-    
-    return image;
-}
-
-- (void)captureOutput:(AVCaptureOutput *)captureOutput
-didOutputMetadataObjects:(NSArray *)metadataObjects
-       fromConnection:(AVCaptureConnection *)connection {
-    
-    
-    return;
-    
-    for (UIView *view in self.viewsFace) {
-        [view removeFromSuperview];
-    }
-    [self.viewsFace removeAllObjects];
-    for (AVMetadataObject *object in metadataObjects) {
-        if ([object.type isEqualToString:AVMetadataObjectTypeFace]) {
-            CGRect frameFace = object.bounds;
-            CGSize sizeScreen = CGSizeMake(1920, 1080);
-            
-            NSLog(@"size face bounds : %f %f %f %f", frameFace.origin.x * CGRectGetWidth([UIScreen mainScreen].bounds), frameFace.origin.y * CGRectGetHeight([UIScreen mainScreen].bounds), frameFace.size.width, frameFace.size.height);
-            
-            CGRect rectCalculated = CGRectMake(frameFace.origin.x * CGRectGetWidth([UIScreen mainScreen].bounds), frameFace.origin.y * CGRectGetHeight([UIScreen mainScreen].bounds), 100, 100);
-            
-            UIView *newView = [[UIView alloc] initWithFrame:rectCalculated];
-            newView.layer.borderColor = [[[UIColor redColor] colorWithAlphaComponent:0.5] CGColor];
-            newView.layer.borderWidth = 1;
-            newView.backgroundColor = [UIColor clearColor];
-            [self.viewsFace addObject:newView];
-            [self.view addSubview:newView];
-        }
-    }
-}
-
-- (NSNumber *) exifOrientation: (UIDeviceOrientation) orientation
-{
+- (NSNumber *) exifOrientation:(UIDeviceOrientation)orientation {
     int exifOrientation;
-    /* kCGImagePropertyOrientation values
-     The intended display orientation of the image. If present, this key is a CFNumber value with the same value as defined
-     by the TIFF and EXIF specifications -- see enumeration of integer constants.
-     The value specified where the origin (0,0) of the image is located. If not present, a value of 1 is assumed.
-     
-     used when calling featuresInImage: options: The value for this key is an integer NSNumber from 1..8 as found in kCGImagePropertyOrientation.
-     If present, the detection will be done based on that orientation but the coordinates in the returned features will still be based on those of the image. */
-    
     enum {
-        PHOTOS_EXIF_0ROW_TOP_0COL_LEFT			= 1, //   1  =  0th row is at the top, and 0th column is on the left (THE DEFAULT).
-        PHOTOS_EXIF_0ROW_TOP_0COL_RIGHT			= 2, //   2  =  0th row is at the top, and 0th column is on the right.
-        PHOTOS_EXIF_0ROW_BOTTOM_0COL_RIGHT      = 3, //   3  =  0th row is at the bottom, and 0th column is on the right.
-        PHOTOS_EXIF_0ROW_BOTTOM_0COL_LEFT       = 4, //   4  =  0th row is at the bottom, and 0th column is on the left.
-        PHOTOS_EXIF_0ROW_LEFT_0COL_TOP          = 5, //   5  =  0th row is on the left, and 0th column is the top.
-        PHOTOS_EXIF_0ROW_RIGHT_0COL_TOP         = 6, //   6  =  0th row is on the right, and 0th column is the top.
-        PHOTOS_EXIF_0ROW_RIGHT_0COL_BOTTOM      = 7, //   7  =  0th row is on the right, and 0th column is the bottom.
-        PHOTOS_EXIF_0ROW_LEFT_0COL_BOTTOM       = 8  //   8  =  0th row is on the left, and 0th column is the bottom.
+        PHOTOS_EXIF_0ROW_TOP_0COL_LEFT			= 1,
+        PHOTOS_EXIF_0ROW_TOP_0COL_RIGHT			= 2,
+        PHOTOS_EXIF_0ROW_BOTTOM_0COL_RIGHT      = 3,
+        PHOTOS_EXIF_0ROW_BOTTOM_0COL_LEFT       = 4,
+        PHOTOS_EXIF_0ROW_LEFT_0COL_TOP          = 5,
+        PHOTOS_EXIF_0ROW_RIGHT_0COL_TOP         = 6,
+        PHOTOS_EXIF_0ROW_RIGHT_0COL_BOTTOM      = 7,
+        PHOTOS_EXIF_0ROW_LEFT_0COL_BOTTOM       = 8
     };
-    
     switch (orientation) {
-        case UIDeviceOrientationPortraitUpsideDown:  // Device oriented vertically, home button on the top
+        case UIDeviceOrientationPortraitUpsideDown:
             exifOrientation = PHOTOS_EXIF_0ROW_LEFT_0COL_BOTTOM;
             break;
-        case UIDeviceOrientationLandscapeLeft:       // Device oriented horizontally, home button on the right
-                                                     //            if (self.isUsingFrontFacingCamera)
-                                                     //                exifOrientation = PHOTOS_EXIF_0ROW_BOTTOM_0COL_RIGHT;
-                                                     //            else
+        
+        case UIDeviceOrientationLandscapeLeft:
             exifOrientation = PHOTOS_EXIF_0ROW_TOP_0COL_LEFT;
             break;
-        case UIDeviceOrientationLandscapeRight:      // Device oriented horizontally, home button on the left
-                                                     //            if (self.isUsingFrontFacingCamera)
-                                                     //                exifOrientation = PHOTOS_EXIF_0ROW_TOP_0COL_LEFT;
-                                                     //            else
+        
+        case UIDeviceOrientationLandscapeRight:
             exifOrientation = PHOTOS_EXIF_0ROW_BOTTOM_0COL_RIGHT;
             break;
-        case UIDeviceOrientationPortrait:            // Device oriented vertically, home button on the bottom
+
+        case UIDeviceOrientationPortrait:
         default:
             exifOrientation = PHOTOS_EXIF_0ROW_RIGHT_0COL_TOP;
             break;
@@ -391,7 +223,7 @@ didOutputMetadataObjects:(NSArray *)metadataObjects
     else
         videoBox.origin.x = (size.width - frameSize.width) / 2;
     
-    if ( size.height < frameSize.height )
+    if (size.height < frameSize.height )
         videoBox.origin.y = (frameSize.height - size.height) / 2;
     else
         videoBox.origin.y = (size.height - frameSize.height) / 2;
@@ -399,26 +231,31 @@ didOutputMetadataObjects:(NSArray *)metadataObjects
     return videoBox;
 }
 
-- (CGImageRef) imageFromSampleBuffer:(CMSampleBufferRef) sampleBuffer // Create a CGImageRef from sample buffer data
-{
-    CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
-    CVPixelBufferLockBaseAddress(imageBuffer,0);        // Lock the image buffer
+- (NSArray *)featuresForImage:(CIImage *)image {
+    UIDeviceOrientation curDeviceOrientation = [[UIDevice currentDevice] orientation];
+    NSDictionary *imageOptions = [NSDictionary dictionaryWithObject:[self exifOrientation:curDeviceOrientation]
+                                                             forKey:CIDetectorImageOrientation];
+    return [self.faceDetector featuresInImage:image options:imageOptions];
+}
+
+- (CGRect)frameForFeature:(CIFaceFeature *)feature
+               previewBox:(CGRect)previewBox
+            cleanAperture:(CGRect)cleanAperture {
     
-    uint8_t *baseAddress = (uint8_t *)CVPixelBufferGetBaseAddressOfPlane(imageBuffer, 0);   // Get information of the image
-    size_t bytesPerRow = CVPixelBufferGetBytesPerRow(imageBuffer);
-    size_t width = CVPixelBufferGetWidth(imageBuffer);
-    size_t height = CVPixelBufferGetHeight(imageBuffer);
-    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    
-    CGContextRef newContext = CGBitmapContextCreate(baseAddress, width, height, 8, bytesPerRow, colorSpace, kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedFirst);
-    CGImageRef newImage = CGBitmapContextCreateImage(newContext);
-    CGContextRelease(newContext);
-    
-    CGColorSpaceRelease(colorSpace);
-    CVPixelBufferUnlockBaseAddress(imageBuffer,0);
-    /* CVBufferRelease(imageBuffer); */  // do not call this!
-    
-    return newImage;
+    CGRect faceRect = feature.bounds;
+    CGFloat temp = faceRect.size.width;
+    faceRect.size.width = faceRect.size.height;
+    faceRect.size.height = temp;
+    temp = faceRect.origin.x;
+    faceRect.origin.x = faceRect.origin.y;
+    faceRect.origin.y = temp;
+    CGFloat widthScaleBy = previewBox.size.width / cleanAperture.size.height;
+    CGFloat heightScaleBy = previewBox.size.height / cleanAperture.size.width;
+    faceRect.size.width *= widthScaleBy;
+    faceRect.size.height *= heightScaleBy;
+    faceRect.origin.x *= widthScaleBy;
+    faceRect.origin.y *= heightScaleBy;
+    return faceRect;
 }
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput
@@ -428,93 +265,36 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     float currentTimestampValue = (float)timestamp.value / timestamp.timescale;
     
     if (currentTimestampValue >= self.currentValue) {
-        
         CVPixelBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
-        CFDictionaryRef attachments = CMCopyDictionaryOfAttachments(kCFAllocatorDefault, sampleBuffer, kCMAttachmentMode_ShouldPropagate);
-        CIImage *ciImage = [[CIImage alloc] initWithCVPixelBuffer:pixelBuffer
-                                                          options:nil];
-        
+        CIImage *ciImage = [[CIImage alloc] initWithCVPixelBuffer:pixelBuffer options:nil];
+
         CIContext *context = [CIContext contextWithOptions:nil];
         CGImageRef cgimage = [context createCGImage:ciImage
                                            fromRect:CGRectMake(0, 0,
                                                                CVPixelBufferGetWidth(pixelBuffer),
                                                                CVPixelBufferGetHeight(pixelBuffer))];
-
         UIImage *image = [UIImage imageWithCGImage:cgimage];
-        
-//        cv::Mat grayMat = [OpenCVImageProcessing cvMatFromUIImage:image];
-//        cv::Mat dst;
-//        cv::transpose(grayMat, dst);
-////        cv::flip(dst, dst, 2);
-//        image = [OpenCVImageProcessing UIImageFromCVMat:dst];
-
         CGImageRelease(cgimage);
-        if (attachments) {
-            CFRelease(attachments);
-        }
         
-        // make sure your device orientation is not locked.
-        UIDeviceOrientation curDeviceOrientation = [[UIDevice currentDevice] orientation];
-        
-        NSDictionary *imageOptions = nil;
-        
-        imageOptions = [NSDictionary dictionaryWithObject:[self exifOrientation:curDeviceOrientation]
-                                                   forKey:CIDetectorImageOrientation];
-        
-        
-        NSLog(@"CI detector : %@", ciImage);
-        NSArray *features = [self.faceDetector featuresInImage:ciImage
-                                                       options:imageOptions];
+        NSArray *features = [self featuresForImage:ciImage];
         
         CMFormatDescriptionRef fdesc = CMSampleBufferGetFormatDescription(sampleBuffer);
-        CGRect cleanAperture = CMVideoFormatDescriptionGetCleanAperture(fdesc, false /*originIsTopLeft == false*/);
-        
-        NSLog(@"number faces detected : %lu", (unsigned long)features.count);
-//        
-//        for (UIView *view in self.viewsFace) {
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                [view removeFromSuperview];
-//            });
-//        }
+        CGRect cleanAperture = CMVideoFormatDescriptionGetCleanAperture(fdesc, false);
         
         CGSize parentFrameSize = [self.view frame].size;
         NSString *gravity = [self.layerPreview videoGravity];
-        BOOL isMirrored = [self.layerPreview isMirrored];
         CGRect previewBox = [self videoPreviewBoxForGravity:gravity
                                                   frameSize:parentFrameSize
                                                apertureSize:cleanAperture.size];
-        
-        [self.viewsFace removeAllObjects];
         
         CGAffineTransform transform = CGAffineTransformMakeScale(1, -1);
         transform = CGAffineTransformTranslate(transform,
                                                0, -self.view.bounds.size.height);
         
         for (CIFaceFeature *feature in features) {
-            CGRect faceRect = feature.bounds;
-            
-            CGFloat temp = faceRect.size.width;
-            faceRect.size.width = faceRect.size.height;
-            faceRect.size.height = temp;
-            temp = faceRect.origin.x;
-            faceRect.origin.x = faceRect.origin.y;
-            faceRect.origin.y = temp;
-            CGFloat widthScaleBy = previewBox.size.width / cleanAperture.size.height;
-            CGFloat heightScaleBy = previewBox.size.height / cleanAperture.size.width;
-            faceRect.size.width *= widthScaleBy;
-            faceRect.size.height *= heightScaleBy;
-            faceRect.origin.x *= widthScaleBy;
-            faceRect.origin.y *= heightScaleBy;
-            
-            NSLog(@"frame face : %f %f %f %f", faceRect.origin.x, faceRect.origin.y, faceRect.size.width, faceRect.size.height);
-            NSLog(@"frame face : %f %f %f %f", feature.bounds.origin.x, feature.bounds.origin.y, feature.bounds.size.width, feature.bounds.size.height);
-            
-            UIView *frame = [[UIView alloc] initWithFrame:faceRect];
-            frame.backgroundColor = [[UIColor greenColor] colorWithAlphaComponent:0.6];
+            CGRect faceRect = [self frameForFeature:feature previewBox:previewBox cleanAperture:cleanAperture];
             
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self.view addSubview:frame];
-                
                 CGImageRef imageRef = CGImageCreateWithImageInRect(image.CGImage,
                                                                    CGRectMake(feature.bounds.origin.x,
                                                                               image.size.height - (feature.bounds.size.height + feature.bounds.origin.y),
@@ -522,12 +302,8 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
                                                                               feature.bounds.size.height));
                 UIImage *croppedImage = [UIImage imageWithCGImage:imageRef];
                 CGImageRelease(imageRef);
-                
-//                cv::Mat croppedImageGray = cv::Mat(dst, cv::Rect(feature.bounds.origin.x, feature.bounds.origin.y, feature.bounds.size.width, feature.bounds.size.height)).clone();
-//                croppedImage = [OpenCVImageProcessing UIImageFromCVMat:croppedImageGray];
                 self.imageViewPreview.image = croppedImage;
             });
-            [self.viewsFace addObject:frame];
         }
         self.currentValue = currentTimestampValue + 0.25;
     }
