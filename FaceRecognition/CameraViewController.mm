@@ -27,9 +27,9 @@
 
 #define MAX_DETECTED_FACES 10
 
-@interface CameraViewController () <AVCaptureMetadataOutputObjectsDelegate, AVCaptureVideoDataOutputSampleBufferDelegate, UICollectionViewDataSource>
+@interface CameraViewController () <AVCaptureMetadataOutputObjectsDelegate, AVCaptureVideoDataOutputSampleBufferDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
+@property (weak, nonatomic) IBOutlet UIButton *buttonClearDetection;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *indicatorLoadingSession;
-@property (weak, nonatomic) IBOutlet UIImageView *imageViewPreview;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraintCollection;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraintClear;
 @property (weak, nonatomic) IBOutlet UIVisualEffectView *effectView;
@@ -48,6 +48,7 @@
 @property (nonatomic, strong) NSMutableArray<UIView *> *viewsFace;
 @property (nonatomic, strong) CIDetector *faceDetector;
 @property (nonatomic, strong) NSMutableArray<DetectFace *> *detectedFaces;
+@property (nonatomic, assign) BOOL isPaused;
 @end
 
 @implementation CameraViewController
@@ -276,6 +277,9 @@
 - (void)captureOutput:(AVCaptureOutput *)captureOutput
 didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
        fromConnection:(AVCaptureConnection *)connection {
+    if (self.isPaused) {
+        return;
+    }
     CMTime timestamp = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
     float currentTimestampValue = (float)timestamp.value / timestamp.timescale;
     
@@ -377,7 +381,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     if (self.detectedFaces.count > 0  && self.bottomConstraintCollection.constant < 0) {
-        self.bottomConstraintCollection.constant = 0;
+        self.bottomConstraintCollection.constant = 44;
         [self.effectView setNeedsUpdateConstraints];
         [UIView animateWithDuration:0.5
                               delay:0
@@ -392,7 +396,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
              usingSpringWithDamping:0.6
               initialSpringVelocity:0.6
                             options:UIViewAnimationOptionCurveEaseOut animations:^{
-                                self.bottomConstraintClear.constant = 136;
+                                self.bottomConstraintClear.constant = 136 + 44;
                                 [self.view layoutIfNeeded];
                             } completion:^(BOOL finished) {}];
     }
@@ -414,12 +418,20 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     return cell;
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    self.buttonClearDetection.layer.borderColor = [[UIColor whiteColor] CGColor];
+    self.buttonClearDetection.layer.borderWidth = 2;
+    self.buttonClearDetection.layer.cornerRadius = 15;
     
     [self checkPermissionCamera];
     self.currentValue = 0;
     
+    self.isPaused = false;
     self.collectionViewLayout.itemSize = CGSizeMake(100, 100);
     self.collectionViewLayout.minimumLineSpacing = 0;
     self.collectionViewLayout.minimumInteritemSpacing = 0;
@@ -427,6 +439,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     
     [self.collectionView registerNib:[UINib nibWithNibName:@"FaceCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"FaceCollectionViewCell"];
     self.collectionView.dataSource = self;
+    self.collectionView.delegate = self;
     
     self.bottomConstraintCollection.constant = -128;
     self.bottomConstraintClear.constant = -136;

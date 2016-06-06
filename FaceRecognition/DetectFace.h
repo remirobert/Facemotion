@@ -14,6 +14,6 @@
 @property (nonatomic, assign) NSInteger trackId;
 @property (nonatomic, strong) NSMutableArray<UIImage *> *faces;
 
-- (instancetype)initWithTrackId:(NSInteger)trackId;
+- (instancetype)initWithTrackId:(NSInteger) trackId;
 - (void)addFrame:(UIImage *)frame;
 @end
