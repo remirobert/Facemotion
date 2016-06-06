@@ -37,6 +37,7 @@
 		BBA10EA11CAA0D1300B74283 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BBA10E9F1CAA0D1300B74283 /* Main.storyboard */; };
 		BBA10EA31CAA0D1300B74283 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBA10EA21CAA0D1300B74283 /* Assets.xcassets */; };
 		BBA10EA61CAA0D1300B74283 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BBA10EA41CAA0D1300B74283 /* LaunchScreen.storyboard */; };
+		BBD3CFC81D055AC300C234F2 /* DetailDetectionFaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD3CFC71D055AC300C234F2 /* DetailDetectionFaceViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -89,6 +90,8 @@
 		BBA10EA21CAA0D1300B74283 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BBA10EA51CAA0D1300B74283 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BBA10EA71CAA0D1300B74283 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BBD3CFC61D055AC300C234F2 /* DetailDetectionFaceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailDetectionFaceViewController.h; sourceTree = "<group>"; };
+		BBD3CFC71D055AC300C234F2 /* DetailDetectionFaceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailDetectionFaceViewController.m; sourceTree = "<group>"; };
 		E15F7313E23F7B2455734697 /* Pods-FaceRecognition.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FaceRecognition.release.xcconfig"; path = "Pods/Target Support Files/Pods-FaceRecognition/Pods-FaceRecognition.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -190,6 +193,8 @@
 				BB15200D1CFC281E0028C5CB /* Face.mm */,
 				BB0ED37E1D002BFE00CE4651 /* DetectFace.h */,
 				BB0ED37F1D002BFE00CE4651 /* DetectFace.m */,
+				BBD3CFC61D055AC300C234F2 /* DetailDetectionFaceViewController.h */,
+				BBD3CFC71D055AC300C234F2 /* DetailDetectionFaceViewController.m */,
 				BBA10E9F1CAA0D1300B74283 /* Main.storyboard */,
 				BBA10EA21CAA0D1300B74283 /* Assets.xcassets */,
 				BBA10EA41CAA0D1300B74283 /* LaunchScreen.storyboard */,
@@ -355,6 +360,7 @@
 				BB1520141CFC3DF10028C5CB /* FaceRecognition.mm in Sources */,
 				BB0ED3831D0037FA00CE4651 /* GradientView.m in Sources */,
 				BBA10E981CAA0D1300B74283 /* main.m in Sources */,
+				BBD3CFC81D055AC300C234F2 /* DetailDetectionFaceViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

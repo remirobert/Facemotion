@@ -20,6 +20,7 @@
 #import "FaceCollectionViewCell.h"
 #import "DetectFace.h"
 #import "GradientView.h"
+#import "DetailDetectionFaceViewController.h"
 
 #include <iostream>
 #include <fstream>
@@ -419,6 +420,13 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    [self performSegueWithIdentifier:@"detailDetectedFace" sender:[self.detectedFaces objectAtIndex:indexPath.row]];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"detailDetectedFace"]) {
+        ((DetailDetectionFaceViewController *)segue.destinationViewController).face = (DetectFace *)sender;
+    }
 }
 
 - (void)viewDidLoad {

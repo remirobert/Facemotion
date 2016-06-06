@@ -25,6 +25,7 @@
 
 - (void)prepareForReuse {
     self.imageViewFace.image = nil;
+    self.labelTrackId.text = nil;
 }
 
 - (void)configure:(DetectFace *)face {
@@ -33,6 +34,11 @@
         self.imageViewFace.image = faceFrame;
     }
     self.labelTrackId.text = [NSString stringWithFormat:@"#%ld", (long)face.trackId];
+}
+
+- (void)configureWithImage:(UIImage *)face {
+    self.imageViewFace.image = face;
+    self.labelTrackId.text = nil;
 }
 
 @end

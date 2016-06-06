@@ -11,4 +11,5 @@
 
 @interface FaceCollectionViewCell : UICollectionViewCell
 - (void)configure:(DetectFace *)face;
+- (void)configureWithImage:(UIImage *)face;
 @end
