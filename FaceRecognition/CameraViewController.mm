@@ -23,6 +23,7 @@
 #import "GradientView.h"
 #import "DetailDetectionFaceViewController.h"
 #import "TargetScanView.h"
+#import "CreateNewContactTableViewController.h"
 
 #include <iostream>
 #include <fstream>
@@ -427,12 +428,13 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     self.isPaused = true;
-    [self performSegueWithIdentifier:@"detailDetectedFace" sender:[self.detectedFaces objectAtIndex:indexPath.row]];
+    [self performSegueWithIdentifier:@"createContactSegue" sender:[self.detectedFaces objectAtIndex:indexPath.row]];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"detailDetectedFace"]) {
-        ((DetailDetectionFaceViewController *)segue.destinationViewController).face = (DetectFace *)sender;
+    if ([segue.identifier isEqualToString:@"createContactSegue"]) {
+        UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
+        ((CreateNewContactTableViewController *)navigationController.presentedViewController).face = (DetectFace *)sender;
     }
 }
 
