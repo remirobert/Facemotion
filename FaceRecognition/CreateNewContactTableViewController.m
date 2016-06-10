@@ -18,7 +18,12 @@
 @implementation CreateNewContactTableViewController
 
 - (IBAction)saveContact:(id)sender {
-    
+    if (self.textfieldLastName.text == nil || self.textfieldFirstName.text == nil) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Please fill the form to add a new contact." message:nil preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil]];
+        [self presentViewController:alertController animated:true completion:nil];
+        return ;
+    }
 }
 
 - (IBAction)cancelCreateContact:(id)sender {
@@ -32,7 +37,6 @@
     [self.collectionviewFrames registerNib:[UINib nibWithNibName:@"FaceCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"cell"];
     self.collectionviewFrames.dataSource = self;
     self.collectionviewFrames.showsHorizontalScrollIndicator = false;
-    NSLog(@"faces = %d", self.face.faces.count);
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {

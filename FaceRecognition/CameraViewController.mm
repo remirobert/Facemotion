@@ -434,7 +434,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"createContactSegue"]) {
         UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
-        ((CreateNewContactTableViewController *)navigationController.presentedViewController).face = (DetectFace *)sender;
+        ((CreateNewContactTableViewController *)navigationController.viewControllers.firstObject).face = (DetectFace *)sender;
     }
 }
 

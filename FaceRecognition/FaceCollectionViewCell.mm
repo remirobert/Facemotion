@@ -10,7 +10,6 @@
 
 @interface FaceCollectionViewCell ()
 @property (weak, nonatomic) IBOutlet UIImageView *imageViewFace;
-@property (weak, nonatomic) IBOutlet UILabel *labelTrackId;
 @end
 
 @implementation FaceCollectionViewCell
@@ -26,7 +25,6 @@
 
 - (void)prepareForReuse {
     self.imageViewFace.image = nil;
-    self.labelTrackId.text = nil;
 }
 
 - (void)configure:(DetectFace *)face {
@@ -34,12 +32,10 @@
     if (faceFrame) {
         self.imageViewFace.image = faceFrame;
     }
-    self.labelTrackId.text = [NSString stringWithFormat:@"#%ld", (long)face.trackId];
 }
 
 - (void)configureWithImage:(UIImage *)face {
     self.imageViewFace.image = face;
-    self.labelTrackId.text = nil;
 }
 
 @end
