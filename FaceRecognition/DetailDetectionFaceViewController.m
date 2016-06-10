@@ -18,11 +18,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self.collectionView registerNib:[UINib nibWithNibName:@"FaceCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"cell"];
-    self.collectionViewFlowLayout.itemSize = CGSizeMake(128, 128);
+    self.collectionViewFlowLayout.itemSize = CGSizeMake(100, 100);
+    self.collectionViewFlowLayout.minimumLineSpacing = 0;
+    self.collectionViewFlowLayout.minimumInteritemSpacing = 0;
     self.collectionViewFlowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     self.collectionView.dataSource = self;
+    self.collectionView.showsHorizontalScrollIndicator = false;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -31,6 +33,7 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     FaceCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    NSLog(@"current imageFrame : %@", [self.face.faces objectAtIndex:indexPath.row]);
     [cell configureWithImage:[self.face.faces objectAtIndex:indexPath.row]];
     return cell;
 }

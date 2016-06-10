@@ -7,6 +7,7 @@
 //
 
 #import "CameraViewController.h"
+#import <Masonry.h>
 #import <AVFoundation/AVFoundation.h>
 #include <opencv2/highgui/cap_ios.h>
 #include <opencv2/opencv.hpp>
@@ -21,6 +22,7 @@
 #import "DetectFace.h"
 #import "GradientView.h"
 #import "DetailDetectionFaceViewController.h"
+#import "TargetScanView.h"
 
 #include <iostream>
 #include <fstream>
@@ -315,6 +317,9 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         
         NSLog(@"🤖 number detected frames : %lu", (unsigned long)self.detectedFaces.count);
         for (CIFaceFeature *feature in features) {
+            if (!feature.hasMouthPosition || !feature.hasLeftEyePosition || !feature.hasRightEyePosition) {
+                continue;
+            }
             CGRect faceRect = [self frameForFeature:feature previewBox:previewBox cleanAperture:cleanAperture];
             
             CGImageRef imageRef = CGImageCreateWithImageInRect(image.CGImage,
@@ -332,6 +337,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    self.isPaused = false;
     if ([self.session canAddOutput:self.videoOutput]) {
         [self.session addOutput:self.videoOutput];
     }
@@ -420,6 +426,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    self.isPaused = true;
     [self performSegueWithIdentifier:@"detailDetectedFace" sender:[self.detectedFaces objectAtIndex:indexPath.row]];
 }
 
@@ -451,6 +458,12 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     
     self.bottomConstraintCollection.constant = -128;
     self.bottomConstraintClear.constant = -136;
+    
+    TargetScanView *targetView = (TargetScanView *)[[[UINib nibWithNibName:@"TargetScanView" bundle:nil] instantiateWithOwner:self options:nil] firstObject];
+    [self.view insertSubview:targetView atIndex:0];
+    [targetView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view);
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
