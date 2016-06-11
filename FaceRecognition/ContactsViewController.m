@@ -7,6 +7,7 @@
 //
 
 #import <Realm.h>
+#import <Masonry.h>
 #import <Contacts/Contacts.h>
 #import "ContactsViewController.h"
 #import "ContactModel.h"
@@ -23,16 +24,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
+    [self.collectionView registerNib:[UINib nibWithNibName:@"ContactCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"cell"];
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
+
+    [self.collectionViewLayout setItemSize: CGSizeMake(CGRectGetWidth([UIScreen mainScreen].bounds) / 3, CGRectGetWidth([UIScreen mainScreen].bounds) / 3)];
     self.collectionView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
-    self.collectionViewLayout.itemSize = CGSizeMake(CGRectGetWidth([UIScreen mainScreen].bounds) / 4, CGRectGetWidth([UIScreen mainScreen].bounds) / 4);
     self.collectionViewLayout.minimumLineSpacing = 0;
     self.collectionViewLayout.minimumInteritemSpacing = 0;
     self.collectionViewLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
-    
-    [self.collectionView registerNib:[UINib nibWithNibName:@"ContactCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"cell"];
     
     self.contacts = [NSMutableArray new];
     
@@ -51,7 +52,9 @@
                 for (CNContact *contact in cnContacts) {
                     [self.contacts addObject:[[ContactModel alloc] initWithContact:contact]];
                 }
-                [self.collectionView reloadData];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.collectionView reloadData];
+                });
             }
         }
     }];
@@ -64,6 +67,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     ContactCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     
+    NSLog(@"cell : %@", cell);
     [cell configure:[self.contacts objectAtIndex:indexPath.row]];
     return cell;
 }
