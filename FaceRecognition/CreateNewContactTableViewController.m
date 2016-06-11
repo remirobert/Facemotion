@@ -8,6 +8,7 @@
 
 #import "CreateNewContactTableViewController.h"
 #import "FaceCollectionViewCell.h"
+#import "Contact.h"
 
 @interface CreateNewContactTableViewController () <UICollectionViewDataSource>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionviewFrames;
@@ -24,6 +25,12 @@
         [self presentViewController:alertController animated:true completion:nil];
         return ;
     }
+    
+    Contact *newContact = [[Contact alloc] init:self.face];
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    [realm transactionWithBlock:^{
+        [realm addObject:newContact];
+    }];
 }
 
 - (IBAction)cancelCreateContact:(id)sender {

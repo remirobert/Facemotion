@@ -8,7 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import <Realm.h>
+#import "DetectFace.h"
 
 @interface Contact : RLMObject
+@property (nonnull, nonatomic, strong) NSString *key;
 
+- (instancetype)init:(DetectFace *)face;
 @end
