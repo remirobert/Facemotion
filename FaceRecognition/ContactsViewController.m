@@ -28,7 +28,8 @@
     self.layerSubView.backgroundColor = [UIColor clearColor];
     CAGradientLayer *gradient = [CAGradientLayer layer];
     gradient.frame = self.layerSubView.bounds;
-    gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor blackColor] CGColor], (id)[[[UIColor blackColor] colorWithAlphaComponent:0.5] CGColor], nil];
+    gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor blackColor] CGColor], (id)[[[UIColor blackColor] colorWithAlphaComponent:0.8] CGColor], (id)[[UIColor clearColor] CGColor], nil];
+
     [self.layerSubView.layer insertSublayer:gradient atIndex:0];
 
     [self.collectionView registerNib:[UINib nibWithNibName:@"ContactCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"cell"];
