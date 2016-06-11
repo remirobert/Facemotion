@@ -18,6 +18,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     self.imageView.backgroundColor = [UIColor lightGrayColor];
+
     CGFloat size = CGRectGetWidth([UIScreen mainScreen].bounds) / 3 - 60;
     self.imageView.layer.masksToBounds = true;
     self.imageView.layer.cornerRadius = size / 2;

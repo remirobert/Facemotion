@@ -24,13 +24,19 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.layerSubView.backgroundColor = [UIColor clearColor];
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    gradient.frame = self.layerSubView.bounds;
+    gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor blackColor] CGColor], (id)[[[UIColor blackColor] colorWithAlphaComponent:0.5] CGColor], nil];
+    [self.layerSubView.layer insertSublayer:gradient atIndex:0];
 
     [self.collectionView registerNib:[UINib nibWithNibName:@"ContactCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"cell"];
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
 
     [self.collectionViewLayout setItemSize: CGSizeMake(CGRectGetWidth([UIScreen mainScreen].bounds) / 3, CGRectGetWidth([UIScreen mainScreen].bounds) / 3)];
-    self.collectionView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
+    self.collectionView.contentInset = UIEdgeInsetsMake(64, 0, 55, 0);
     self.collectionViewLayout.minimumLineSpacing = 0;
     self.collectionViewLayout.minimumInteritemSpacing = 0;
     self.collectionViewLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
