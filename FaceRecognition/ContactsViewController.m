@@ -12,12 +12,13 @@
 #import "ContactsViewController.h"
 #import "ContactModel.h"
 #import "ContactCollectionViewCell.h"
+#import "ContactManager.h"
 
 @interface ContactsViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIView *layerSubView;
 @property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *collectionViewLayout;
-@property (nonatomic, strong) NSMutableArray<ContactModel *> *contacts;
+@property (nonatomic, strong) NSArray<ContactModel *> *contacts;
 @end
 
 @implementation ContactsViewController
@@ -44,26 +45,9 @@
     
     self.contacts = [NSMutableArray new];
     
-    CNContactStore *store = [[CNContactStore alloc] init];
-    [store requestAccessForEntityType:CNEntityTypeContacts completionHandler:^(BOOL granted, NSError * _Nullable error) {
-        if (granted == YES) {
-            NSArray *keys = @[CNContactFamilyNameKey, CNContactGivenNameKey, CNContactPhoneNumbersKey, CNContactImageDataKey];
-            NSString *containerId = store.defaultContainerIdentifier;
-            NSPredicate *predicate = [CNContact predicateForContactsInContainerWithIdentifier:containerId];
-            NSError *error;
-            NSArray *cnContacts = [store unifiedContactsMatchingPredicate:predicate keysToFetch:keys error:&error];
-            if (error) {
-                NSLog(@"error fetching contacts %@", error);
-            }
-            else {
-                for (CNContact *contact in cnContacts) {
-                    [self.contacts addObject:[[ContactModel alloc] initWithContact:contact]];
-                }
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self.collectionView reloadData];
-                });
-            }
-        }
+    [ContactManager fetchContacts:^(NSArray<ContactModel *> *contacts) {
+        self.contacts = contacts;
+        [self.collectionView reloadData];
     }];
 }
 

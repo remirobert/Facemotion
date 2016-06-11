@@ -26,6 +26,7 @@
 		BB0BCAA11D0C1ECE00970502 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB0BCA9F1D0C1ECE00970502 /* Contacts.framework */; };
 		BB0BCAA21D0C1ECE00970502 /* ContactsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB0BCAA01D0C1ECE00970502 /* ContactsUI.framework */; };
 		BB0BCAA51D0C1F9700970502 /* ContactModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0BCAA41D0C1F9700970502 /* ContactModel.m */; };
+		BB0BCAA81D0C2D8A00970502 /* ContactManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0BCAA71D0C2D8A00970502 /* ContactManager.m */; };
 		BB0ED37D1D002A2200CE4651 /* OrientationDevice.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB0ED37C1D002A2200CE4651 /* OrientationDevice.mm */; };
 		BB0ED3801D002BFE00CE4651 /* DetectFace.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0ED37F1D002BFE00CE4651 /* DetectFace.m */; };
 		BB0ED3831D0037FA00CE4651 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0ED3821D0037FA00CE4651 /* GradientView.m */; };
@@ -78,6 +79,8 @@
 		BB0BCAA01D0C1ECE00970502 /* ContactsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ContactsUI.framework; path = System/Library/Frameworks/ContactsUI.framework; sourceTree = SDKROOT; };
 		BB0BCAA31D0C1F9700970502 /* ContactModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactModel.h; sourceTree = "<group>"; };
 		BB0BCAA41D0C1F9700970502 /* ContactModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactModel.m; sourceTree = "<group>"; };
+		BB0BCAA61D0C2D8A00970502 /* ContactManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactManager.h; sourceTree = "<group>"; };
+		BB0BCAA71D0C2D8A00970502 /* ContactManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactManager.m; sourceTree = "<group>"; };
 		BB0ED37B1D002A2200CE4651 /* OrientationDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrientationDevice.h; sourceTree = "<group>"; };
 		BB0ED37C1D002A2200CE4651 /* OrientationDevice.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OrientationDevice.mm; sourceTree = "<group>"; };
 		BB0ED37E1D002BFE00CE4651 /* DetectFace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetectFace.h; sourceTree = "<group>"; };
@@ -233,6 +236,8 @@
 				BB2193A71D0A9EE000F88C64 /* TargetScanView.m */,
 				BB0BCA971D0C1D2600970502 /* ContactsViewController.h */,
 				BB0BCA981D0C1D2600970502 /* ContactsViewController.m */,
+				BB0BCAA61D0C2D8A00970502 /* ContactManager.h */,
+				BB0BCAA71D0C2D8A00970502 /* ContactManager.m */,
 				BB0BCAA31D0C1F9700970502 /* ContactModel.h */,
 				BB0BCAA41D0C1F9700970502 /* ContactModel.m */,
 				BB0BCA9A1D0C1E1700970502 /* ContactCollectionViewCell.h */,
@@ -404,6 +409,7 @@
 				BB0BCAA51D0C1F9700970502 /* ContactModel.m in Sources */,
 				BB0ED37D1D002A2200CE4651 /* OrientationDevice.mm in Sources */,
 				BBA10E9B1CAA0D1300B74283 /* AppDelegate.m in Sources */,
+				BB0BCAA81D0C2D8A00970502 /* ContactManager.m in Sources */,
 				BB1520181CFD1FDC0028C5CB /* FaceCollectionViewCell.mm in Sources */,
 				BB722D581CB14ED500701F03 /* VideoFaceDetector.cpp in Sources */,
 				BB1520141CFC3DF10028C5CB /* FaceRecognition.mm in Sources */,
