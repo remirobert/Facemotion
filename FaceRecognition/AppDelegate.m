@@ -24,6 +24,13 @@
     
     [[UITabBar appearance] setBackgroundImage:[UIImage new]];
     [[UITabBar appearance] setShadowImage:[UIImage new]];
+    [[UITabBar appearance] setTintColor:[UIColor whiteColor]];
+    
+    tabBar.items[0].image = [[UIImage imageNamed:@"scanImage"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    tabBar.items[0].selectedImage = [[UIImage imageNamed:@"scanImage"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    
+    tabBar.items[1].image = [[UIImage imageNamed:@"contactImage"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    tabBar.items[1].selectedImage = [[UIImage imageNamed:@"contactImage"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     
     UIVisualEffectView *blurView = [[UIVisualEffectView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, tabBar.bounds.size.height)];
     UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];

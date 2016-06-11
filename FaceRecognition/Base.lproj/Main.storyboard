@@ -99,7 +99,7 @@
                             <constraint firstItem="bHe-tJ-7PI" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="dQh-fc-EU3"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="hYK-1W-2mG"/>
+                    <tabBarItem key="tabBarItem" title="Scan" selectedImage="scanImage" id="hYK-1W-2mG"/>
                     <navigationItem key="navigationItem" title="Camera" id="cfs-MP-sqF"/>
                     <connections>
                         <outlet property="bottomConstraintClear" destination="Nxs-8M-aed" id="eSz-ld-Oqt"/>
@@ -276,9 +276,9 @@
                     <view key="view" contentMode="scaleToFill" id="L21-fB-L5E">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="tqQ-Z5-KOJ"/>
+                    <tabBarItem key="tabBarItem" title="Contacts" id="tqQ-Z5-KOJ"/>
                     <navigationItem key="navigationItem" title="Contacts" id="n0r-ZD-x30"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LLe-cV-T03" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -358,4 +358,7 @@
             <point key="canvasLocation" x="1985" y="1105"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="scanImage" width="30" height="30"/>
+    </resources>
 </document>

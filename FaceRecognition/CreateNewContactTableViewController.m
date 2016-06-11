@@ -31,6 +31,8 @@
     [realm transactionWithBlock:^{
         [realm addObject:newContact];
     }];
+    
+    [self dismissViewControllerAnimated:true completion:nil];
 }
 
 - (IBAction)cancelCreateContact:(id)sender {
