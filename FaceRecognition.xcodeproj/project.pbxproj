@@ -8,16 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		57BDD51FA85FB0C48C015A78 /* libPods-FaceRecognition.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1794D07794449E8F09A86DD5 /* libPods-FaceRecognition.a */; };
-		BB0399EE1CF92BA7008C9BAF /* yaleB01_P00A-005E-10.pgm in Resources */ = {isa = PBXBuildFile; fileRef = BB0399EC1CF92BA7008C9BAF /* yaleB01_P00A-005E-10.pgm */; };
-		BB0399EF1CF92BA7008C9BAF /* yaleB01_P00A-005E+10.pgm in Resources */ = {isa = PBXBuildFile; fileRef = BB0399ED1CF92BA7008C9BAF /* yaleB01_P00A-005E+10.pgm */; };
-		BB0399F31CF92E33008C9BAF /* yaleB02_P00A-005E-10.pgm in Resources */ = {isa = PBXBuildFile; fileRef = BB0399F11CF92E33008C9BAF /* yaleB02_P00A-005E-10.pgm */; };
-		BB0399F41CF92E33008C9BAF /* yaleB02_P00A-005E+10.pgm in Resources */ = {isa = PBXBuildFile; fileRef = BB0399F21CF92E33008C9BAF /* yaleB02_P00A-005E+10.pgm */; };
-		BB0399F71CF92E3F008C9BAF /* yaleB03_P00A-005E-10.pgm in Resources */ = {isa = PBXBuildFile; fileRef = BB0399F51CF92E3F008C9BAF /* yaleB03_P00A-005E-10.pgm */; };
-		BB0399F81CF92E3F008C9BAF /* yaleB03_P00A-005E+10.pgm in Resources */ = {isa = PBXBuildFile; fileRef = BB0399F61CF92E3F008C9BAF /* yaleB03_P00A-005E+10.pgm */; };
-		BB0399FB1CF92E57008C9BAF /* yaleB04_P00A-005E-10.pgm in Resources */ = {isa = PBXBuildFile; fileRef = BB0399F91CF92E57008C9BAF /* yaleB04_P00A-005E-10.pgm */; };
-		BB0399FC1CF92E57008C9BAF /* yaleB04_P00A-005E+10.pgm in Resources */ = {isa = PBXBuildFile; fileRef = BB0399FA1CF92E57008C9BAF /* yaleB04_P00A-005E+10.pgm */; };
-		BB039A011CF9A8A5008C9BAF /* 1.pic.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BB0399FF1CF9A8A5008C9BAF /* 1.pic.jpg */; };
-		BB039A021CF9A8A5008C9BAF /* 2.pic.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BB039A001CF9A8A5008C9BAF /* 2.pic.jpg */; };
 		BB039A051CF9C8B3008C9BAF /* CameraViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB039A041CF9C8B3008C9BAF /* CameraViewController.mm */; };
 		BB0B5ED71CF9137700F13EE7 /* PCAViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB0B5ED61CF9137700F13EE7 /* PCAViewController.mm */; };
 		BB0BCA991D0C1D2600970502 /* ContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0BCA981D0C1D2600970502 /* ContactsViewController.m */; };
@@ -54,18 +44,6 @@
 /* Begin PBXFileReference section */
 		1794D07794449E8F09A86DD5 /* libPods-FaceRecognition.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FaceRecognition.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		612E8B49CB04E666E58DA26D /* Pods-FaceRecognition.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FaceRecognition.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FaceRecognition/Pods-FaceRecognition.debug.xcconfig"; sourceTree = "<group>"; };
-		BB0399EC1CF92BA7008C9BAF /* yaleB01_P00A-005E-10.pgm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "yaleB01_P00A-005E-10.pgm"; sourceTree = "<group>"; };
-		BB0399ED1CF92BA7008C9BAF /* yaleB01_P00A-005E+10.pgm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "yaleB01_P00A-005E+10.pgm"; sourceTree = "<group>"; };
-		BB0399F11CF92E33008C9BAF /* yaleB02_P00A-005E-10.pgm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "yaleB02_P00A-005E-10.pgm"; sourceTree = "<group>"; };
-		BB0399F21CF92E33008C9BAF /* yaleB02_P00A-005E+10.pgm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "yaleB02_P00A-005E+10.pgm"; sourceTree = "<group>"; };
-		BB0399F51CF92E3F008C9BAF /* yaleB03_P00A-005E-10.pgm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "yaleB03_P00A-005E-10.pgm"; sourceTree = "<group>"; };
-		BB0399F61CF92E3F008C9BAF /* yaleB03_P00A-005E+10.pgm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "yaleB03_P00A-005E+10.pgm"; sourceTree = "<group>"; };
-		BB0399F91CF92E57008C9BAF /* yaleB04_P00A-005E-10.pgm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "yaleB04_P00A-005E-10.pgm"; sourceTree = "<group>"; };
-		BB0399FA1CF92E57008C9BAF /* yaleB04_P00A-005E+10.pgm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "yaleB04_P00A-005E+10.pgm"; sourceTree = "<group>"; };
-		BB0399FD1CF92E63008C9BAF /* yaleB05_P00A-005E-10.pgm */ = {isa = PBXFileReference; lastKnownFileType = file; path = "yaleB05_P00A-005E-10.pgm"; sourceTree = "<group>"; };
-		BB0399FE1CF92E63008C9BAF /* yaleB05_P00A-005E+10.pgm */ = {isa = PBXFileReference; lastKnownFileType = file; path = "yaleB05_P00A-005E+10.pgm"; sourceTree = "<group>"; };
-		BB0399FF1CF9A8A5008C9BAF /* 1.pic.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1.pic.jpg; sourceTree = "<group>"; };
-		BB039A001CF9A8A5008C9BAF /* 2.pic.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 2.pic.jpg; sourceTree = "<group>"; };
 		BB039A031CF9C8B3008C9BAF /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
 		BB039A041CF9C8B3008C9BAF /* CameraViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CameraViewController.mm; sourceTree = "<group>"; };
 		BB0B5ED51CF9137700F13EE7 /* PCAViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCAViewController.h; sourceTree = "<group>"; };
@@ -157,25 +135,6 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		BB0399F01CF92BB1008C9BAF /* Faces */ = {
-			isa = PBXGroup;
-			children = (
-				BB0399EC1CF92BA7008C9BAF /* yaleB01_P00A-005E-10.pgm */,
-				BB0399ED1CF92BA7008C9BAF /* yaleB01_P00A-005E+10.pgm */,
-				BB0399F11CF92E33008C9BAF /* yaleB02_P00A-005E-10.pgm */,
-				BB0399F21CF92E33008C9BAF /* yaleB02_P00A-005E+10.pgm */,
-				BB0399F51CF92E3F008C9BAF /* yaleB03_P00A-005E-10.pgm */,
-				BB0399F61CF92E3F008C9BAF /* yaleB03_P00A-005E+10.pgm */,
-				BB0399F91CF92E57008C9BAF /* yaleB04_P00A-005E-10.pgm */,
-				BB0399FA1CF92E57008C9BAF /* yaleB04_P00A-005E+10.pgm */,
-				BB0399FD1CF92E63008C9BAF /* yaleB05_P00A-005E-10.pgm */,
-				BB0399FE1CF92E63008C9BAF /* yaleB05_P00A-005E+10.pgm */,
-				BB0399FF1CF9A8A5008C9BAF /* 1.pic.jpg */,
-				BB039A001CF9A8A5008C9BAF /* 2.pic.jpg */,
-			);
-			name = Faces;
-			sourceTree = "<group>";
-		};
 		BBA10E8A1CAA0D1200B74283 = {
 			isa = PBXGroup;
 			children = (
@@ -197,7 +156,6 @@
 		BBA10E951CAA0D1300B74283 /* FaceRecognition */ = {
 			isa = PBXGroup;
 			children = (
-				BB0399F01CF92BB1008C9BAF /* Faces */,
 				BB722D561CB14ED500701F03 /* VideoFaceDetector.cpp */,
 				BB722D571CB14ED500701F03 /* VideoFaceDetector.h */,
 				BB722D471CAFF36400701F03 /* haarcascade_frontalface_alt2.xml */,
@@ -322,23 +280,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BB0399FB1CF92E57008C9BAF /* yaleB04_P00A-005E-10.pgm in Resources */,
-				BB039A011CF9A8A5008C9BAF /* 1.pic.jpg in Resources */,
 				BB0BCA9E1D0C1E1700970502 /* ContactCollectionViewCell.xib in Resources */,
 				BBA10EA61CAA0D1300B74283 /* LaunchScreen.storyboard in Resources */,
 				BBA10EA31CAA0D1300B74283 /* Assets.xcassets in Resources */,
 				BB1520191CFD1FDC0028C5CB /* FaceCollectionViewCell.xib in Resources */,
 				BB722D481CAFF36400701F03 /* haarcascade_frontalface_alt2.xml in Resources */,
-				BB0399EE1CF92BA7008C9BAF /* yaleB01_P00A-005E-10.pgm in Resources */,
 				BBA10EA11CAA0D1300B74283 /* Main.storyboard in Resources */,
-				BB0399FC1CF92E57008C9BAF /* yaleB04_P00A-005E+10.pgm in Resources */,
-				BB0399F31CF92E33008C9BAF /* yaleB02_P00A-005E-10.pgm in Resources */,
 				BB2193AA1D0A9EED00F88C64 /* TargetScanView.xib in Resources */,
-				BB039A021CF9A8A5008C9BAF /* 2.pic.jpg in Resources */,
-				BB0399EF1CF92BA7008C9BAF /* yaleB01_P00A-005E+10.pgm in Resources */,
-				BB0399F81CF92E3F008C9BAF /* yaleB03_P00A-005E+10.pgm in Resources */,
-				BB0399F41CF92E33008C9BAF /* yaleB02_P00A-005E+10.pgm in Resources */,
-				BB0399F71CF92E3F008C9BAF /* yaleB03_P00A-005E-10.pgm in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
