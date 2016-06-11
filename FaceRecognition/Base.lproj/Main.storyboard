@@ -268,7 +268,7 @@
         <!--Contacts-->
         <scene sceneID="1Nt-49-lzc">
             <objects>
-                <viewController id="EVJ-yv-4rp" sceneMemberID="viewController">
+                <viewController id="EVJ-yv-4rp" customClass="ContactsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="koI-Ce-Uil"/>
                         <viewControllerLayoutGuide type="bottom" id="F6E-a4-QVO"/>
@@ -276,10 +276,44 @@
                     <view key="view" contentMode="scaleToFill" id="L21-fB-L5E">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="mEc-ys-2yA">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="k5s-VB-hwI">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LFs-Bp-lGH">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="64"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="64" id="JrI-Nf-cBY"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="LFs-Bp-lGH" secondAttribute="trailing" constant="-20" id="1ff-n1-Vy5"/>
+                            <constraint firstItem="mEc-ys-2yA" firstAttribute="leading" secondItem="L21-fB-L5E" secondAttribute="leadingMargin" constant="-20" id="8Di-sX-xJC"/>
+                            <constraint firstItem="F6E-a4-QVO" firstAttribute="top" secondItem="mEc-ys-2yA" secondAttribute="bottom" id="Hfk-o0-4nX"/>
+                            <constraint firstItem="LFs-Bp-lGH" firstAttribute="leading" secondItem="L21-fB-L5E" secondAttribute="leadingMargin" constant="-20" id="RLf-27-3yF"/>
+                            <constraint firstItem="mEc-ys-2yA" firstAttribute="top" secondItem="L21-fB-L5E" secondAttribute="topMargin" id="aWD-yC-oLG"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="mEc-ys-2yA" secondAttribute="trailing" constant="-20" id="mQS-EF-g6A"/>
+                            <constraint firstItem="LFs-Bp-lGH" firstAttribute="top" secondItem="L21-fB-L5E" secondAttribute="topMargin" id="xVF-CD-ruK"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Contacts" id="tqQ-Z5-KOJ"/>
                     <navigationItem key="navigationItem" title="Contacts" id="n0r-ZD-x30"/>
+                    <connections>
+                        <outlet property="collectionView" destination="mEc-ys-2yA" id="fNV-Vx-wce"/>
+                        <outlet property="collectionViewLayout" destination="k5s-VB-hwI" id="Uvx-3z-yJC"/>
+                        <outlet property="layerSubView" destination="LFs-Bp-lGH" id="TTa-Ii-zIW"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LLe-cV-T03" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

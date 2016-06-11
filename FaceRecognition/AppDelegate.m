@@ -37,6 +37,8 @@
     [blurView setEffect:blurEffect];
     
     [tabBar insertSubview:blurView atIndex:0];
+    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
