@@ -45,6 +45,7 @@
         [realm transactionWithBlock:^{
             [realm addObjects:faces];
         }];
+        [self.navigationController dismissViewControllerAnimated:true completion:nil];
     }]];
     [self presentViewController:alertController animated:true completion:nil];
 }

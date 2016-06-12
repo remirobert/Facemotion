@@ -8,6 +8,8 @@
 
 #import "ProcessingRecognitionTableViewController.h"
 #import "FaceCollectionViewCell.h"
+#import "FaceRecognition.h"
+#import "FaceContact.h"
 
 @interface ProcessingRecognitionTableViewController () <UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionviewFrames;
@@ -27,10 +29,19 @@
     [self.collectionviewFrames registerNib:[UINib nibWithNibName:@"FaceCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"cell"];
     self.collectionviewFrames.delegate = self;
     self.collectionviewFrames.dataSource = self;
+
+    RLMResults<FaceContact *> *contactsFace = [FaceContact allObjects];
+    NSLog(@"objects fund ; %@", contactsFace);
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@""]) {
+        
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 2) {
+    if (indexPath.section == 3) {
     }
 }
 

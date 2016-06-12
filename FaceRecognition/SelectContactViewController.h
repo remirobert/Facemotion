@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "DetectFace.h"
+#import "FaceContact.h"
 
 @interface SelectContactViewController : UIViewController
 @property (nonatomic, strong) DetectFace *face;
++ (NSString *)recognitionFace:(NSArray<FaceContact *> *)faces face:(UIImage *)image;
 @end

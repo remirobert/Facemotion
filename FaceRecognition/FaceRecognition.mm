@@ -10,7 +10,9 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#import "FaceContact.h"
 #import "FaceRecognition.h"
+#import "OpenCVImageProcessing.h"
 
 @interface FaceRecognition ()
 @property (nonatomic, assign) cv::Ptr<cv::FaceRecognizer> recognizer;
@@ -29,36 +31,52 @@
     return instance;
 }
 
-+ (int)trainingImages:(std::vector<cv::Mat>)images labels:(std::vector<int>)labels sample:(cv::Mat)frame {
++ (std::string)trainingImages:(std::vector<cv::Mat>)images labels:(std::vector<std::string>)labels sample:(cv::Mat)frame {
     FaceRecognition *instance = [self sharedInstance];
-    int predicted_label = -1;
+    std::string predicted_label;
     double predicted_confidence = 0.0;
     
     instance.recognizer->train(images, labels);
-    instance.recognizer->predict(frame, predicted_label, predicted_confidence);
-    NSLog(@"number train faces: %d", images.size());
-    NSLog(@"ret label training : %d", predicted_label);
-    NSLog(@"ret confidence training : %f", predicted_confidence);
-    if (predicted_confidence == 0 && images.size() == 0) {
-        return -1;
-    }
+    predicted_label = instance.recognizer->predict(frame);
+//    NSLog(@"number train faces: %d", images.size());
+//    NSLog(@"ret label training : %d", predicted_label);
+//    NSLog(@"ret confidence training : %f", predicted_confidence);
+//    if (predicted_confidence == 0 && images.size() == 0) {
+//        return -1;
+//    }
+    
+    NSLog(@"label predicted : %s", predicted_label.c_str());
     return predicted_label;
 //    return (predicted_confidence < 500) ? -1 : predicted_label;
 }
 
-+ (BOOL)trainingFace:(NSArray<Face *> *)faces withFace:(Face *)face {
++ (NSString *)recognitionFace:(NSArray<FaceContact *> *)faces face:(UIImage *)image {
     std::vector<cv::Mat> images;
-    std::vector<int> labels;
-    NSMutableArray<NSNumber *> *labelsTest = [NSMutableArray new];
-
-    NSLog(@"   🍿 test face label : %d", face.label);
-    for (Face *currentFace in faces) {
-        NSLog(@"add current label to training : %d", currentFace.label);
-        images.push_back(currentFace.face);
-        labels.push_back(currentFace.label);
-        [labelsTest addObject:@(currentFace.label)];
+    std::vector<std::string> labels;
+    
+    cv::Mat frame = [OpenCVImageProcessing cvMatFromUIImage:image];
+    
+    for (FaceContact *face in faces) {
+        images.push_back([OpenCVImageProcessing cvMatFromUIImage:[UIImage imageWithData:face.imageData]]);
+        labels.push_back([face.id UTF8String]);
     }
-    return [labelsTest containsObject:@([self trainingImages:images labels:labels sample:face.face])];
+    [self trainingImages:images labels:labels sample:frame];
+    return @"o";
 }
+
+//+ (BOOL)trainingFace:(NSArray<Face *> *)faces withFace:(Face *)face {
+//    std::vector<cv::Mat> images;
+//    std::vector<int> labels;
+//    NSMutableArray<NSNumber *> *labelsTest = [NSMutableArray new];
+//
+//    NSLog(@"   🍿 test face label : %d", face.label);
+//    for (Face *currentFace in faces) {
+//        NSLog(@"add current label to training : %d", currentFace.label);
+//        images.push_back(currentFace.face);
+//        labels.push_back(currentFace.label);
+//        [labelsTest addObject:@(currentFace.label)];
+//    }
+////    return [labelsTest containsObject:@([self trainingImages:images labels:labels sample:face.face])];
+//}
 
 @end
