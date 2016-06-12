@@ -11,6 +11,7 @@
 
 @interface FaceContact : RLMObject
 @property (nonatomic, strong) NSString *id;
+@property (nonatomic, assign) NSInteger idRecognition;
 @property (nonatomic, strong) NSData *imageData;
 - (instancetype)initWithImage:(UIImage *)image idContact:(NSString *)id;
 @end

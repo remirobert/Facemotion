@@ -30,18 +30,34 @@
     }];
 }
 
+- (NSInteger)idFace:(ContactModel *)contact {
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"id = %@",
+                         contact.id];
+    RLMResults<FaceContact *> *facesContact = [FaceContact objectsWithPredicate:pred];
+    
+    if (facesContact.count > 0) {
+        FaceContact *firstFace = [facesContact objectAtIndex:0];
+        return firstFace.idRecognition;
+    }
+    return [(NSNumber *)[[FaceContact allObjects] maxOfProperty:@"idRecognition"] integerValue] + 1;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Do you want to assign the detected frames to this contact ?" message:nil preferredStyle:UIAlertControllerStyleAlert];
     
     [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
     [alertController addAction:[UIAlertAction actionWithTitle:@"Assign" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         ContactModel *contact = [self.contacts objectAtIndex:indexPath.row];
+        RLMRealm *realm = [RLMRealm defaultRealm];
+        NSInteger idFace = [self idFace:contact];
+        NSLog(@"index value : %d", idFace);
         NSMutableArray *faces = [NSMutableArray new];
+        
         for (UIImage *imageFace in self.face.faces) {
             FaceContact *newFace = [[FaceContact alloc] initWithImage:imageFace idContact:contact.id];
+            newFace.idRecognition = idFace;
             [faces addObject:newFace];
         }
-        RLMRealm *realm = [RLMRealm defaultRealm];
         [realm transactionWithBlock:^{
             [realm addObjects:faces];
         }];

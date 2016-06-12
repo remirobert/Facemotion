@@ -32,6 +32,13 @@
     self.collectionviewFrames.dataSource = self;
 
     RLMResults<FaceContact *> *contactsFace = [FaceContact allObjects];
+    NSMutableArray<FaceContact *> *contacts = [NSMutableArray new];
+    for (NSInteger index = 0; index < contactsFace.count; index++) {
+        [contacts addObject:[contactsFace objectAtIndex:index]];
+    }
+    if (contactsFace.count > 0) {
+        //    [FaceRecognition recognitionFace:contacts face:[self.face.faces firstObject]];
+    }
     NSLog(@"objects fund ; %@", contactsFace);
 }
 
