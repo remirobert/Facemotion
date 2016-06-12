@@ -38,7 +38,7 @@
     
     instance.recognizer->train(images, labels);
     instance.recognizer->predict(frame, predicted_label, predicted_confidence);
-    NSLog(@"label predicted : %d", predicted_label);
+    
     NSPredicate *pred = [NSPredicate predicateWithFormat:@"idRecognition = %d", predicted_label];
     RLMResults<FaceContact *> *facesContact = [FaceContact objectsWithPredicate:pred];
     

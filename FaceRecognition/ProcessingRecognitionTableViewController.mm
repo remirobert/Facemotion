@@ -35,6 +35,10 @@
     RecognitionResult *result = [FaceRecognition recognitionFace:contacts face:face];
     FaceContact *contact = result.contact;
     
+    self.labelConfidence.text = nil;
+    self.nameResult.text = nil;
+    self.imageviewResult.image = nil;
+    
     self.labelConfidence.text = [NSString stringWithFormat:@"confidence : %f", result.confidence];
     [ContactManager fetchWithId:contact.id completion:^(ContactModel *contact) {
         self.nameResult.text = contact.name;
