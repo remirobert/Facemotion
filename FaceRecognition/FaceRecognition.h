@@ -14,6 +14,5 @@
 #import "RecognitionResult.h"
 
 @interface FaceRecognition : NSObject
-+ (BOOL)trainingFace:(NSArray<Face *> *)faces withFace:(Face *)face;
 + (RecognitionResult *)recognitionFace:(NSArray<FaceContact *> *)faces face:(UIImage *)image;
 @end

@@ -54,6 +54,7 @@
 @property (nonatomic, strong) NSMutableArray<UIView *> *viewsFace;
 @property (nonatomic, strong) CIDetector *faceDetector;
 @property (nonatomic, strong) NSMutableArray<DetectFace *> *detectedFaces;
+@property (nonatomic, strong) TargetScanView *targetView;
 @property (nonatomic, assign) BOOL isPaused;
 @end
 
@@ -277,6 +278,17 @@
     });
 }
 
+- (void)addViewsFace:(CGRect)frameFace {
+    UIView *faceView = [[UIView alloc] initWithFrame:frameFace];
+    faceView.layer.cornerRadius = frameFace.size.width / 2;
+    faceView.layer.borderColor = [[[UIColor whiteColor] colorWithAlphaComponent:0.5] CGColor];
+    faceView.layer.borderWidth = 4;
+    [self.viewsFace addObject:faceView];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.view insertSubview:faceView belowSubview:self.targetView];
+    });
+}
+
 - (void)captureOutput:(AVCaptureOutput *)captureOutput
 didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
        fromConnection:(AVCaptureConnection *)connection {
@@ -313,14 +325,25 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         CGAffineTransform transform = CGAffineTransformMakeScale(1, -1);
         transform = CGAffineTransformTranslate(transform,
                                                0, -self.view.bounds.size.height);
-        
+    
+        for (UIView *view in self.viewsFace) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [view removeFromSuperview];
+            });
+        }
+        [self.viewsFace removeAllObjects];
         
         NSLog(@"🤖 number detected frames : %lu", (unsigned long)self.detectedFaces.count);
         for (CIFaceFeature *feature in features) {
             if (!feature.hasMouthPosition || !feature.hasLeftEyePosition || !feature.hasRightEyePosition) {
                 continue;
             }
+            
+            CGPoint eyePosition = feature.leftEyePosition;
+            NSLog(@"eyePosition : %f %f", eyePosition.x, eyePosition.y);
+            
             CGRect faceRect = [self frameForFeature:feature previewBox:previewBox cleanAperture:cleanAperture];
+            [self addViewsFace:faceRect];
             
             CGImageRef imageRef = CGImageCreateWithImageInRect(image.CGImage,
                                                                CGRectMake(feature.bounds.origin.x,
@@ -383,7 +406,10 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 }
 
 - (IBAction)clearFaces:(id)sender {
-    NSLog(@"clear call");
+    for (UIView *view in self.viewsFace) {
+        [view removeFromSuperview];
+    }
+    [self.viewsFace removeAllObjects];
     self.faceDetector = nil;
     [self.detectedFaces removeAllObjects];
     [self.collectionView reloadData];
@@ -468,9 +494,9 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     self.bottomConstraintCollection.constant = -128;
     self.bottomConstraintClear.constant = -136;
     
-    TargetScanView *targetView = (TargetScanView *)[[[UINib nibWithNibName:@"TargetScanView" bundle:nil] instantiateWithOwner:self options:nil] firstObject];
-    [self.view insertSubview:targetView atIndex:0];
-    [targetView mas_makeConstraints:^(MASConstraintMaker *make) {
+    self.targetView = (TargetScanView *)[[[UINib nibWithNibName:@"TargetScanView" bundle:nil] instantiateWithOwner:self options:nil] firstObject];
+    [self.view insertSubview:self.targetView atIndex:0];
+    [self.targetView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
     }];
 }
