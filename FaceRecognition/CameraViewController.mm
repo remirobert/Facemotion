@@ -24,6 +24,7 @@
 #import "DetailDetectionFaceViewController.h"
 #import "TargetScanView.h"
 #import "CreateNewContactTableViewController.h"
+#import "ProcessingRecognitionTableViewController.h"
 
 #include <iostream>
 #include <fstream>
@@ -428,13 +429,13 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     self.isPaused = true;
-    [self performSegueWithIdentifier:@"createContactSegue" sender:[self.detectedFaces objectAtIndex:indexPath.row]];
+    [self performSegueWithIdentifier:@"processingSegue" sender:[self.detectedFaces objectAtIndex:indexPath.row]];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"createContactSegue"]) {
+    if ([segue.identifier isEqualToString:@"processingSegue"]) {
         UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
-        ((CreateNewContactTableViewController *)navigationController.viewControllers.firstObject).face = (DetectFace *)sender;
+//        ((ProcessingRecognitionTableViewController *)navigationController.viewControllers.firstObject).face = (DetectFace *)sender;
     }
 }
 
