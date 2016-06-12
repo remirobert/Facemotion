@@ -11,4 +11,5 @@
 
 @interface ContactManager : NSObject
 + (void)fetchContacts:(void (^)(NSArray<ContactModel *> *))completion;
++ (void)fetchWithId:(NSString *)id completion:(void (^)(ContactModel *))completion;
 @end

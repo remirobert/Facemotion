@@ -31,8 +31,7 @@
 }
 
 - (NSInteger)idFace:(ContactModel *)contact {
-    NSPredicate *pred = [NSPredicate predicateWithFormat:@"id = %@",
-                         contact.id];
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"id = %@", contact.id];
     RLMResults<FaceContact *> *facesContact = [FaceContact objectsWithPredicate:pred];
     
     if (facesContact.count > 0) {

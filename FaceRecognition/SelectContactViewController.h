@@ -12,5 +12,5 @@
 
 @interface SelectContactViewController : UIViewController
 @property (nonatomic, strong) DetectFace *face;
-+ (NSString *)recognitionFace:(NSArray<FaceContact *> *)faces face:(UIImage *)image;
++ (FaceContact *)recognitionFace:(NSArray<FaceContact *> *)faces face:(UIImage *)image;
 @end

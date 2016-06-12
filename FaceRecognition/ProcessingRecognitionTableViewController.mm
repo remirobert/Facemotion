@@ -10,10 +10,13 @@
 #import "FaceCollectionViewCell.h"
 #import "FaceRecognition.h"
 #import "FaceContact.h"
+#import "ContactManager.h"
 #import "SelectContactViewController.h"
 
 @interface ProcessingRecognitionTableViewController () <UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
+@property (weak, nonatomic) IBOutlet UILabel *predictionDegree;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionviewFrames;
+@property (weak, nonatomic) IBOutlet UILabel *nameResult;
 @property (weak, nonatomic) IBOutlet UIImageView *imageviewResult;
 @end
 
@@ -37,7 +40,19 @@
         [contacts addObject:[contactsFace objectAtIndex:index]];
     }
     if (contactsFace.count > 0) {
-        [FaceRecognition recognitionFace:contacts face:[self.face.faces firstObject]];
+        FaceContact *contact = [FaceRecognition recognitionFace:contacts face:[self.face.faces firstObject]];
+        [ContactManager fetchWithId:contact.id completion:^(ContactModel *contact) {
+            self.nameResult.text = contact.name;
+            
+            NSPredicate *pred = [NSPredicate predicateWithFormat:@"id = %@", contact.id];
+            RLMResults<FaceContact *> *facesContact = [FaceContact objectsWithPredicate:pred];
+            
+            if (facesContact.count > 0) {
+                FaceContact *firstFace = [facesContact objectAtIndex:0];
+                UIImage *image = [UIImage imageWithData:firstFace.imageData];
+                self.imageviewResult.image = image;
+            }
+        }];
     }
 }
 

@@ -11,8 +11,9 @@
 #import <opencv2/core/core.hpp>
 #import "Face.h"
 #import "FaceContact.h"
+#import "RecognitionResult.h"
 
 @interface FaceRecognition : NSObject
 + (BOOL)trainingFace:(NSArray<Face *> *)faces withFace:(Face *)face;
-+ (NSString *)recognitionFace:(NSArray<FaceContact *> *)faces face:(UIImage *)image;
++ (RecognitionResult *)recognitionFace:(NSArray<FaceContact *> *)faces face:(UIImage *)image;
 @end

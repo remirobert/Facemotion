@@ -34,6 +34,7 @@
 		BB288B6E1CFAA65000784037 /* OpenCVImageProcessing.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB288B6D1CFAA65000784037 /* OpenCVImageProcessing.mm */; };
 		BB288B711CFACD9F00784037 /* ImageProcessing.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB288B701CFACD9F00784037 /* ImageProcessing.mm */; };
 		BB2AD3EE1D0D7A69000BC32A /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = BB2AD3ED1D0D7A69000BC32A /* UIImage+Resize.m */; };
+		BB2AD3F11D0D8B47000BC32A /* RecognitionResult.m in Sources */ = {isa = PBXBuildFile; fileRef = BB2AD3F01D0D8B47000BC32A /* RecognitionResult.m */; };
 		BB722D481CAFF36400701F03 /* haarcascade_frontalface_alt2.xml in Resources */ = {isa = PBXBuildFile; fileRef = BB722D471CAFF36400701F03 /* haarcascade_frontalface_alt2.xml */; };
 		BB722D581CB14ED500701F03 /* VideoFaceDetector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BB722D561CB14ED500701F03 /* VideoFaceDetector.cpp */; };
 		BBA10E981CAA0D1300B74283 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA10E971CAA0D1300B74283 /* main.m */; };
@@ -95,6 +96,8 @@
 		BB288B701CFACD9F00784037 /* ImageProcessing.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ImageProcessing.mm; sourceTree = "<group>"; };
 		BB2AD3EC1D0D7A69000BC32A /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Resize.h"; path = "../../../Downloads/UIImage-Resize-master-3/UIImage+Resize.h"; sourceTree = "<group>"; };
 		BB2AD3ED1D0D7A69000BC32A /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Resize.m"; path = "../../../Downloads/UIImage-Resize-master-3/UIImage+Resize.m"; sourceTree = "<group>"; };
+		BB2AD3EF1D0D8B47000BC32A /* RecognitionResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecognitionResult.h; sourceTree = "<group>"; };
+		BB2AD3F01D0D8B47000BC32A /* RecognitionResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecognitionResult.m; sourceTree = "<group>"; };
 		BB722D471CAFF36400701F03 /* haarcascade_frontalface_alt2.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = haarcascade_frontalface_alt2.xml; sourceTree = "<group>"; };
 		BB722D491CB119E900701F03 /* FaceRecognition-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FaceRecognition-Bridging-Header.h"; sourceTree = "<group>"; };
 		BB722D561CB14ED500701F03 /* VideoFaceDetector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VideoFaceDetector.cpp; sourceTree = "<group>"; };
@@ -185,6 +188,8 @@
 				BB1520101CFC2ACF0028C5CB /* FaceDetector.mm */,
 				BB1520121CFC3DF10028C5CB /* FaceRecognition.h */,
 				BB1520131CFC3DF10028C5CB /* FaceRecognition.mm */,
+				BB2AD3EF1D0D8B47000BC32A /* RecognitionResult.h */,
+				BB2AD3F01D0D8B47000BC32A /* RecognitionResult.m */,
 				BB288B6F1CFACD9F00784037 /* ImageProcessing.h */,
 				BB288B701CFACD9F00784037 /* ImageProcessing.mm */,
 				BB0ED37B1D002A2200CE4651 /* OrientationDevice.h */,
@@ -381,6 +386,7 @@
 				BB0ED37D1D002A2200CE4651 /* OrientationDevice.mm in Sources */,
 				BBA10E9B1CAA0D1300B74283 /* AppDelegate.m in Sources */,
 				BB0BCAA81D0C2D8A00970502 /* ContactManager.m in Sources */,
+				BB2AD3F11D0D8B47000BC32A /* RecognitionResult.m in Sources */,
 				BB1520181CFD1FDC0028C5CB /* FaceCollectionViewCell.mm in Sources */,
 				BB722D581CB14ED500701F03 /* VideoFaceDetector.cpp in Sources */,
 				BB1520141CFC3DF10028C5CB /* FaceRecognition.mm in Sources */,

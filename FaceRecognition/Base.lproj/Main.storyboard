@@ -469,7 +469,7 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Result recognition" id="gPc-dL-Ryp">
+                            <tableViewSection headerTitle="Prediction recognition" id="gPc-dL-Ryp">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="130" id="Zpp-O0-7I7">
                                         <rect key="frame" x="0.0" y="283.5" width="600" height="130"/>
@@ -485,11 +485,35 @@
                                                         <constraint firstAttribute="height" constant="100" id="suw-eJ-kuU"/>
                                                     </constraints>
                                                 </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rvi-hU-RF8">
+                                                    <rect key="frame" x="126" y="15" width="466" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="vjj-9v-jB3"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nGr-1D-HBq">
+                                                    <rect key="frame" x="126" y="44" width="466" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="62F-SY-Afu"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <color key="backgroundColor" red="0.092307692307692313" green="0.092307692307692313" blue="0.092307692307692313" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
+                                                <constraint firstItem="nGr-1D-HBq" firstAttribute="trailing" secondItem="ykB-ym-ZvD" secondAttribute="trailingMargin" id="BHF-zW-4fP"/>
+                                                <constraint firstItem="rvi-hU-RF8" firstAttribute="leading" secondItem="jbu-RY-win" secondAttribute="trailing" constant="8" id="Kma-Cl-UjJ"/>
+                                                <constraint firstItem="rvi-hU-RF8" firstAttribute="trailing" secondItem="ykB-ym-ZvD" secondAttribute="trailingMargin" id="LJF-eE-e7d"/>
                                                 <constraint firstItem="jbu-RY-win" firstAttribute="centerY" secondItem="ykB-ym-ZvD" secondAttribute="centerY" id="LfO-9A-zCi"/>
+                                                <constraint firstItem="rvi-hU-RF8" firstAttribute="top" secondItem="ykB-ym-ZvD" secondAttribute="topMargin" constant="7" id="MOu-w6-vAg"/>
+                                                <constraint firstItem="nGr-1D-HBq" firstAttribute="top" secondItem="rvi-hU-RF8" secondAttribute="bottom" constant="8" id="Qsx-b2-6Vj"/>
                                                 <constraint firstItem="jbu-RY-win" firstAttribute="leading" secondItem="ykB-ym-ZvD" secondAttribute="leadingMargin" constant="10" id="r3k-OH-ycC"/>
+                                                <constraint firstItem="nGr-1D-HBq" firstAttribute="leading" secondItem="jbu-RY-win" secondAttribute="trailing" constant="8" id="uIq-gc-1u1"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -590,6 +614,8 @@
                     <connections>
                         <outlet property="collectionviewFrames" destination="qsp-8p-imb" id="Nhv-ZV-6eQ"/>
                         <outlet property="imageviewResult" destination="jbu-RY-win" id="Rbt-TV-gQe"/>
+                        <outlet property="nameResult" destination="rvi-hU-RF8" id="q0e-Oa-qVm"/>
+                        <outlet property="predictionDegree" destination="nGr-1D-HBq" id="KhA-N0-AAX"/>
                         <segue destination="UCc-4F-8CB" kind="show" identifier="selectContactSegue" id="u6Z-rl-ee1"/>
                     </connections>
                 </tableViewController>
