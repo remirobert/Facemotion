@@ -353,7 +353,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
             NSLog(@"%d %d", feature.leftEyeClosed, feature.rightEyeClosed);
             NSLog(@"%f", feature.faceAngle);
             
-            if (!feature.leftEyeClosed && !feature.rightEyeClosed && feature.faceAngle > -5 && feature.faceAngle < 5) {
+            if (feature.faceAngle > -5 && feature.faceAngle < 5) {
                 [self addViewsFace:faceRect validView:true];
             }
             else {
