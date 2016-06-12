@@ -80,13 +80,26 @@
                                     <action selector="clearFaces:" destination="BYZ-38-t0r" eventType="touchUpInside" id="S2R-II-aKO"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eUc-or-oN6">
+                                <rect key="frame" x="20" y="28" width="46" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Hdc-cS-edd"/>
+                                    <constraint firstAttribute="width" constant="46" id="nCT-Yd-ApP"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="flipCamera:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bOo-RQ-Xgs"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="bottomMargin" secondItem="8Zd-XI-Tpj" secondAttribute="bottom" id="0iQ-QK-ZfK"/>
                             <constraint firstAttribute="trailingMargin" secondItem="8Zd-XI-Tpj" secondAttribute="trailing" constant="-20" id="5Ej-If-RTY"/>
                             <constraint firstItem="wTW-MB-IWb" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="8Hd-Dd-B56"/>
+                            <constraint firstItem="eUc-or-oN6" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="A3v-1d-PUt"/>
                             <constraint firstItem="8Zd-XI-Tpj" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="BJ4-Qq-Jrt"/>
+                            <constraint firstItem="eUc-or-oN6" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="LPS-8O-Hl5"/>
                             <constraint firstAttribute="bottomMargin" secondItem="wTW-MB-IWb" secondAttribute="bottom" constant="136" id="Nxs-8M-aed"/>
                         </constraints>
                     </view>
@@ -96,6 +109,7 @@
                         <outlet property="bottomConstraintClear" destination="Nxs-8M-aed" id="eSz-ld-Oqt"/>
                         <outlet property="bottomConstraintCollection" destination="0iQ-QK-ZfK" id="AeQ-fS-T8j"/>
                         <outlet property="buttonClearDetection" destination="wTW-MB-IWb" id="Xdn-Qv-IPk"/>
+                        <outlet property="buttonFlipCamera" destination="eUc-or-oN6" id="d2u-2a-JyI"/>
                         <outlet property="collectionView" destination="ax4-D8-VQD" id="fy7-bS-Qed"/>
                         <outlet property="collectionViewLayout" destination="yEy-Nj-x3I" id="E9J-bu-Ntl"/>
                         <outlet property="effectView" destination="8Zd-XI-Tpj" id="PI1-bT-FWK"/>

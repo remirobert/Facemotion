@@ -33,6 +33,10 @@
 
 #define MAX_DETECTED_FACES 10
 
+enum CameraViewDeviceOrientation {
+    Back, Front
+};
+
 @interface CameraViewController () <AVCaptureMetadataOutputObjectsDelegate, AVCaptureVideoDataOutputSampleBufferDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 @property (strong, nonatomic) IBOutlet UIView *loadingView;
 @property (weak, nonatomic) IBOutlet UIButton *buttonClearDetection;
@@ -56,6 +60,7 @@
 @property (nonatomic, strong) NSMutableArray<DetectFace *> *detectedFaces;
 @property (nonatomic, strong) TargetScanView *targetView;
 @property (nonatomic, assign) BOOL isPaused;
+@property (nonatomic, assign) CameraViewDeviceOrientation currentOrientation;
 @end
 
 @implementation CameraViewController
@@ -214,11 +219,9 @@
     return [self.faceDetector featuresInImage:image options:imageOptions];
 }
 
-- (CGRect)frameForFeature:(CIFaceFeature *)feature
+- (CGRect)frameForFeature:(CGRect)faceRect
                previewBox:(CGRect)previewBox
             cleanAperture:(CGRect)cleanAperture {
-    
-    CGRect faceRect = feature.bounds;
     CGFloat temp = faceRect.size.width;
     faceRect.size.width = faceRect.size.height;
     faceRect.size.height = temp;
@@ -342,7 +345,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
             CGPoint eyePosition = feature.leftEyePosition;
             NSLog(@"eyePosition : %f %f", eyePosition.x, eyePosition.y);
             
-            CGRect faceRect = [self frameForFeature:feature previewBox:previewBox cleanAperture:cleanAperture];
+            CGRect faceRect = [self frameForFeature:feature.bounds previewBox:previewBox cleanAperture:cleanAperture];
             [self addViewsFace:faceRect];
             
             CGImageRef imageRef = CGImageCreateWithImageInRect(image.CGImage,
@@ -376,6 +379,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     } completion:^(BOOL finished) {
         [self.loadingView removeFromSuperview];
     }];
+    [self.view bringSubviewToFront:self.buttonFlipCamera];
 }
 
 - (void)initCamera {
@@ -402,6 +406,19 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
             
         default:
             break;
+    }
+}
+
+- (IBAction)flipCamera:(id)sender {
+    [self.session removeInput:self.deviceInput];
+    [self clearFaces:nil];
+    if (self.currentOrientation == Back) {
+        [self initInputDevice:self.frontDevice];
+        self.currentOrientation = Front;
+    }
+    else {
+        [self initInputDevice:self.backDevice];
+        self.currentOrientation = Back;
     }
 }
 
@@ -468,6 +485,8 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.currentOrientation = Back;
     
     [self.view addSubview:self.loadingView];
     [self.loadingView mas_makeConstraints:^(MASConstraintMaker *make) {
