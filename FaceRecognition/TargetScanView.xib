@@ -12,7 +12,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hold your camera up to someone." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VNJ-E8-h8A">
-                    <rect key="frame" x="8" y="26" width="584" height="21"/>
+                    <rect key="frame" x="8" y="31" width="584" height="21"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="21" id="nTF-UY-xgT"/>
                     </constraints>
@@ -25,7 +25,7 @@
             <constraints>
                 <constraint firstItem="VNJ-E8-h8A" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="P9y-uc-Ggo"/>
                 <constraint firstAttribute="trailing" secondItem="VNJ-E8-h8A" secondAttribute="trailing" constant="8" id="fOi-y3-CYy"/>
-                <constraint firstItem="VNJ-E8-h8A" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="26" id="jyH-qm-HgN"/>
+                <constraint firstItem="VNJ-E8-h8A" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="31" id="jyH-qm-HgN"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>

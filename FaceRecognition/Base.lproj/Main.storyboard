@@ -81,10 +81,10 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eUc-or-oN6">
-                                <rect key="frame" x="20" y="28" width="50" height="50"/>
+                                <rect key="frame" x="20" y="28" width="40" height="40"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="Hdc-cS-edd"/>
-                                    <constraint firstAttribute="width" constant="50" id="nCT-Yd-ApP"/>
+                                    <constraint firstAttribute="height" constant="40" id="Hdc-cS-edd"/>
+                                    <constraint firstAttribute="width" constant="40" id="nCT-Yd-ApP"/>
                                 </constraints>
                                 <state key="normal" image="flipCamera"/>
                                 <connections>

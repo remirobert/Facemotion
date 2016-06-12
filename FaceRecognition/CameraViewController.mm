@@ -281,10 +281,15 @@ enum CameraViewDeviceOrientation {
     });
 }
 
-- (void)addViewsFace:(CGRect)frameFace {
+- (void)addViewsFace:(CGRect)frameFace validView:(BOOL)valid {
     UIView *faceView = [[UIView alloc] initWithFrame:frameFace];
     faceView.layer.cornerRadius = frameFace.size.width / 2;
-    faceView.layer.borderColor = [[[UIColor whiteColor] colorWithAlphaComponent:0.5] CGColor];
+    if (valid) {
+        faceView.layer.borderColor = [[[UIColor whiteColor] colorWithAlphaComponent:0.5] CGColor];
+    }
+    else {
+        faceView.layer.borderColor = [[[UIColor redColor] colorWithAlphaComponent:0.5] CGColor];
+    }
     faceView.layer.borderWidth = 4;
     [self.viewsFace addObject:faceView];
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -342,11 +347,18 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
                 continue;
             }
             
-            CGPoint eyePosition = feature.leftEyePosition;
-            NSLog(@"eyePosition : %f %f", eyePosition.x, eyePosition.y);
-            
             CGRect faceRect = [self frameForFeature:feature.bounds previewBox:previewBox cleanAperture:cleanAperture];
-            [self addViewsFace:faceRect];
+            
+            NSLog(@"%d %d", feature.hasFaceAngle, feature.hasSmile);
+            NSLog(@"%d %d", feature.leftEyeClosed, feature.rightEyeClosed);
+            NSLog(@"%f", feature.faceAngle);
+            
+            if (!feature.leftEyeClosed && !feature.rightEyeClosed && feature.faceAngle < 5) {
+                [self addViewsFace:faceRect validView:true];
+            }
+            else {
+                [self addViewsFace:faceRect validView:false];
+            }
             
             CGImageRef imageRef = CGImageCreateWithImageInRect(image.CGImage,
                                                                CGRectMake(feature.bounds.origin.x,
