@@ -10,6 +10,7 @@
 #import "FaceCollectionViewCell.h"
 #import "FaceRecognition.h"
 #import "FaceContact.h"
+#import "SelectContactViewController.h"
 
 @interface ProcessingRecognitionTableViewController () <UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionviewFrames;
@@ -35,13 +36,14 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@""]) {
-        
+    if ([segue.identifier isEqualToString:@"selectContactSegue"]) {
+        ((SelectContactViewController *)segue.destinationViewController).face = self.face;
     }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 3) {
+        [self performSegueWithIdentifier:@"selectContactSegue" sender:nil];
     }
 }
 

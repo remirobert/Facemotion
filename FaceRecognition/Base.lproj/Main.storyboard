@@ -554,9 +554,6 @@
                                                 <constraint firstAttribute="bottomMargin" secondItem="CN4-GP-Q61" secondAttribute="bottom" constant="3.5" id="vjK-Jd-jx2"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="UCc-4F-8CB" kind="show" id="egN-4k-bIX"/>
-                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -577,6 +574,7 @@
                     <connections>
                         <outlet property="collectionviewFrames" destination="qsp-8p-imb" id="Nhv-ZV-6eQ"/>
                         <outlet property="imageviewResult" destination="jbu-RY-win" id="Rbt-TV-gQe"/>
+                        <segue destination="UCc-4F-8CB" kind="show" identifier="selectContactSegue" id="u6Z-rl-ee1"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r5s-4W-ynL" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -11,10 +11,6 @@
 
 @implementation FaceContact
 
-+ (nullable NSString *)primaryKey {
-    return @"id";
-}
-
 - (instancetype)initWithImage:(UIImage *)image idContact:(NSString *)id {
     self = [super init];
     
