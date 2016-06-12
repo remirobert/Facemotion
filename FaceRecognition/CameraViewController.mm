@@ -351,7 +351,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
                                                                           feature.bounds.size.width,
                                                                           feature.bounds.size.height));
             UIImage *croppedImage = [UIImage imageWithCGImage:imageRef];
-        
+            croppedImage = [UIImage imageWithCGImage:croppedImage.CGImage scale:0.0 orientation:UIImageOrientationRight];
             CGImageRelease(imageRef);
             [self addNewFaceFrame:feature frame:croppedImage];
         }

@@ -47,7 +47,7 @@
         
     }
     cvMat.release();
-    cv::flip(cvMatTest, cvMatTest, 1);
+//    cv::flip(cvMatTest, cvMatTest, 1);
     return cvMatTest;
 }
 

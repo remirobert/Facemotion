@@ -56,6 +56,10 @@
     std::vector<cv::Mat> images;
     std::vector<int> labels;
     
+    if (faces.count == 0) {
+        return nil;
+    }
+    
     cv::Mat frame = [OpenCVImageProcessing cvMatFromUIImage:image];
     
     for (FaceContact *face in faces) {
