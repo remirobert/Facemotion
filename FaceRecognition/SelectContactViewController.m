@@ -35,7 +35,16 @@
     
     [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
     [alertController addAction:[UIAlertAction actionWithTitle:@"Assign" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
+        ContactModel *contact = [self.contacts objectAtIndex:indexPath.row];
+        NSMutableArray *faces = [NSMutableArray new];
+        for (UIImage *imageFace in self.face.faces) {
+            FaceContact *newFace = [[FaceContact alloc] initWithImage:imageFace idContact:contact.id];
+            [faces addObject:newFace];
+        }
+        RLMRealm *realm = [RLMRealm defaultRealm];
+        [realm transactionWithBlock:^{
+            [realm addObjects:faces];
+        }];
     }]];
     [self presentViewController:alertController animated:true completion:nil];
 }
