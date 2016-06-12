@@ -14,7 +14,7 @@
 #import "SelectContactViewController.h"
 
 @interface ProcessingRecognitionTableViewController () <UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
-@property (weak, nonatomic) IBOutlet UILabel *predictionDegree;
+@property (weak, nonatomic) IBOutlet UILabel *labelConfidence;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionviewFrames;
 @property (weak, nonatomic) IBOutlet UILabel *nameResult;
 @property (weak, nonatomic) IBOutlet UIImageView *imageviewResult;
@@ -40,7 +40,10 @@
         [contacts addObject:[contactsFace objectAtIndex:index]];
     }
     if (contactsFace.count > 0) {
-        FaceContact *contact = [FaceRecognition recognitionFace:contacts face:[self.face.faces firstObject]];
+        RecognitionResult *result = [FaceRecognition recognitionFace:contacts face:[self.face.faces firstObject]];
+        FaceContact *contact = result.contact;
+
+        self.labelConfidence.text = [NSString stringWithFormat:@"confidence : %f", result.confidence];
         [ContactManager fetchWithId:contact.id completion:^(ContactModel *contact) {
             self.nameResult.text = contact.name;
             

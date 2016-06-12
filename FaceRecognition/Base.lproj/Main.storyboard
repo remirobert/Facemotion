@@ -614,8 +614,8 @@
                     <connections>
                         <outlet property="collectionviewFrames" destination="qsp-8p-imb" id="Nhv-ZV-6eQ"/>
                         <outlet property="imageviewResult" destination="jbu-RY-win" id="Rbt-TV-gQe"/>
+                        <outlet property="labelConfidence" destination="nGr-1D-HBq" id="zit-3N-PAs"/>
                         <outlet property="nameResult" destination="rvi-hU-RF8" id="q0e-Oa-qVm"/>
-                        <outlet property="predictionDegree" destination="nGr-1D-HBq" id="KhA-N0-AAX"/>
                         <segue destination="UCc-4F-8CB" kind="show" identifier="selectContactSegue" id="u6Z-rl-ee1"/>
                     </connections>
                 </tableViewController>

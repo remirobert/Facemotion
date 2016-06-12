@@ -337,6 +337,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    [self clearFaces:nil];
     [super viewDidAppear:animated];
     self.isPaused = false;
     if ([self.session canAddOutput:self.videoOutput]) {
@@ -381,12 +382,9 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     }
 }
 
-- (IBAction)flipCamera:(id)sender {
-    
-}
-
 - (IBAction)clearFaces:(id)sender {
     NSLog(@"clear call");
+    self.faceDetector = nil;
     [self.detectedFaces removeAllObjects];
     [self.collectionView reloadData];
 }
