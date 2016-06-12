@@ -68,7 +68,7 @@ enum CameraViewDeviceOrientation {
 - (CIDetector *)faceDetector {
     if (!_faceDetector) {
         NSDictionary *detectorOptions = [[NSDictionary alloc] initWithObjectsAndKeys:CIDetectorAccuracyHigh, CIDetectorAccuracy,
-                                         @(YES), CIDetectorTracking, nil];
+                                         @(YES), CIDetectorTracking, @(YES), CIDetectorEyeBlink, nil];
         _faceDetector = [CIDetector detectorOfType:CIDetectorTypeFace context:nil options:detectorOptions];
     }
     return _faceDetector;
@@ -353,7 +353,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
             NSLog(@"%d %d", feature.leftEyeClosed, feature.rightEyeClosed);
             NSLog(@"%f", feature.faceAngle);
             
-            if (!feature.leftEyeClosed && !feature.rightEyeClosed && feature.faceAngle < 5) {
+            if (!feature.leftEyeClosed && !feature.rightEyeClosed && feature.faceAngle > -5 && feature.faceAngle < 5) {
                 [self addViewsFace:faceRect validView:true];
             }
             else {
