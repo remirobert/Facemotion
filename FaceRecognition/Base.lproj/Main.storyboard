@@ -66,13 +66,6 @@
                                 </constraints>
                                 <blurEffect style="dark"/>
                             </visualEffectView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="bHe-tJ-7PI">
-                                <rect key="frame" x="282" y="281" width="37" height="37"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="37" id="21p-a2-h1S"/>
-                                    <constraint firstAttribute="width" constant="37" id="vqM-8p-Jrv"/>
-                                </constraints>
-                            </activityIndicatorView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wTW-MB-IWb">
                                 <rect key="frame" x="246" y="434" width="108" height="30"/>
                                 <constraints>
@@ -95,8 +88,6 @@
                             <constraint firstItem="wTW-MB-IWb" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="8Hd-Dd-B56"/>
                             <constraint firstItem="8Zd-XI-Tpj" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="BJ4-Qq-Jrt"/>
                             <constraint firstAttribute="bottomMargin" secondItem="wTW-MB-IWb" secondAttribute="bottom" constant="136" id="Nxs-8M-aed"/>
-                            <constraint firstItem="bHe-tJ-7PI" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="cYM-ju-9IE"/>
-                            <constraint firstItem="bHe-tJ-7PI" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="dQh-fc-EU3"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Scan" selectedImage="scanImage" id="hYK-1W-2mG"/>
@@ -108,7 +99,7 @@
                         <outlet property="collectionView" destination="ax4-D8-VQD" id="fy7-bS-Qed"/>
                         <outlet property="collectionViewLayout" destination="yEy-Nj-x3I" id="E9J-bu-Ntl"/>
                         <outlet property="effectView" destination="8Zd-XI-Tpj" id="PI1-bT-FWK"/>
-                        <outlet property="indicatorLoadingSession" destination="bHe-tJ-7PI" id="lkO-n7-AV2"/>
+                        <outlet property="loadingView" destination="IY9-a0-k6Q" id="djo-eB-n1v"/>
                         <segue destination="i1c-m2-fM8" kind="presentation" identifier="processingSegue" modalTransitionStyle="flipHorizontal" id="b6T-sv-uuI"/>
                     </connections>
                 </viewController>
@@ -116,7 +107,32 @@
                 <view contentMode="scaleToFill" id="IY9-a0-k6Q">
                     <rect key="frame" x="0.0" y="0.0" width="240" height="310"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <subviews>
+                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="oS2-eB-Gz9">
+                            <rect key="frame" x="110" y="145" width="20" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="aya-fx-KkX"/>
+                                <constraint firstAttribute="width" constant="20" id="w1w-dw-FYo"/>
+                            </constraints>
+                        </activityIndicatorView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Initializing camera..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0HF-4W-s9U">
+                            <rect key="frame" x="8" y="173" width="224" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="21" id="pYR-qk-JV3"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="15"/>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="oS2-eB-Gz9" firstAttribute="centerX" secondItem="IY9-a0-k6Q" secondAttribute="centerX" id="YBy-hL-r2e"/>
+                        <constraint firstItem="0HF-4W-s9U" firstAttribute="top" secondItem="oS2-eB-Gz9" secondAttribute="bottom" constant="8" id="cE0-jn-7ms"/>
+                        <constraint firstItem="oS2-eB-Gz9" firstAttribute="centerY" secondItem="IY9-a0-k6Q" secondAttribute="centerY" id="hg0-WY-kbG"/>
+                        <constraint firstAttribute="trailing" secondItem="0HF-4W-s9U" secondAttribute="trailing" constant="8" id="iWK-um-XDE"/>
+                        <constraint firstItem="0HF-4W-s9U" firstAttribute="leading" secondItem="IY9-a0-k6Q" secondAttribute="leading" constant="8" id="lU7-3Y-11D"/>
+                    </constraints>
                 </view>
             </objects>
             <point key="canvasLocation" x="1302" y="1105"/>

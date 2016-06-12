@@ -31,9 +31,9 @@
     return instance;
 }
 
-+ (std::string)trainingImages:(std::vector<cv::Mat>)images labels:(std::vector<std::string>)labels sample:(cv::Mat)frame {
++ (int)trainingImages:(std::vector<cv::Mat>)images labels:(std::vector<int>)labels sample:(cv::Mat)frame {
     FaceRecognition *instance = [self sharedInstance];
-    std::string predicted_label;
+    int predicted_label;
     double predicted_confidence = 0.0;
     
     instance.recognizer->train(images, labels);
@@ -45,22 +45,28 @@
 //        return -1;
 //    }
     
-    NSLog(@"label predicted : %s", predicted_label.c_str());
+    NSLog(@"label predicted : %d", predicted_label);
     return predicted_label;
 //    return (predicted_confidence < 500) ? -1 : predicted_label;
 }
 
 + (NSString *)recognitionFace:(NSArray<FaceContact *> *)faces face:(UIImage *)image {
     std::vector<cv::Mat> images;
-    std::vector<std::string> labels;
+    std::vector<int> labels;
     
     cv::Mat frame = [OpenCVImageProcessing cvMatFromUIImage:image];
     
     for (FaceContact *face in faces) {
-        images.push_back([OpenCVImageProcessing cvMatFromUIImage:[UIImage imageWithData:face.imageData]]);
-        labels.push_back([face.id UTF8String]);
+        UIImage *currentImage = [UIImage imageWithData:face.imageData];
+        cv::Mat currentFrame = [OpenCVImageProcessing cvMatFromUIImage:currentImage];
+        cv::Mat grayFrame;
+        cv::cvtColor(currentFrame, grayFrame, CV_BGR2GRAY);
+        images.push_back(grayFrame);
+        labels.push_back((int)face.idRecognition);
     }
-    [self trainingImages:images labels:labels sample:frame];
+    cv::Mat grayFrame;
+    cv::cvtColor(frame, grayFrame, CV_BGR2GRAY);
+    [self trainingImages:images labels:labels sample:grayFrame];
     return @"o";
 }
 

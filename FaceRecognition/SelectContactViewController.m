@@ -50,7 +50,6 @@
         ContactModel *contact = [self.contacts objectAtIndex:indexPath.row];
         RLMRealm *realm = [RLMRealm defaultRealm];
         NSInteger idFace = [self idFace:contact];
-        NSLog(@"index value : %d", idFace);
         NSMutableArray *faces = [NSMutableArray new];
         
         for (UIImage *imageFace in self.face.faces) {

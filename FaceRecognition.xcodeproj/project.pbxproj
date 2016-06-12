@@ -33,6 +33,7 @@
 		BB2193B01D0AA9CD00F88C64 /* CreateNewContactTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB2193AF1D0AA9CD00F88C64 /* CreateNewContactTableViewController.m */; };
 		BB288B6E1CFAA65000784037 /* OpenCVImageProcessing.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB288B6D1CFAA65000784037 /* OpenCVImageProcessing.mm */; };
 		BB288B711CFACD9F00784037 /* ImageProcessing.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB288B701CFACD9F00784037 /* ImageProcessing.mm */; };
+		BB2AD3EE1D0D7A69000BC32A /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = BB2AD3ED1D0D7A69000BC32A /* UIImage+Resize.m */; };
 		BB722D481CAFF36400701F03 /* haarcascade_frontalface_alt2.xml in Resources */ = {isa = PBXBuildFile; fileRef = BB722D471CAFF36400701F03 /* haarcascade_frontalface_alt2.xml */; };
 		BB722D581CB14ED500701F03 /* VideoFaceDetector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BB722D561CB14ED500701F03 /* VideoFaceDetector.cpp */; };
 		BBA10E981CAA0D1300B74283 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA10E971CAA0D1300B74283 /* main.m */; };
@@ -92,6 +93,8 @@
 		BB288B6D1CFAA65000784037 /* OpenCVImageProcessing.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OpenCVImageProcessing.mm; sourceTree = "<group>"; };
 		BB288B6F1CFACD9F00784037 /* ImageProcessing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageProcessing.h; sourceTree = "<group>"; };
 		BB288B701CFACD9F00784037 /* ImageProcessing.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ImageProcessing.mm; sourceTree = "<group>"; };
+		BB2AD3EC1D0D7A69000BC32A /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Resize.h"; path = "../../../Downloads/UIImage-Resize-master-3/UIImage+Resize.h"; sourceTree = "<group>"; };
+		BB2AD3ED1D0D7A69000BC32A /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Resize.m"; path = "../../../Downloads/UIImage-Resize-master-3/UIImage+Resize.m"; sourceTree = "<group>"; };
 		BB722D471CAFF36400701F03 /* haarcascade_frontalface_alt2.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = haarcascade_frontalface_alt2.xml; sourceTree = "<group>"; };
 		BB722D491CB119E900701F03 /* FaceRecognition-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FaceRecognition-Bridging-Header.h"; sourceTree = "<group>"; };
 		BB722D561CB14ED500701F03 /* VideoFaceDetector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VideoFaceDetector.cpp; sourceTree = "<group>"; };
@@ -165,6 +168,8 @@
 		BBA10E951CAA0D1300B74283 /* FaceRecognition */ = {
 			isa = PBXGroup;
 			children = (
+				BB2AD3EC1D0D7A69000BC32A /* UIImage+Resize.h */,
+				BB2AD3ED1D0D7A69000BC32A /* UIImage+Resize.m */,
 				BB722D561CB14ED500701F03 /* VideoFaceDetector.cpp */,
 				BB722D571CB14ED500701F03 /* VideoFaceDetector.h */,
 				BB722D471CAFF36400701F03 /* haarcascade_frontalface_alt2.xml */,
@@ -383,6 +388,7 @@
 				BBA10E981CAA0D1300B74283 /* main.m in Sources */,
 				BB2193B01D0AA9CD00F88C64 /* CreateNewContactTableViewController.m in Sources */,
 				BB0BCA9D1D0C1E1700970502 /* ContactCollectionViewCell.m in Sources */,
+				BB2AD3EE1D0D7A69000BC32A /* UIImage+Resize.m in Sources */,
 				BB2193A81D0A9EE000F88C64 /* TargetScanView.m in Sources */,
 				BBD3CFC81D055AC300C234F2 /* DetailDetectionFaceViewController.mm in Sources */,
 			);

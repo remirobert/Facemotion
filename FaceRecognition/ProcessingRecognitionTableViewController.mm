@@ -37,9 +37,8 @@
         [contacts addObject:[contactsFace objectAtIndex:index]];
     }
     if (contactsFace.count > 0) {
-        //    [FaceRecognition recognitionFace:contacts face:[self.face.faces firstObject]];
+        [FaceRecognition recognitionFace:contacts face:[self.face.faces firstObject]];
     }
-    NSLog(@"objects fund ; %@", contactsFace);
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

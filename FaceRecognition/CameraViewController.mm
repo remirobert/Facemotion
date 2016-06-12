@@ -25,6 +25,7 @@
 #import "TargetScanView.h"
 #import "CreateNewContactTableViewController.h"
 #import "ProcessingRecognitionTableViewController.h"
+#import "UIImage+Resize.h"
 
 #include <iostream>
 #include <fstream>
@@ -33,8 +34,8 @@
 #define MAX_DETECTED_FACES 10
 
 @interface CameraViewController () <AVCaptureMetadataOutputObjectsDelegate, AVCaptureVideoDataOutputSampleBufferDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
+@property (strong, nonatomic) IBOutlet UIView *loadingView;
 @property (weak, nonatomic) IBOutlet UIButton *buttonClearDetection;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *indicatorLoadingSession;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraintCollection;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraintClear;
 @property (weak, nonatomic) IBOutlet UIVisualEffectView *effectView;
@@ -252,18 +253,15 @@
 }
 
 - (void)addNewFaceFrame:(CIFaceFeature *)feature frame:(UIImage *)frameImage {
-    if (![feature hasTrackingID]) {
+    if (!feature.hasMouthPosition || !feature.hasLeftEyePosition || !feature.hasRightEyePosition) {
         return;
     }
+    frameImage = [frameImage resizedImageToSize:CGSizeMake(150, 150)];
     for (DetectFace *detectedFace in self.detectedFaces) {
         if (detectedFace.trackId == feature.trackingID) {
             [detectedFace addFrame:frameImage];
             return;
         }
-    }
-    
-    if (!feature.hasMouthPosition || !feature.hasLeftEyePosition || !feature.hasRightEyePosition) {
-        return;
     }
     
     DetectFace *newFace = [[DetectFace alloc] initWithTrackId:feature.trackingID];
@@ -330,6 +328,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
                                                                           feature.bounds.size.width,
                                                                           feature.bounds.size.height));
             UIImage *croppedImage = [UIImage imageWithCGImage:imageRef];
+        
             CGImageRelease(imageRef);
             [self addNewFaceFrame:feature frame:croppedImage];
         }
@@ -347,8 +346,12 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         [self.session addOutput:self.stillImageOutput];
     }
     [self initMetadataOutput];
-    
-    [self.indicatorLoadingSession stopAnimating];
+
+    [UIView animateWithDuration:1 animations:^{
+        self.loadingView.alpha = 0;
+    } completion:^(BOOL finished) {
+        [self.loadingView removeFromSuperview];
+    }];
 }
 
 - (void)initCamera {
@@ -441,6 +444,11 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self.view addSubview:self.loadingView];
+    [self.loadingView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view);
+    }];
 
     self.buttonClearDetection.layer.borderColor = [[UIColor whiteColor] CGColor];
     self.buttonClearDetection.layer.borderWidth = 2;
