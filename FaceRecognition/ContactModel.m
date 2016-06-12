@@ -14,6 +14,7 @@
     self = [super init];
     
     if (self) {
+        self.id = contact.identifier;
         self.name = contact.givenName;
         self.picture = [UIImage imageWithData:contact.imageData];
     }

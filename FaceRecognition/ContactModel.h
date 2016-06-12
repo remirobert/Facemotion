@@ -11,6 +11,7 @@
 #import <Contacts/Contacts.h>
 
 @interface ContactModel : NSObject
+@property (nonatomic, strong) NSString *id;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) UIImage *picture;
 - (instancetype)initWithContact:(CNContact *)contact;

@@ -435,7 +435,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"processingSegue"]) {
         UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
-//        ((ProcessingRecognitionTableViewController *)navigationController.viewControllers.firstObject).face = (DetectFace *)sender;
+        ((ProcessingRecognitionTableViewController *)navigationController.viewControllers.firstObject).face = (DetectFace *)sender;
     }
 }
 
