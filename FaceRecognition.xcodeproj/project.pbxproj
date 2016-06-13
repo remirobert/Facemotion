@@ -88,6 +88,7 @@
 		BB1520171CFD1FDC0028C5CB /* FaceCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FaceCollectionViewCell.xib; sourceTree = "<group>"; };
 		BB1815ED1D0E9A2E00579575 /* SettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTableViewController.h; sourceTree = "<group>"; };
 		BB1815EE1D0E9A2E00579575 /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewController.m; sourceTree = "<group>"; };
+		BB1815F01D0E9DC500579575 /* SettingsKey.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingsKey.h; sourceTree = "<group>"; };
 		BB2193A61D0A9EE000F88C64 /* TargetScanView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TargetScanView.h; sourceTree = "<group>"; };
 		BB2193A71D0A9EE000F88C64 /* TargetScanView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TargetScanView.m; sourceTree = "<group>"; };
 		BB2193A91D0A9EED00F88C64 /* TargetScanView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TargetScanView.xib; sourceTree = "<group>"; };
@@ -238,6 +239,7 @@
 				BBA10EA71CAA0D1300B74283 /* Info.plist */,
 				BBA10E961CAA0D1300B74283 /* Supporting Files */,
 				BB722D491CB119E900701F03 /* FaceRecognition-Bridging-Header.h */,
+				BB1815F01D0E9DC500579575 /* SettingsKey.h */,
 			);
 			path = FaceRecognition;
 			sourceTree = "<group>";

@@ -26,6 +26,7 @@
 #import "CreateNewContactTableViewController.h"
 #import "ProcessingRecognitionTableViewController.h"
 #import "UIImage+Resize.h"
+#import "SettingsKey.h"
 
 #include <iostream>
 #include <fstream>
@@ -284,6 +285,7 @@ enum CameraViewDeviceOrientation {
 - (void)addViewsFace:(CGRect)frameFace validView:(BOOL)valid {
     UIView *faceView = [[UIView alloc] initWithFrame:frameFace];
     faceView.layer.cornerRadius = frameFace.size.width / 2;
+    
     if (valid) {
         faceView.layer.borderColor = [[[UIColor whiteColor] colorWithAlphaComponent:0.5] CGColor];
     }
@@ -353,11 +355,16 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
             NSLog(@"%d %d", feature.leftEyeClosed, feature.rightEyeClosed);
             NSLog(@"%f", feature.faceAngle);
             
-            if (feature.faceAngle > -5 && feature.faceAngle < 5) {
-                [self addViewsFace:faceRect validView:true];
+            if ([[NSUserDefaults standardUserDefaults] boolForKey:SETTINGS_DETECTION_ANGLE]) {
+                if (feature.faceAngle > -5 && feature.faceAngle < 5) {
+                    [self addViewsFace:faceRect validView:true];
+                }
+                else {
+                    [self addViewsFace:faceRect validView:false];
+                }
             }
             else {
-                [self addViewsFace:faceRect validView:false];
+                [self addViewsFace:faceRect validView:true];
             }
             
             CGImageRef imageRef = CGImageCreateWithImageInRect(image.CGImage,

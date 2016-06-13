@@ -13,6 +13,7 @@
 #import "FaceContact.h"
 #import "ContactManager.h"
 #import "SelectContactViewController.h"
+#import "SettingsKey.h"
 
 @interface ProcessingRecognitionTableViewController () <UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *labelConfidence;
@@ -28,7 +29,7 @@
 }
 
 - (void)speechResult:(NSString *)result {
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"speech"]) {
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:SETTINGS_SPEECK]) {
         return ;
     }
     AVSpeechUtterance *v = [[AVSpeechUtterance alloc] initWithString:result];

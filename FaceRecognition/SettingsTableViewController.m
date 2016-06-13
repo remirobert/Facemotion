@@ -6,6 +6,7 @@
 //  Copyright © 2016 Remi Robert. All rights reserved.
 //
 
+#import "SettingsKey.h"
 #import "SettingsTableViewController.h"
 
 @interface SettingsTableViewController ()
@@ -15,13 +16,12 @@
 @implementation SettingsTableViewController
 
 - (IBAction)switchStateSpeech:(id)sender {
-    [[NSUserDefaults standardUserDefaults] setBool:self.switchSpeech.on forKey:@"speech"];
+    [[NSUserDefaults standardUserDefaults] setBool:self.switchSpeech.on forKey:SETTINGS_SPEECK];
 }
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    self.switchSpeech.on = [[NSUserDefaults standardUserDefaults] boolForKey:@"speech"];
+    [super viewDidLoad];    
+    self.switchSpeech.on = [[NSUserDefaults standardUserDefaults] boolForKey:SETTINGS_SPEECK];
 }
 
 @end

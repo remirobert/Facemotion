@@ -7,12 +7,20 @@
 //
 
 #import "AppDelegate.h"
+#import "SettingsKey.h"
 
 @interface AppDelegate ()
 
 @end
 
 @implementation AppDelegate
+
+- (void)initSettingsFirstLaunch {
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:SETTINGS_INIT]) {
+        [[NSUserDefaults standardUserDefaults] setBool:true forKey:SETTINGS_DETECTION_ANGLE];
+        [[NSUserDefaults standardUserDefaults] setBool:true forKey:SETTINGS_INIT];
+    }
+}
 
 - (void)configureApperance {
     [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
@@ -46,6 +54,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [self configureApperance];
+    [self initSettingsFirstLaunch];
     return YES;
 }
 
