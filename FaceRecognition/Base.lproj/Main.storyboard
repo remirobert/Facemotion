@@ -352,7 +352,7 @@
         <!--Settings-->
         <scene sceneID="CUG-9s-43g">
             <objects>
-                <tableViewController id="RF3-TF-FiL" sceneMemberID="viewController">
+                <tableViewController id="RF3-TF-FiL" customClass="SettingsTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="vcQ-jP-CEf">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -381,6 +381,9 @@
                                                         <constraint firstAttribute="width" constant="49" id="Z3O-uI-aWr"/>
                                                     </constraints>
                                                     <color key="onTintColor" red="0.27058823529999998" green="0.77647058820000003" blue="0.30588235289999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <connections>
+                                                        <action selector="switchStateSpeech:" destination="RF3-TF-FiL" eventType="valueChanged" id="Fyn-Nw-JoF"/>
+                                                    </connections>
                                                 </switch>
                                             </subviews>
                                             <color key="backgroundColor" red="0.078004807692307665" green="0.078004807692307665" blue="0.078004807692307665" alpha="1" colorSpace="calibratedRGB"/>
@@ -403,6 +406,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Settings" id="kff-0h-den"/>
+                    <connections>
+                        <outlet property="switchSpeech" destination="COh-45-V5S" id="3rE-2u-whV"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lfz-OI-sQM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

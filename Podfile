@@ -4,4 +4,5 @@ target 'FaceRecognition' do
     pod 'FCFileManager'
     pod 'Realm'
     pod 'pop', '~> 1.0.9'
+    pod 'ZFDragableModalTransition'
 end

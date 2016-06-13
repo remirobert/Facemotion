@@ -28,6 +28,7 @@
 		BB1520141CFC3DF10028C5CB /* FaceRecognition.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB1520131CFC3DF10028C5CB /* FaceRecognition.mm */; };
 		BB1520181CFD1FDC0028C5CB /* FaceCollectionViewCell.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB1520161CFD1FDC0028C5CB /* FaceCollectionViewCell.mm */; };
 		BB1520191CFD1FDC0028C5CB /* FaceCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB1520171CFD1FDC0028C5CB /* FaceCollectionViewCell.xib */; };
+		BB1815EF1D0E9A2E00579575 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB1815EE1D0E9A2E00579575 /* SettingsTableViewController.m */; };
 		BB2193A81D0A9EE000F88C64 /* TargetScanView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB2193A71D0A9EE000F88C64 /* TargetScanView.m */; };
 		BB2193AA1D0A9EED00F88C64 /* TargetScanView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB2193A91D0A9EED00F88C64 /* TargetScanView.xib */; };
 		BB2193B01D0AA9CD00F88C64 /* CreateNewContactTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB2193AF1D0AA9CD00F88C64 /* CreateNewContactTableViewController.m */; };
@@ -85,6 +86,8 @@
 		BB1520151CFD1FDC0028C5CB /* FaceCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceCollectionViewCell.h; sourceTree = "<group>"; };
 		BB1520161CFD1FDC0028C5CB /* FaceCollectionViewCell.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FaceCollectionViewCell.mm; sourceTree = "<group>"; };
 		BB1520171CFD1FDC0028C5CB /* FaceCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FaceCollectionViewCell.xib; sourceTree = "<group>"; };
+		BB1815ED1D0E9A2E00579575 /* SettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTableViewController.h; sourceTree = "<group>"; };
+		BB1815EE1D0E9A2E00579575 /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewController.m; sourceTree = "<group>"; };
 		BB2193A61D0A9EE000F88C64 /* TargetScanView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TargetScanView.h; sourceTree = "<group>"; };
 		BB2193A71D0A9EE000F88C64 /* TargetScanView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TargetScanView.m; sourceTree = "<group>"; };
 		BB2193A91D0A9EED00F88C64 /* TargetScanView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TargetScanView.xib; sourceTree = "<group>"; };
@@ -226,6 +229,8 @@
 				BB0BCA9C1D0C1E1700970502 /* ContactCollectionViewCell.xib */,
 				BB0BCAAF1D0D60B600970502 /* FaceContact.h */,
 				BB0BCAB01D0D60B600970502 /* FaceContact.m */,
+				BB1815ED1D0E9A2E00579575 /* SettingsTableViewController.h */,
+				BB1815EE1D0E9A2E00579575 /* SettingsTableViewController.m */,
 				BB2193A91D0A9EED00F88C64 /* TargetScanView.xib */,
 				BBA10E9F1CAA0D1300B74283 /* Main.storyboard */,
 				BBA10EA21CAA0D1300B74283 /* Assets.xcassets */,
@@ -370,6 +375,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB1815EF1D0E9A2E00579575 /* SettingsTableViewController.m in Sources */,
 				BBD3CFCB1D05673400C234F2 /* Contact.m in Sources */,
 				BB0ED3801D002BFE00CE4651 /* DetectFace.m in Sources */,
 				BB1520111CFC2ACF0028C5CB /* FaceDetector.mm in Sources */,
