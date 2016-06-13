@@ -20,6 +20,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.switchSpeech.on = [[NSUserDefaults standardUserDefaults] boolForKey:@"speech"];
 }
 
 @end

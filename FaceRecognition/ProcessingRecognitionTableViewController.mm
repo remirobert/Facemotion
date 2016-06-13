@@ -6,6 +6,7 @@
 //  Copyright © 2016 Remi Robert. All rights reserved.
 //
 
+#import <AVFoundation/AVSpeechSynthesis.h>
 #import "ProcessingRecognitionTableViewController.h"
 #import "FaceCollectionViewCell.h"
 #import "FaceRecognition.h"
@@ -26,6 +27,18 @@
     [self dismissViewControllerAnimated:true completion:nil];
 }
 
+- (void)speechResult:(NSString *)result {
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"speech"]) {
+        return ;
+    }
+    AVSpeechUtterance *v = [[AVSpeechUtterance alloc] initWithString:result];
+    AVSpeechSynthesisVoice *voice = [AVSpeechSynthesisVoice voiceWithLanguage:@"us-US"];
+    v.voice = voice;
+    v.rate = 0.1;
+    AVSpeechSynthesizer *c = [[AVSpeechSynthesizer alloc] init];
+    [c speakUtterance:v];
+}
+
 - (void)startRecognition:(UIImage *)face {
     RLMResults<FaceContact *> *contactsFace = [FaceContact allObjects];
     NSMutableArray<FaceContact *> *contacts = [NSMutableArray new];
@@ -42,6 +55,7 @@
     self.labelConfidence.text = [NSString stringWithFormat:@"confidence : %f", result.confidence];
     [ContactManager fetchWithId:contact.id completion:^(ContactModel *contact) {
         self.nameResult.text = contact.name;
+        [self speechResult:contact.name];
         
         NSPredicate *pred = [NSPredicate predicateWithFormat:@"id = %@", contact.id];
         RLMResults<FaceContact *> *facesContact = [FaceContact objectsWithPredicate:pred];
