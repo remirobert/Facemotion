@@ -374,8 +374,15 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     }
 }
 
-- (void)viewDidAppear:(BOOL)animated {
+- (void)viewDidDisappear:(BOOL)animated {
+    self.isPaused = true;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
     [self clearFaces:nil];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     self.isPaused = false;
     if ([self.session canAddOutput:self.videoOutput]) {
