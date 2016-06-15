@@ -12,8 +12,9 @@
 #import "FaceRecognition.h"
 #import "FaceContact.h"
 #import "ContactManager.h"
-#import "SelectContactViewController.h"
+#import "SelectNewContactViewController.h"
 #import "SettingsKey.h"
+#import "SelectContactViewController.h"
 
 @interface ProcessingRecognitionTableViewController () <UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *labelConfidence;
@@ -82,13 +83,16 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"selectNewcontact"]) {
+        ((SelectNewContactViewController *)segue.destinationViewController).face = self.face;
+    }
+    else if ([segue.identifier isEqualToString:@"selectContactSegue"]) {
         ((SelectContactViewController *)segue.destinationViewController).face = self.face;
     }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 3 && indexPath.row == 0) {
-//        [self performSegueWithIdentifier:@"selectContactSegue" sender:nil];
+        [self performSegueWithIdentifier:@"selectContactSegue" sender:nil];
     }
     else if (indexPath.section == 3 && indexPath.row == 1) {
         [self performSegueWithIdentifier:@"selectNewcontact" sender:nil];

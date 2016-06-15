@@ -2,18 +2,20 @@
 //  SelectContactViewController.m
 //  FaceRecognition
 //
-//  Created by Remi Robert on 12/06/16.
+//  Created by Remi Robert on 15/06/16.
 //  Copyright © 2016 Remi Robert. All rights reserved.
 //
 
+#import <Realm.h>
 #import "SelectContactViewController.h"
-#import "ContactManager.h"
 #import "FaceContact.h"
 #import "Contact.h"
+#import "ContactCollectionViewCell.h"
 
-@interface SelectContactViewController () <UITableViewDataSource, UITableViewDelegate>
-@property (weak, nonatomic) IBOutlet UITableView *tableview;
-@property (nonatomic, strong) NSMutableArray<ContactModel *> *contacts;
+@interface SelectContactViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *collectionViewFlow;
+@property (nonatomic, strong) NSMutableArray<Contact *> *contacts;
 @end
 
 @implementation SelectContactViewController
@@ -21,39 +23,15 @@
 - (void)viewWillAppear:(BOOL)animated {
     RLMResults<Contact *> *localContacts = [Contact allObjects];
     
-    [ContactManager fetchContacts:^(NSArray<ContactModel *> *contacts) {
-        [self.contacts removeAllObjects];
-        
-        for (ContactModel *contact in contacts) {
-            BOOL exist = false;
-            for (Contact *localContact in localContacts) {
-                if ([localContact.key isEqualToString:contact.id]) {
-                    exist = true;
-                    break;
-                }
-            }
-            if (!exist) {
-                [self.contacts addObject:contact];
-            }
-        }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.tableview reloadData];
-        });
-    }];
+    [self.contacts removeAllObjects];
+    for (Contact *contact in localContacts) {
+        [self.contacts addObject:contact];
+    }
+    [self.collectionView reloadData];
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    self.tableview.backgroundColor = [UIColor blackColor];
-    self.tableview.tableFooterView = [UIView new];
-    
-    self.tableview.dataSource = self;
-    self.tableview.delegate = self;
-    self.contacts = [NSMutableArray new];
-}
-
-- (NSInteger)idFace:(ContactModel *)contact {
-    NSPredicate *pred = [NSPredicate predicateWithFormat:@"id = %@", contact.id];
+- (NSInteger)idFace:(Contact *)contact {
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"id = %@", contact.key];
     RLMResults<FaceContact *> *facesContact = [FaceContact objectsWithPredicate:pred];
     
     if (facesContact.count > 0) {
@@ -63,48 +41,51 @@
     return [(NSNumber *)[[FaceContact allObjects] maxOfProperty:@"idRecognition"] integerValue] + 1;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Do you want to assign the detected frames to this contact ?" message:nil preferredStyle:UIAlertControllerStyleAlert];
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
     
-    [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
-    [alertController addAction:[UIAlertAction actionWithTitle:@"Assign" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        ContactModel *contact = [self.contacts objectAtIndex:indexPath.row];
-        
-        RLMRealm *realm = [RLMRealm defaultRealm];
-        NSInteger idFace = [self idFace:contact];
-        
-        Contact *newContact = [Contact new];
-        newContact.key = contact.id;
-        newContact.name = contact.name;
-        newContact.dataImage = UIImageJPEGRepresentation(self.face.faces.firstObject, 1);
+    self.title = @"Select a contact";
     
-        NSMutableArray *faces = [NSMutableArray new];
+    self.contacts = [NSMutableArray new];
     
-        for (UIImage *imageFace in self.face.faces) {
-            FaceContact *newFace = [[FaceContact alloc] initWithImage:imageFace idContact:contact.id];
-            newFace.idRecognition = idFace;
-            [faces addObject:newFace];
-        }
-        [realm transactionWithBlock:^{
-            [realm addObject:newContact];
-            [realm addObjects:faces];
-        }];
-        [self.navigationController dismissViewControllerAnimated:true completion:nil];
-    }]];
-    [self presentViewController:alertController animated:true completion:nil];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"ContactCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"cell"];
+    self.collectionView.dataSource = self;
+    self.collectionView.delegate = self;
+    
+    [self.collectionViewFlow setItemSize: CGSizeMake(CGRectGetWidth([UIScreen mainScreen].bounds) / 3, CGRectGetWidth([UIScreen mainScreen].bounds) / 3)];
+    self.collectionViewFlow.minimumLineSpacing = 0;
+    self.collectionViewFlow.minimumInteritemSpacing = 0;
+    self.collectionViewFlow.scrollDirection = UICollectionViewScrollDirectionVertical;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    Contact *selectedContact = [self.contacts objectAtIndex:indexPath.row];
+    NSInteger idFace = [self idFace:selectedContact];
+    
+    NSMutableArray *faces = [NSMutableArray new];
+    for (UIImage *imageFace in self.face.faces) {
+        FaceContact *newFace = [[FaceContact alloc] initWithImage:imageFace idContact:selectedContact.key];
+        newFace.idRecognition = idFace;
+        [faces addObject:newFace];
+    }
+    [realm transactionWithBlock:^{
+        [realm addObjects:faces];
+    }];
+    [self.navigationController dismissViewControllerAnimated:true completion:nil];
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return self.contacts.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    ContactCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     
-    ContactModel *contact = [self.contacts objectAtIndex:indexPath.row];
-    cell.textLabel.text = contact.name;
-    cell.textLabel.textColor = [UIColor whiteColor];
-
+    Contact *contact = [self.contacts objectAtIndex:indexPath.row];
+    [cell configure:contact];
     return cell;
 }
 

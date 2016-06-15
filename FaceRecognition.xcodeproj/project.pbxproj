@@ -18,7 +18,7 @@
 		BB0BCAA51D0C1F9700970502 /* ContactModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0BCAA41D0C1F9700970502 /* ContactModel.m */; };
 		BB0BCAA81D0C2D8A00970502 /* ContactManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0BCAA71D0C2D8A00970502 /* ContactManager.m */; };
 		BB0BCAAB1D0D545200970502 /* ProcessingRecognitionTableViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB0BCAAA1D0D545200970502 /* ProcessingRecognitionTableViewController.mm */; };
-		BB0BCAAE1D0D5CCC00970502 /* SelectContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0BCAAD1D0D5CCC00970502 /* SelectContactViewController.m */; };
+		BB0BCAAE1D0D5CCC00970502 /* SelectNewContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0BCAAD1D0D5CCC00970502 /* SelectNewContactViewController.m */; };
 		BB0BCAB11D0D60B600970502 /* FaceContact.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0BCAB01D0D60B600970502 /* FaceContact.m */; };
 		BB0ED37D1D002A2200CE4651 /* OrientationDevice.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB0ED37C1D002A2200CE4651 /* OrientationDevice.mm */; };
 		BB0ED3801D002BFE00CE4651 /* DetectFace.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0ED37F1D002BFE00CE4651 /* DetectFace.m */; };
@@ -38,6 +38,7 @@
 		BB2AD3F11D0D8B47000BC32A /* RecognitionResult.m in Sources */ = {isa = PBXBuildFile; fileRef = BB2AD3F01D0D8B47000BC32A /* RecognitionResult.m */; };
 		BB722D481CAFF36400701F03 /* haarcascade_frontalface_alt2.xml in Resources */ = {isa = PBXBuildFile; fileRef = BB722D471CAFF36400701F03 /* haarcascade_frontalface_alt2.xml */; };
 		BB722D581CB14ED500701F03 /* VideoFaceDetector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BB722D561CB14ED500701F03 /* VideoFaceDetector.cpp */; };
+		BB75120A1D117B140049FB71 /* SelectContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB7512091D117B140049FB71 /* SelectContactViewController.m */; };
 		BBA10E981CAA0D1300B74283 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA10E971CAA0D1300B74283 /* main.m */; };
 		BBA10E9B1CAA0D1300B74283 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA10E9A1CAA0D1300B74283 /* AppDelegate.m */; };
 		BBA10EA11CAA0D1300B74283 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BBA10E9F1CAA0D1300B74283 /* Main.storyboard */; };
@@ -67,8 +68,8 @@
 		BB0BCAA71D0C2D8A00970502 /* ContactManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactManager.m; sourceTree = "<group>"; };
 		BB0BCAA91D0D545200970502 /* ProcessingRecognitionTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProcessingRecognitionTableViewController.h; sourceTree = "<group>"; };
 		BB0BCAAA1D0D545200970502 /* ProcessingRecognitionTableViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ProcessingRecognitionTableViewController.mm; sourceTree = "<group>"; };
-		BB0BCAAC1D0D5CCC00970502 /* SelectContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectContactViewController.h; sourceTree = "<group>"; };
-		BB0BCAAD1D0D5CCC00970502 /* SelectContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectContactViewController.m; sourceTree = "<group>"; };
+		BB0BCAAC1D0D5CCC00970502 /* SelectNewContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectNewContactViewController.h; sourceTree = "<group>"; };
+		BB0BCAAD1D0D5CCC00970502 /* SelectNewContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectNewContactViewController.m; sourceTree = "<group>"; };
 		BB0BCAAF1D0D60B600970502 /* FaceContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceContact.h; sourceTree = "<group>"; };
 		BB0BCAB01D0D60B600970502 /* FaceContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FaceContact.m; sourceTree = "<group>"; };
 		BB0ED37B1D002A2200CE4651 /* OrientationDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrientationDevice.h; sourceTree = "<group>"; };
@@ -106,6 +107,8 @@
 		BB722D491CB119E900701F03 /* FaceRecognition-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FaceRecognition-Bridging-Header.h"; sourceTree = "<group>"; };
 		BB722D561CB14ED500701F03 /* VideoFaceDetector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VideoFaceDetector.cpp; sourceTree = "<group>"; };
 		BB722D571CB14ED500701F03 /* VideoFaceDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoFaceDetector.h; sourceTree = "<group>"; };
+		BB7512081D117B130049FB71 /* SelectContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectContactViewController.h; sourceTree = "<group>"; };
+		BB7512091D117B140049FB71 /* SelectContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectContactViewController.m; sourceTree = "<group>"; };
 		BBA10E931CAA0D1200B74283 /* FaceRecognition.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FaceRecognition.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBA10E971CAA0D1300B74283 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		BBA10E991CAA0D1300B74283 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -225,8 +228,10 @@
 				BB0BCA9B1D0C1E1700970502 /* ContactCollectionViewCell.m */,
 				BB0BCAA91D0D545200970502 /* ProcessingRecognitionTableViewController.h */,
 				BB0BCAAA1D0D545200970502 /* ProcessingRecognitionTableViewController.mm */,
-				BB0BCAAC1D0D5CCC00970502 /* SelectContactViewController.h */,
-				BB0BCAAD1D0D5CCC00970502 /* SelectContactViewController.m */,
+				BB0BCAAC1D0D5CCC00970502 /* SelectNewContactViewController.h */,
+				BB0BCAAD1D0D5CCC00970502 /* SelectNewContactViewController.m */,
+				BB7512081D117B130049FB71 /* SelectContactViewController.h */,
+				BB7512091D117B140049FB71 /* SelectContactViewController.m */,
 				BB0BCA9C1D0C1E1700970502 /* ContactCollectionViewCell.xib */,
 				BB0BCAAF1D0D60B600970502 /* FaceContact.h */,
 				BB0BCAB01D0D60B600970502 /* FaceContact.m */,
@@ -390,7 +395,7 @@
 				BB288B711CFACD9F00784037 /* ImageProcessing.mm in Sources */,
 				BB0B5ED71CF9137700F13EE7 /* PCAViewController.mm in Sources */,
 				BB0BCAA51D0C1F9700970502 /* ContactModel.m in Sources */,
-				BB0BCAAE1D0D5CCC00970502 /* SelectContactViewController.m in Sources */,
+				BB0BCAAE1D0D5CCC00970502 /* SelectNewContactViewController.m in Sources */,
 				BB0ED37D1D002A2200CE4651 /* OrientationDevice.mm in Sources */,
 				BBA10E9B1CAA0D1300B74283 /* AppDelegate.m in Sources */,
 				BB0BCAA81D0C2D8A00970502 /* ContactManager.m in Sources */,
@@ -401,6 +406,7 @@
 				BB0ED3831D0037FA00CE4651 /* GradientView.m in Sources */,
 				BBA10E981CAA0D1300B74283 /* main.m in Sources */,
 				BB2193B01D0AA9CD00F88C64 /* CreateNewContactTableViewController.m in Sources */,
+				BB75120A1D117B140049FB71 /* SelectContactViewController.m in Sources */,
 				BB0BCA9D1D0C1E1700970502 /* ContactCollectionViewCell.m in Sources */,
 				BB2AD3EE1D0D7A69000BC32A /* UIImage+Resize.m in Sources */,
 				BB2193A81D0A9EE000F88C64 /* TargetScanView.m in Sources */,

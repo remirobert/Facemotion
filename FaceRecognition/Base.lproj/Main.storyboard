@@ -798,17 +798,17 @@
                         <outlet property="labelConfidence" destination="nGr-1D-HBq" id="zit-3N-PAs"/>
                         <outlet property="nameResult" destination="rvi-hU-RF8" id="q0e-Oa-qVm"/>
                         <segue destination="UCc-4F-8CB" kind="show" identifier="selectNewcontact" id="u6Z-rl-ee1"/>
-                        <segue destination="Hn8-Tl-itb" kind="presentation" id="Tef-fe-HgL"/>
+                        <segue destination="Hn8-Tl-itb" kind="show" identifier="selectContactSegue" id="Tef-fe-HgL"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r5s-4W-ynL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2826" y="1105"/>
         </scene>
-        <!--Select Contact View Controller-->
+        <!--Select New Contact View Controller-->
         <scene sceneID="z7M-9s-vjx">
             <objects>
-                <viewController id="UCc-4F-8CB" customClass="SelectContactViewController" sceneMemberID="viewController">
+                <viewController id="UCc-4F-8CB" customClass="SelectNewContactViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="L9V-2m-3nP"/>
                         <viewControllerLayoutGuide type="bottom" id="ls8-xT-DGS"/>
@@ -817,13 +817,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="3F4-FS-F3l">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="3F4-FS-F3l">
                                 <rect key="frame" x="0.0" y="64" width="600" height="536"/>
-                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" textLabel="LRc-M9-pfN" style="IBUITableViewCellStyleDefault" id="EBa-LX-okr">
-                                        <rect key="frame" x="0.0" y="113.5" width="600" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="cell" textLabel="LRc-M9-pfN" style="IBUITableViewCellStyleDefault" id="EBa-LX-okr">
+                                        <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EBa-LX-okr" id="Nv7-7h-8IA">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
@@ -860,10 +860,10 @@
             </objects>
             <point key="canvasLocation" x="3532" y="1105"/>
         </scene>
-        <!--View Controller-->
+        <!--Select Contact View Controller-->
         <scene sceneID="PHO-D5-Z0f">
             <objects>
-                <viewController id="Hn8-Tl-itb" sceneMemberID="viewController">
+                <viewController id="Hn8-Tl-itb" customClass="SelectContactViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="zeT-VQ-chz"/>
                         <viewControllerLayoutGuide type="bottom" id="KLQ-Gf-Jl5"/>
@@ -871,8 +871,31 @@
                     <view key="view" contentMode="scaleToFill" id="Eba-Mw-Dtc">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ZBp-oD-xVe">
+                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="qPB-5U-4vZ">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ZBp-oD-xVe" firstAttribute="top" secondItem="zeT-VQ-chz" secondAttribute="bottom" id="0az-2g-STT"/>
+                            <constraint firstItem="KLQ-Gf-Jl5" firstAttribute="top" secondItem="ZBp-oD-xVe" secondAttribute="bottom" id="D5t-HF-5qn"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ZBp-oD-xVe" secondAttribute="trailing" constant="-20" id="SpK-kL-NPq"/>
+                            <constraint firstItem="ZBp-oD-xVe" firstAttribute="leading" secondItem="Eba-Mw-Dtc" secondAttribute="leadingMargin" constant="-20" id="q7v-wf-r7L"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="collectionView" destination="ZBp-oD-xVe" id="DEg-xt-g22"/>
+                        <outlet property="collectionViewFlow" destination="qPB-5U-4vZ" id="2sj-js-iH6"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rem-Fb-QJ1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
