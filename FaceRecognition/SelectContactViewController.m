@@ -76,8 +76,8 @@
         Contact *newContact = [Contact new];
         newContact.key = contact.id;
         newContact.name = contact.name;
-        newContact.dataImage = UIImageJPEGRepresentation(self.face.faces.firstObject, 0.5);
-                
+        newContact.dataImage = UIImageJPEGRepresentation(self.face.faces.firstObject, 1);
+    
         NSMutableArray *faces = [NSMutableArray new];
     
         for (UIImage *imageFace in self.face.faces) {

@@ -81,7 +81,7 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"selectContactSegue"]) {
+    if ([segue.identifier isEqualToString:@"selectNewcontact"]) {
         ((SelectContactViewController *)segue.destinationViewController).face = self.face;
     }
 }
