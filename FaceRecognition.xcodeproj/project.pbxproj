@@ -39,6 +39,7 @@
 		BB722D481CAFF36400701F03 /* haarcascade_frontalface_alt2.xml in Resources */ = {isa = PBXBuildFile; fileRef = BB722D471CAFF36400701F03 /* haarcascade_frontalface_alt2.xml */; };
 		BB722D581CB14ED500701F03 /* VideoFaceDetector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BB722D561CB14ED500701F03 /* VideoFaceDetector.cpp */; };
 		BB75120A1D117B140049FB71 /* SelectContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB7512091D117B140049FB71 /* SelectContactViewController.m */; };
+		BB75120D1D1180E70049FB71 /* DetailContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB75120C1D1180E60049FB71 /* DetailContactViewController.m */; };
 		BBA10E981CAA0D1300B74283 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA10E971CAA0D1300B74283 /* main.m */; };
 		BBA10E9B1CAA0D1300B74283 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA10E9A1CAA0D1300B74283 /* AppDelegate.m */; };
 		BBA10EA11CAA0D1300B74283 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BBA10E9F1CAA0D1300B74283 /* Main.storyboard */; };
@@ -109,6 +110,8 @@
 		BB722D571CB14ED500701F03 /* VideoFaceDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoFaceDetector.h; sourceTree = "<group>"; };
 		BB7512081D117B130049FB71 /* SelectContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectContactViewController.h; sourceTree = "<group>"; };
 		BB7512091D117B140049FB71 /* SelectContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectContactViewController.m; sourceTree = "<group>"; };
+		BB75120B1D1180E60049FB71 /* DetailContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailContactViewController.h; sourceTree = "<group>"; };
+		BB75120C1D1180E60049FB71 /* DetailContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailContactViewController.m; sourceTree = "<group>"; };
 		BBA10E931CAA0D1200B74283 /* FaceRecognition.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FaceRecognition.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBA10E971CAA0D1300B74283 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		BBA10E991CAA0D1300B74283 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -232,6 +235,8 @@
 				BB0BCAAD1D0D5CCC00970502 /* SelectNewContactViewController.m */,
 				BB7512081D117B130049FB71 /* SelectContactViewController.h */,
 				BB7512091D117B140049FB71 /* SelectContactViewController.m */,
+				BB75120B1D1180E60049FB71 /* DetailContactViewController.h */,
+				BB75120C1D1180E60049FB71 /* DetailContactViewController.m */,
 				BB0BCA9C1D0C1E1700970502 /* ContactCollectionViewCell.xib */,
 				BB0BCAAF1D0D60B600970502 /* FaceContact.h */,
 				BB0BCAB01D0D60B600970502 /* FaceContact.m */,
@@ -394,6 +399,7 @@
 				BB0BCAB11D0D60B600970502 /* FaceContact.m in Sources */,
 				BB288B711CFACD9F00784037 /* ImageProcessing.mm in Sources */,
 				BB0B5ED71CF9137700F13EE7 /* PCAViewController.mm in Sources */,
+				BB75120D1D1180E70049FB71 /* DetailContactViewController.m in Sources */,
 				BB0BCAA51D0C1F9700970502 /* ContactModel.m in Sources */,
 				BB0BCAAE1D0D5CCC00970502 /* SelectNewContactViewController.m in Sources */,
 				BB0ED37D1D002A2200CE4651 /* OrientationDevice.mm in Sources */,

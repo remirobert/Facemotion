@@ -320,9 +320,21 @@
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LFs-Bp-lGH">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="64"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Contacts" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="efH-Yw-3ky">
+                                        <rect key="frame" x="8" y="21" width="584" height="21"/>
+                                        <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="17"/>
+                                        <color key="textColor" white="1" alpha="0.80000000000000004" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="efH-Yw-3ky" firstAttribute="top" secondItem="LFs-Bp-lGH" secondAttribute="top" constant="21" id="5AN-CY-dJE"/>
                                     <constraint firstAttribute="height" constant="64" id="JrI-Nf-cBY"/>
+                                    <constraint firstAttribute="trailing" secondItem="efH-Yw-3ky" secondAttribute="trailing" constant="8" id="Kgj-lr-gbN"/>
+                                    <constraint firstAttribute="bottom" secondItem="efH-Yw-3ky" secondAttribute="bottom" constant="22" id="lrL-8t-MCy"/>
+                                    <constraint firstItem="efH-Yw-3ky" firstAttribute="leading" secondItem="LFs-Bp-lGH" secondAttribute="leading" constant="8" id="xtF-9b-Pd7"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -343,11 +355,30 @@
                         <outlet property="collectionView" destination="mEc-ys-2yA" id="fNV-Vx-wce"/>
                         <outlet property="collectionViewLayout" destination="k5s-VB-hwI" id="Uvx-3z-yJC"/>
                         <outlet property="layerSubView" destination="LFs-Bp-lGH" id="TTa-Ii-zIW"/>
+                        <segue destination="F69-hO-Mcq" kind="presentation" id="cDL-ai-6Dx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LLe-cV-T03" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1302" y="1766"/>
+        </scene>
+        <!--Detail Contact View Controller-->
+        <scene sceneID="ZRp-s6-tzP">
+            <objects>
+                <viewController id="F69-hO-Mcq" customClass="DetailContactViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="NAX-Bj-WgD"/>
+                        <viewControllerLayoutGuide type="bottom" id="g2K-ej-U7s"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="NbG-ha-KUx">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ni1-KI-gw1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2092" y="1766"/>
         </scene>
         <!--Settings-->
         <scene sceneID="CUG-9s-43g">
@@ -766,12 +797,12 @@
                                                 <mask key="constraints">
                                                     <exclude reference="AXJ-Hc-sMu"/>
                                                     <exclude reference="JRV-tY-fLl"/>
-                                                    <exclude reference="iXT-rt-gZn"/>
-                                                    <exclude reference="Vz9-Jb-7MN"/>
                                                     <exclude reference="NII-OT-haF"/>
-                                                    <exclude reference="tjH-BG-NFe"/>
+                                                    <exclude reference="Vz9-Jb-7MN"/>
                                                     <exclude reference="brF-bH-rNZ"/>
                                                     <exclude reference="fAn-78-IAq"/>
+                                                    <exclude reference="iXT-rt-gZn"/>
+                                                    <exclude reference="tjH-BG-NFe"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
