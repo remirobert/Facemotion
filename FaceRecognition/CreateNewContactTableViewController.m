@@ -26,7 +26,7 @@
         return ;
     }
     
-    Contact *newContact = [[Contact alloc] init:self.face];
+    Contact *newContact = [Contact new];
     RLMRealm *realm = [RLMRealm defaultRealm];
     [realm transactionWithBlock:^{
         [realm addObject:newContact];

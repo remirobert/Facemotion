@@ -12,6 +12,6 @@
 
 @interface Contact : RLMObject
 @property (nonnull, nonatomic, strong) NSString *key;
-
-- (instancetype)init:(DetectFace *)face;
+@property (nonnull, nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSData *dataImage;
 @end

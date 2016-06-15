@@ -9,13 +9,38 @@
 #import "SelectContactViewController.h"
 #import "ContactManager.h"
 #import "FaceContact.h"
+#import "Contact.h"
 
 @interface SelectContactViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
-@property (nonatomic, strong) NSArray<ContactModel *> *contacts;
+@property (nonatomic, strong) NSMutableArray<ContactModel *> *contacts;
 @end
 
 @implementation SelectContactViewController
+
+- (void)viewWillAppear:(BOOL)animated {
+    RLMResults<Contact *> *localContacts = [Contact allObjects];
+    
+    [ContactManager fetchContacts:^(NSArray<ContactModel *> *contacts) {
+        [self.contacts removeAllObjects];
+        
+        for (ContactModel *contact in contacts) {
+            BOOL exist = false;
+            for (Contact *localContact in localContacts) {
+                if ([localContact.key isEqualToString:contact.id]) {
+                    exist = true;
+                    break;
+                }
+            }
+            if (!exist) {
+                [self.contacts addObject:contact];
+            }
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableview reloadData];
+        });
+    }];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -24,10 +49,7 @@
     
     self.tableview.dataSource = self;
     self.tableview.delegate = self;
-    [ContactManager fetchContacts:^(NSArray<ContactModel *> *contacts) {
-        self.contacts = contacts;
-        [self.tableview reloadData];
-    }];
+    self.contacts = [NSMutableArray new];
 }
 
 - (NSInteger)idFace:(ContactModel *)contact {
@@ -47,16 +69,24 @@
     [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
     [alertController addAction:[UIAlertAction actionWithTitle:@"Assign" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         ContactModel *contact = [self.contacts objectAtIndex:indexPath.row];
+        
         RLMRealm *realm = [RLMRealm defaultRealm];
         NSInteger idFace = [self idFace:contact];
-        NSMutableArray *faces = [NSMutableArray new];
         
+        Contact *newContact = [Contact new];
+        newContact.key = contact.id;
+        newContact.name = contact.name;
+        newContact.dataImage = UIImageJPEGRepresentation(self.face.faces.firstObject, 0.5);
+                
+        NSMutableArray *faces = [NSMutableArray new];
+    
         for (UIImage *imageFace in self.face.faces) {
             FaceContact *newFace = [[FaceContact alloc] initWithImage:imageFace idContact:contact.id];
             newFace.idRecognition = idFace;
             [faces addObject:newFace];
         }
         [realm transactionWithBlock:^{
+            [realm addObject:newContact];
             [realm addObjects:faces];
         }];
         [self.navigationController dismissViewControllerAnimated:true completion:nil];

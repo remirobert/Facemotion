@@ -87,8 +87,11 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 3) {
-        [self performSegueWithIdentifier:@"selectContactSegue" sender:nil];
+    if (indexPath.section == 3 && indexPath.row == 0) {
+//        [self performSegueWithIdentifier:@"selectContactSegue" sender:nil];
+    }
+    else if (indexPath.section == 3 && indexPath.row == 1) {
+        [self performSegueWithIdentifier:@"selectNewcontact" sender:nil];
     }
 }
 

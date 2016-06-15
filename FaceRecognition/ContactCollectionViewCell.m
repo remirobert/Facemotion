@@ -24,9 +24,9 @@
     self.imageView.layer.cornerRadius = size / 2;
 }
 
-- (void)configure:(ContactModel *)model {
-    self.imageView.image = model.picture;
+- (void)configure:(Contact *)model {
     self.labelName.text = model.name;
+    self.imageView.image = [UIImage imageWithData:model.dataImage];
 }
 
 @end

@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "ContactModel.h"
+#import "Contact.h"
 
 @interface ContactCollectionViewCell : UICollectionViewCell
-- (void)configure:(ContactModel *)model;
+- (void)configure:(Contact *)model;
 @end

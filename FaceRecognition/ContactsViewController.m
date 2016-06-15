@@ -13,15 +13,27 @@
 #import "ContactModel.h"
 #import "ContactCollectionViewCell.h"
 #import "ContactManager.h"
+#import "Contact.h"
 
 @interface ContactsViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIView *layerSubView;
 @property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *collectionViewLayout;
-@property (nonatomic, strong) NSArray<ContactModel *> *contacts;
+@property (nonatomic, strong) NSMutableArray<Contact *> *contacts;
 @end
 
 @implementation ContactsViewController
+
+- (void)viewWillAppear:(BOOL)animated {
+    RLMResults<Contact *> *localContacts = [Contact allObjects];
+    
+    NSLog(@"local contacts : %@", localContacts);
+    [self.contacts removeAllObjects];
+    for (Contact *contact in localContacts) {
+        [self.contacts addObject:contact];
+    }
+    [self.collectionView reloadData];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -44,11 +56,6 @@
     self.collectionViewLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
     
     self.contacts = [NSMutableArray new];
-    
-    [ContactManager fetchContacts:^(NSArray<ContactModel *> *contacts) {
-        self.contacts = contacts;
-        [self.collectionView reloadData];
-    }];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -58,8 +65,8 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     ContactCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     
-    NSLog(@"cell : %@", cell);
-    [cell configure:[self.contacts objectAtIndex:indexPath.row]];
+    Contact *contact = [self.contacts objectAtIndex:indexPath.row];
+    [cell configure:contact];
     return cell;
 }
 
