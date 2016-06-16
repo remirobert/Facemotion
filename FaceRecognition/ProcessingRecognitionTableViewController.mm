@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionviewFrames;
 @property (weak, nonatomic) IBOutlet UILabel *nameResult;
 @property (weak, nonatomic) IBOutlet UIImageView *imageviewResult;
+@property (weak, nonatomic) IBOutlet UILabel *labelCountProcess;
 @end
 
 @implementation ProcessingRecognitionTableViewController
@@ -43,6 +44,11 @@
 }
 
 - (void)startRecognition:(UIImage *)face {
+    self.labelConfidence.text = nil;
+    self.nameResult.text = nil;
+    self.imageviewResult.image = nil;
+    self.labelCountProcess.text = nil;
+
     RLMResults<FaceContact *> *contactsFace = [FaceContact allObjects];
     NSMutableArray<FaceContact *> *contacts = [NSMutableArray new];
     for (NSInteger index = 0; index < contactsFace.count; index++) {
@@ -59,11 +65,8 @@
         [realm beginWriteTransaction];
         registredContact.numberRecogition += 1;
         [realm commitWriteTransaction];
+        self.labelCountProcess.text = [NSString stringWithFormat:@"Count process : %ld", (long)registredContact.numberRecogition];
     }
-    
-    self.labelConfidence.text = nil;
-    self.nameResult.text = nil;
-    self.imageviewResult.image = nil;
     
     self.labelConfidence.text = [NSString stringWithFormat:@"confidence : %f", result.confidence];
     [ContactManager fetchWithId:contact.id completion:^(ContactModel *contact) {
@@ -84,6 +87,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.delegate = self;
+    
 
     [self.collectionviewFrames registerNib:[UINib nibWithNibName:@"FaceCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"cell"];
     self.collectionviewFrames.delegate = self;

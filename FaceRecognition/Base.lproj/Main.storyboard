@@ -714,6 +714,15 @@
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Djd-Aw-CXg">
+                                                    <rect key="frame" x="126" y="73" width="466" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="aYW-GO-tOo"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <color key="backgroundColor" red="0.092307692307692313" green="0.092307692307692313" blue="0.092307692307692313" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
@@ -723,6 +732,9 @@
                                                 <constraint firstItem="jbu-RY-win" firstAttribute="centerY" secondItem="ykB-ym-ZvD" secondAttribute="centerY" id="LfO-9A-zCi"/>
                                                 <constraint firstItem="rvi-hU-RF8" firstAttribute="top" secondItem="ykB-ym-ZvD" secondAttribute="topMargin" constant="7" id="MOu-w6-vAg"/>
                                                 <constraint firstItem="nGr-1D-HBq" firstAttribute="top" secondItem="rvi-hU-RF8" secondAttribute="bottom" constant="8" id="Qsx-b2-6Vj"/>
+                                                <constraint firstItem="Djd-Aw-CXg" firstAttribute="trailing" secondItem="ykB-ym-ZvD" secondAttribute="trailingMargin" id="XOu-BF-gQu"/>
+                                                <constraint firstItem="Djd-Aw-CXg" firstAttribute="top" secondItem="nGr-1D-HBq" secondAttribute="bottom" constant="8" id="Yez-oX-13S"/>
+                                                <constraint firstItem="Djd-Aw-CXg" firstAttribute="leading" secondItem="jbu-RY-win" secondAttribute="trailing" constant="8" id="hII-LP-fnL"/>
                                                 <constraint firstItem="jbu-RY-win" firstAttribute="leading" secondItem="ykB-ym-ZvD" secondAttribute="leadingMargin" constant="10" id="r3k-OH-ycC"/>
                                                 <constraint firstItem="nGr-1D-HBq" firstAttribute="leading" secondItem="jbu-RY-win" secondAttribute="trailing" constant="8" id="uIq-gc-1u1"/>
                                             </constraints>
@@ -889,6 +901,7 @@
                         <outlet property="collectionviewFrames" destination="qsp-8p-imb" id="Nhv-ZV-6eQ"/>
                         <outlet property="imageviewResult" destination="jbu-RY-win" id="Rbt-TV-gQe"/>
                         <outlet property="labelConfidence" destination="nGr-1D-HBq" id="zit-3N-PAs"/>
+                        <outlet property="labelCountProcess" destination="Djd-Aw-CXg" id="sgF-ld-bxd"/>
                         <outlet property="nameResult" destination="rvi-hU-RF8" id="q0e-Oa-qVm"/>
                         <segue destination="UCc-4F-8CB" kind="show" identifier="selectNewcontact" id="u6Z-rl-ee1"/>
                         <segue destination="Hn8-Tl-itb" kind="show" identifier="selectContactSegue" id="Tef-fe-HgL"/>
