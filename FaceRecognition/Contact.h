@@ -13,5 +13,6 @@
 @interface Contact : RLMObject
 @property (nonnull, nonatomic, strong) NSString *key;
 @property (nonnull, nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSData *dataImage;
+@property (nullable, nonatomic, strong) NSData *dataImage;
+@property (nonatomic, assign) NSInteger numberRecogition;
 @end

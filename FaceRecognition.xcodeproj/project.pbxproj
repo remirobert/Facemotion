@@ -10,7 +10,7 @@
 		57BDD51FA85FB0C48C015A78 /* libPods-FaceRecognition.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1794D07794449E8F09A86DD5 /* libPods-FaceRecognition.a */; };
 		BB039A051CF9C8B3008C9BAF /* CameraViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB039A041CF9C8B3008C9BAF /* CameraViewController.mm */; };
 		BB0B5ED71CF9137700F13EE7 /* PCAViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB0B5ED61CF9137700F13EE7 /* PCAViewController.mm */; };
-		BB0BCA991D0C1D2600970502 /* ContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0BCA981D0C1D2600970502 /* ContactsViewController.m */; };
+		BB0BCA991D0C1D2600970502 /* ContactsViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB0BCA981D0C1D2600970502 /* ContactsViewController.mm */; };
 		BB0BCA9D1D0C1E1700970502 /* ContactCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0BCA9B1D0C1E1700970502 /* ContactCollectionViewCell.m */; };
 		BB0BCA9E1D0C1E1700970502 /* ContactCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB0BCA9C1D0C1E1700970502 /* ContactCollectionViewCell.xib */; };
 		BB0BCAA11D0C1ECE00970502 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB0BCA9F1D0C1ECE00970502 /* Contacts.framework */; };
@@ -57,7 +57,7 @@
 		BB0B5ED51CF9137700F13EE7 /* PCAViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCAViewController.h; sourceTree = "<group>"; };
 		BB0B5ED61CF9137700F13EE7 /* PCAViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PCAViewController.mm; sourceTree = "<group>"; };
 		BB0BCA971D0C1D2600970502 /* ContactsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsViewController.h; sourceTree = "<group>"; };
-		BB0BCA981D0C1D2600970502 /* ContactsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsViewController.m; sourceTree = "<group>"; };
+		BB0BCA981D0C1D2600970502 /* ContactsViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ContactsViewController.mm; sourceTree = "<group>"; };
 		BB0BCA9A1D0C1E1700970502 /* ContactCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactCollectionViewCell.h; sourceTree = "<group>"; };
 		BB0BCA9B1D0C1E1700970502 /* ContactCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactCollectionViewCell.m; sourceTree = "<group>"; };
 		BB0BCA9C1D0C1E1700970502 /* ContactCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -222,7 +222,7 @@
 				BB2193A61D0A9EE000F88C64 /* TargetScanView.h */,
 				BB2193A71D0A9EE000F88C64 /* TargetScanView.m */,
 				BB0BCA971D0C1D2600970502 /* ContactsViewController.h */,
-				BB0BCA981D0C1D2600970502 /* ContactsViewController.m */,
+				BB0BCA981D0C1D2600970502 /* ContactsViewController.mm */,
 				BB0BCAA61D0C2D8A00970502 /* ContactManager.h */,
 				BB0BCAA71D0C2D8A00970502 /* ContactManager.m */,
 				BB0BCAA31D0C1F9700970502 /* ContactModel.h */,
@@ -393,7 +393,7 @@
 				BB1520111CFC2ACF0028C5CB /* FaceDetector.mm in Sources */,
 				BB15200E1CFC281E0028C5CB /* Face.mm in Sources */,
 				BB0BCAAB1D0D545200970502 /* ProcessingRecognitionTableViewController.mm in Sources */,
-				BB0BCA991D0C1D2600970502 /* ContactsViewController.m in Sources */,
+				BB0BCA991D0C1D2600970502 /* ContactsViewController.mm in Sources */,
 				BB039A051CF9C8B3008C9BAF /* CameraViewController.mm in Sources */,
 				BB288B6E1CFAA65000784037 /* OpenCVImageProcessing.mm in Sources */,
 				BB0BCAB11D0D60B600970502 /* FaceContact.m in Sources */,

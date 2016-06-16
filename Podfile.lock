@@ -6,6 +6,7 @@ PODS:
   - Realm (1.0.0):
     - Realm/Headers (= 1.0.0)
   - Realm/Headers (1.0.0)
+  - ZFDragableModalTransition (0.6)
 
 DEPENDENCIES:
   - FCFileManager
@@ -13,6 +14,7 @@ DEPENDENCIES:
   - OpenCV (~> 2.4.12.3)
   - pop (~> 1.0.9)
   - Realm
+  - ZFDragableModalTransition
 
 SPEC CHECKSUMS:
   FCFileManager: 8bfc931ce2a6223676147e9baf0e8a65c691eca6
@@ -20,7 +22,8 @@ SPEC CHECKSUMS:
   OpenCV: 52fd6b6b31296d817f69254441da111d5a661207
   pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
   Realm: e15cd8e7c11d3e576f628ba0b7cb855269b4991c
+  ZFDragableModalTransition: 0d294eaaba6edfcb9839595de765f9ca06a4b524
 
-PODFILE CHECKSUM: be25b87029997fbe21a37aa466efb80827be101d
+PODFILE CHECKSUM: 8ad56e7aaf5dee860f43213483bf7439d20ff39d
 
 COCOAPODS: 1.0.0

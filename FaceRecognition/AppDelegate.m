@@ -16,7 +16,8 @@
 @implementation AppDelegate
 
 - (void)initSettingsFirstLaunch {
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:SETTINGS_INIT]) {
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:SETTINGS_INIT]) {\
+        [[NSUserDefaults standardUserDefaults] setBool:false forKey:SETTINGS_SPEECK];
         [[NSUserDefaults standardUserDefaults] setBool:true forKey:SETTINGS_DETECTION_ANGLE];
         [[NSUserDefaults standardUserDefaults] setBool:true forKey:SETTINGS_INIT];
     }

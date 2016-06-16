@@ -12,6 +12,7 @@
 #include <opencv2/highgui/cap_ios.h>
 #include <opencv2/opencv.hpp>
 #include <opencv2/core/core.hpp>
+#import <ZFModalTransitionAnimator.h>
 
 #import "OrientationDevice.h"
 #import "OpenCVImageProcessing.h"
@@ -62,6 +63,7 @@ enum CameraViewDeviceOrientation {
 @property (nonatomic, strong) TargetScanView *targetView;
 @property (nonatomic, assign) BOOL isPaused;
 @property (nonatomic, assign) CameraViewDeviceOrientation currentOrientation;
+@property (nonatomic, strong) ZFModalTransitionAnimator *animator;
 @end
 
 @implementation CameraViewController
@@ -284,13 +286,13 @@ enum CameraViewDeviceOrientation {
 
 - (void)addViewsFace:(CGRect)frameFace validView:(BOOL)valid {
     UIView *faceView = [[UIView alloc] initWithFrame:frameFace];
-    faceView.layer.cornerRadius = frameFace.size.width / 2;
+    faceView.layer.cornerRadius = 5;
     
     if (valid) {
-        faceView.layer.borderColor = [[[UIColor whiteColor] colorWithAlphaComponent:0.5] CGColor];
+        faceView.layer.borderColor = [[[UIColor whiteColor] colorWithAlphaComponent:0.3] CGColor];
     }
     else {
-        faceView.layer.borderColor = [[[UIColor redColor] colorWithAlphaComponent:0.5] CGColor];
+        faceView.layer.borderColor = [[[UIColor redColor] colorWithAlphaComponent:0.3] CGColor];
     }
     faceView.layer.borderWidth = 4;
     [self.viewsFace addObject:faceView];
@@ -506,6 +508,14 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     if ([segue.identifier isEqualToString:@"processingSegue"]) {
         UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
         ((ProcessingRecognitionTableViewController *)navigationController.viewControllers.firstObject).face = (DetectFace *)sender;
+        
+        self.animator = [[ZFModalTransitionAnimator alloc] initWithModalViewController:navigationController];
+        self.animator.dragable = false;
+        self.animator.bounces = true;
+        self.animator.behindViewAlpha = 0.7f;
+        self.animator.behindViewScale = 0.7f;
+        self.animator.transitionDuration = 1;
+        navigationController.transitioningDelegate = self.animator;
     }
 }
 

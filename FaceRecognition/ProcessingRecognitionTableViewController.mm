@@ -13,6 +13,7 @@
 #import "FaceContact.h"
 #import "ContactManager.h"
 #import "SelectNewContactViewController.h"
+#import "Contact.h"
 #import "SettingsKey.h"
 #import "SelectContactViewController.h"
 
@@ -49,6 +50,16 @@
     }
     RecognitionResult *result = [FaceRecognition recognitionFace:contacts face:face];
     FaceContact *contact = result.contact;
+    
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"key = %@", contact.id];
+    RLMResults<Contact *> *facesContact = [Contact objectsWithPredicate:pred];
+    Contact *registredContact = facesContact.firstObject;
+    if (registredContact) {
+        RLMRealm *realm = [RLMRealm defaultRealm];
+        [realm beginWriteTransaction];
+        registredContact.numberRecogition += 1;
+        [realm commitWriteTransaction];
+    }
     
     self.labelConfidence.text = nil;
     self.nameResult.text = nil;
