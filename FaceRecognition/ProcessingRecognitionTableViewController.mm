@@ -23,12 +23,24 @@
 @property (weak, nonatomic) IBOutlet UILabel *nameResult;
 @property (weak, nonatomic) IBOutlet UIImageView *imageviewResult;
 @property (weak, nonatomic) IBOutlet UILabel *labelCountProcess;
+@property (nonatomic, strong) Contact *detectedContact;
 @end
 
 @implementation ProcessingRecognitionTableViewController
 
 - (IBAction)cancelRecognition:(id)sender {
     [self dismissViewControllerAnimated:true completion:nil];
+}
+
+- (NSInteger)idFace:(Contact *)contact {
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"id = %@", contact.key];
+    RLMResults<FaceContact *> *facesContact = [FaceContact objectsWithPredicate:pred];
+    
+    if (facesContact.count > 0) {
+        FaceContact *firstFace = [facesContact objectAtIndex:0];
+        return firstFace.idRecognition;
+    }
+    return [(NSNumber *)[[FaceContact allObjects] maxOfProperty:@"idRecognition"] integerValue] + 1;
 }
 
 - (void)speechResult:(NSString *)result {
@@ -41,6 +53,24 @@
     v.rate = 0.1;
     AVSpeechSynthesizer *c = [[AVSpeechSynthesizer alloc] init];
     [c speakUtterance:v];
+}
+
+- (void)addFrameToDetectedContact {
+    if (!self.detectedContact) {
+        return ;
+    }
+    NSMutableArray *faces = [NSMutableArray new];
+    NSInteger idFace = [self idFace:self.detectedContact];
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    for (UIImage *imageFace in self.face.faces) {
+        FaceContact *newFace = [[FaceContact alloc] initWithImage:imageFace idContact:self.detectedContact.key];
+        newFace.idRecognition = idFace;
+        [faces addObject:newFace];
+    }
+    [realm transactionWithBlock:^{
+        [realm addObjects:faces];
+    }];
+    [self.navigationController dismissViewControllerAnimated:true completion:nil];
 }
 
 - (void)startRecognition:(UIImage *)face {
@@ -59,13 +89,13 @@
     
     NSPredicate *pred = [NSPredicate predicateWithFormat:@"key = %@", contact.id];
     RLMResults<Contact *> *facesContact = [Contact objectsWithPredicate:pred];
-    Contact *registredContact = facesContact.firstObject;
-    if (registredContact) {
+    self.detectedContact = facesContact.firstObject;
+    if (self.detectedContact) {
         RLMRealm *realm = [RLMRealm defaultRealm];
         [realm beginWriteTransaction];
-        registredContact.numberRecogition += 1;
+        self.detectedContact.numberRecogition += 1;
         [realm commitWriteTransaction];
-        self.labelCountProcess.text = [NSString stringWithFormat:@"Count process : %ld", (long)registredContact.numberRecogition];
+        self.labelCountProcess.text = [NSString stringWithFormat:@"Count process : %ld", (long)self.detectedContact.numberRecogition];
     }
     
     self.labelConfidence.text = [NSString stringWithFormat:@"confidence : %f", result.confidence];
@@ -106,7 +136,10 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 3 && indexPath.row == 0) {
+    if (indexPath.section == 2) {
+        [self addFrameToDetectedContact];
+    }
+    else if (indexPath.section == 3 && indexPath.row == 0) {
         [self performSegueWithIdentifier:@"selectContactSegue" sender:nil];
     }
     else if (indexPath.section == 3 && indexPath.row == 1) {

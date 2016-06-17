@@ -41,7 +41,6 @@
     return [(NSNumber *)[[FaceContact allObjects] maxOfProperty:@"idRecognition"] integerValue] + 1;
 }
 
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
