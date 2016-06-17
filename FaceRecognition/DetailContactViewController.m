@@ -26,17 +26,32 @@
     [self dismissViewControllerAnimated:true completion:nil];
 }
 
-- (IBAction)removeContact:(id)sender {
+- (void)removeContact {
     RLMRealm *realm = [RLMRealm defaultRealm];
     
     NSPredicate *pred = [NSPredicate predicateWithFormat:@"id = %@", self.contact.key];
     RLMResults<FaceContact *> *facesContact = [FaceContact objectsWithPredicate:pred];
     
+    [realm beginWriteTransaction];
     [realm deleteObject:self.contact];
     [realm deleteObjects:facesContact];
+    [realm commitWriteTransaction];
     
     [self dismissViewControllerAnimated:true completion:nil];
 }
+
+- (IBAction)removeContact:(id)sender {
+    UIAlertController *controller = [UIAlertController alertControllerWithTitle:@"Do you want to remove this contact ?" message:nil preferredStyle:UIAlertControllerStyleAlert];
+
+    [controller addAction:[UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self removeContact];
+    }]];
+    
+    [controller addAction:[UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleCancel handler:nil]];
+    
+    [self presentViewController:controller animated:true completion:nil];
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
