@@ -42,6 +42,16 @@
     [self dismissViewControllerAnimated:true completion:nil];
 }
 
+- (void)removeFrame:(FaceContact *)face {
+    [self.frames removeObject:face];
+    [self.collectionview reloadData];
+    
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    [realm beginWriteTransaction];
+    [realm deleteObjects:face];
+    [realm commitWriteTransaction];
+}
+
 - (IBAction)removeContact:(id)sender {
     UIAlertController *controller = [UIAlertController alertControllerWithTitle:@"Do you want to remove this contact ?" message:nil preferredStyle:UIAlertControllerStyleAlert];
 
@@ -85,6 +95,20 @@
     self.collectionview.dataSource = self;
     self.collectionview.delegate = self;
     self.labelName.text = self.contact.name;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    FaceContact *frame = [self.frames objectAtIndex:indexPath.row];
+    
+    UIAlertController *controller = [UIAlertController alertControllerWithTitle:@"Remove frame ?" message:@"This frame won't be trained in the future recognition process." preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    [controller addAction:[UIAlertAction actionWithTitle:@"Remove" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        [self removeFrame:frame];
+    }]];
+    
+    [controller addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+    
+    [self presentViewController:controller animated:true completion:nil];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
