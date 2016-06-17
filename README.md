@@ -36,3 +36,5 @@ pod install
 Run the project on a real device. 🍔
 
 If you like it, please give me a :star:
+
+made in 同济 with ❤️
