@@ -10,8 +10,8 @@ Scan the face of a person, whether the contact is in the local storage, it can b
               |  Features
 --------------------------|------------------------------------------------------------
 :girl: | Face detection
-:triangular_ruler: | Angle detection, to help you to take the best frames, and increase the chance of recognition
 :mag: | Face recognition 
+:triangular_ruler: | Angle detection, to help you to take the best frames, and increase the chance of recognition
 :chart_with_upwards_trend: | improving recognition by adding more frames to a contact
 
 
