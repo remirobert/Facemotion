@@ -13,7 +13,7 @@
 - (void)drawRect:(CGRect)rect {
     CGContextRef context = UIGraphicsGetCurrentContext();
     
-    CGContextSetFillColorWithColor( context, [[UIColor blackColor] colorWithAlphaComponent:0.5].CGColor);
+    CGContextSetFillColorWithColor( context, [[UIColor blackColor] colorWithAlphaComponent:0.075].CGColor);
     CGContextFillRect( context, rect );
     
     CGSize sizeScreen = CGSizeMake(CGRectGetWidth([UIScreen mainScreen].bounds), CGRectGetHeight([UIScreen mainScreen].bounds));

@@ -514,7 +514,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         self.animator.bounces = true;
         self.animator.behindViewAlpha = 0.7f;
         self.animator.behindViewScale = 0.7f;
-        self.animator.transitionDuration = 1;
+        self.animator.transitionDuration = 0.75;
         navigationController.transitioningDelegate = self.animator;
     }
 }

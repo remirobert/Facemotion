@@ -150,7 +150,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
 
-    [alertController addAction:[UIAlertAction actionWithTitle:@"Recognition for this frame" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+    [alertController addAction:[UIAlertAction actionWithTitle:@"Recognition for this frame" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self startRecognition:[self.face.faces objectAtIndex:indexPath.row]];
     }]];
     [alertController addAction:[UIAlertAction actionWithTitle:@"Remove frame" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {

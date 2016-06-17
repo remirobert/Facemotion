@@ -63,7 +63,7 @@
         self.animator.bounces = true;
         self.animator.behindViewAlpha = 0.5f;
         self.animator.behindViewScale = 0.7f;
-        self.animator.transitionDuration = 1.5;
+        self.animator.transitionDuration = 0.75;
         controller.transitioningDelegate = self.animator;
     }
 }
