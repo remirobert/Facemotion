@@ -117,7 +117,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.delegate = self;
-    
 
     [self.collectionviewFrames registerNib:[UINib nibWithNibName:@"FaceCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"cell"];
     self.collectionviewFrames.delegate = self;
