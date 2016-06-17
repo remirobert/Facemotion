@@ -25,3 +25,14 @@ Scan the face of a person, whether the contact is in the local storage, it can b
 - **OpenCV** for faces recognition algorithm / image processing
 - **AVFoundation** for face detection / some image processing
 
+## Installation and usage
+
+First thing to do is to install the pods.
+I choosed a pod for **opencv**, instead a built framework for easy integration. It can take a long time compiling. (1 hour macbook 13 inch 😬😿)
+```
+pod install
+```
+
+Run the project on a real device. 🍔
+
+If you like it, please give me a :star:
