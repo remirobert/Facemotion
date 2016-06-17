@@ -26,15 +26,18 @@
 
 @implementation ContactsViewController
 
-- (void)viewWillAppear:(BOOL)animated {
+- (void)updateContactList {
     RLMResults<Contact *> *localContacts = [Contact allObjects];
     
-    NSLog(@"local contacts : %@", localContacts);
     [self.contacts removeAllObjects];
     for (Contact *contact in localContacts) {
         [self.contacts addObject:contact];
     }
     [self.collectionView reloadData];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [self updateContactList];
 }
 
 - (void)viewDidLoad {
@@ -49,6 +52,10 @@
     self.collectionViewLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
     
     self.contacts = [NSMutableArray new];
+    
+    [[NSNotificationCenter defaultCenter] addObserverForName:@"updateContactList" object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
+        [self updateContactList];
+    }];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

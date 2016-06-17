@@ -37,6 +37,8 @@
     [realm deleteObjects:facesContact];
     [realm commitWriteTransaction];
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"updateContactList" object:nil];
+    
     [self dismissViewControllerAnimated:true completion:nil];
 }
 
