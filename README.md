@@ -3,6 +3,21 @@
 # Facemotion
 
 **Facemotion** it's an iOS app, allowing you to find easily a contact by *face recognition*.
+Scan the face of a person, whether the contact is in the local storage, it can be detected by the recognition algorithm. Or add the detected frames to a new contact among your own iOS contacts. And then can be recognise later by the application.
+
+
+
+              |  Features
+--------------------------|------------------------------------------------------------
+:girl: | Face detection
+:triangular_ruler: | Angle detection, to help you to take the best frames, and increase the chance of recognition
+:mag: | Face recognition 
+:chart_with_upwards_trend: | improving recognition by adding more frames to a contact
+
+
+![recordcapture](https://cloud.githubusercontent.com/assets/3276768/16144253/4e96344e-34a4-11e6-9257-06f5bcdf06ef.gif)
+![recordcontact](https://cloud.githubusercontent.com/assets/3276768/16144252/4e931cf0-34a4-11e6-8a17-cb6d1fca60b8.gif)
+
 
 ## 💻🎉 Technologies
 
@@ -10,5 +25,3 @@
 - **OpenCV** for faces recognition algorithm / image processing
 - **AVFoundation** for face detection / some image processing
 
-![recordcontact](https://cloud.githubusercontent.com/assets/3276768/16144252/4e931cf0-34a4-11e6-8a17-cb6d1fca60b8.gif)
-![recordcapture](https://cloud.githubusercontent.com/assets/3276768/16144253/4e96344e-34a4-11e6-9257-06f5bcdf06ef.gif)
